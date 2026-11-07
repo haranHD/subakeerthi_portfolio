@@ -1,0 +1,126 @@
+/* Areas of Work Styles */
+.areas-section {
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.areas-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .areas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .areas-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.area-card {
+  background-color: var(--color-warm-white);
+  border: 1px solid var(--color-warm-beige-border);
+  border-radius: var(--radius-md);
+  padding: 2.25rem 1.85rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.area-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-rose-border);
+}
+
+.area-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.area-icon-container {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-rose-light);
+  border: 1px solid var(--color-rose-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.area-icon {
+  color: var(--color-burgundy);
+}
+
+.area-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  background-color: rgba(167, 25, 48, 0.06);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+
+.area-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.32rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  margin-bottom: 0.85rem;
+  line-height: 1.35;
+}
+
+.area-card-description {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--color-charcoal-muted);
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.area-card-audience {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-charcoal);
+  background-color: var(--color-warm-beige-light);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.35rem;
+  border-left: 2px solid var(--color-rose);
+}
+
+.area-card-audience strong {
+  color: var(--color-burgundy);
+}
+
+.area-card-footer {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-warm-beige-subtle);
+}
+
+.area-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  transition: gap var(--transition-fast), color var(--transition-fast);
+}
+
+.area-link:hover {
+  gap: 0.75rem;
+  color: var(--color-burgundy-dark);
+}
+

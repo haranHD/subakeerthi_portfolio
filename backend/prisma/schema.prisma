@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  role         String     @default("ADMIN") // SUPER_ADMIN, ADMIN, EDITOR
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+
+  @@map("admin_users")
+}
+
+model Profile {
+  id          String   @id @default(uuid())
+  fullName    String
+  headline    String
+  biography   String   @db.Text
+  location    String
+  phone       String
+  email       String
+  portraitUrl String?
+  heroPills   Json?
+  values      Json?
+  updatedAt   DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model Service {
+  id           String   @id @default(uuid())
+  title        String
+  slug         String   @unique
+  tag          String
+  category     String
+  description  String   @db.Text
+  audience     String
+  icon         String   @default("ShieldCheck")
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isPublished, displayOrder])
+  @@map("services")
+}
+
+model Programme {
+  id               String   @id @default(uuid())
+  title            String
+  slug             String   @unique
+  category         String
+  intendedAudience String
+  purpose          String   @db.Text
+  description      String   @db.Text
+  highlights       Json
+  duration         String?
+  bannerUrl        String?
+  displayOrder     Int      @default(0)
+  isPublished      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([isPublished, displayOrder])
+  @@map("programmes")
+}
+
+model Credential {
+  id              String   @id @default(uuid())
+  credentialType  String   // "EDUCATION" or "ACCREDITATION"
+  institution     String
+  qualification   String
+  period          String
+  status          String
+  details         String   @db.Text
+  issuingBody     String?
+  statutoryDomain String?
+  certificateUrl  String?
+  displayOrder    Int      @default(0)
+  isPublished     Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([credentialType, isPublished, displayOrder])
+  @@map("credentials")
+}
+
+model AudienceGroup {
+  id           String   @id @default(uuid())
+  title        String
+  badge        String
+  icon         String   @default("Users")
+  description  String   @db.Text
+  actionText   String
+  displayOrder Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isPublished, displayOrder])
+  @@map("audience_groups")
+}
+
+model Enquiry {
+  id             String   @id @default(uuid())
+  fullName       String
+  organisation   String
+  email          String?
+  phone          String?
+  category       String
+  areaOfInterest String
+  requirements   String   @db.Text
+  status         String   @default("NEW") // NEW, PENDING, RESPONDED, ARCHIVED
+  ipHash         String?
+  notes          String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@map("enquiries")
+}
+
+model MediaAsset {
+  id           String   @id @default(uuid())
+  fileName     String
+  originalName String
+  mimeType     String
+  size         Int
+  storageUrl   String
+  assetType    String   @default("OTHER") // PORTRAIT, BANNER, CERTIFICATE, OTHER
+  createdAt    DateTime @default(now())
+
+  @@map("media_assets")
+}
+
+model SiteSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String   @db.Text
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model AuditLog {
+  id          String     @id @default(uuid())
+  adminUserId String?
+  adminUser   AdminUser? @relation(fields: [adminUserId], references: [id], onDelete: SetNull)
+  action      String
+  entityType  String
+  entityId    String?
+  details     Json?
+  ipAddress   String?
+  createdAt   DateTime   @default(now())
+
+  @@index([entityType, createdAt])
+  @@map("audit_logs")
+}

@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: subakeerthii_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secure_local_db_password
+      POSTGRES_DB: subakeerthii_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: subakeerthii_backend
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:secure_local_db_password@postgres:5432/subakeerthii_db?sslmode=disable
+      SESSION_SECRET: subakeerthii_production_session_secret_key_2026
+      CORS_ORIGIN: "http://localhost:5173,http://localhost:5174"
+      ADMIN_DEFAULT_EMAIL: admin@subakeerthii.com
+      ADMIN_DEFAULT_PASSWORD: ChangeMe123!
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend/uploads:/app/uploads
+
+  website:
+    build:
+      context: ./frontend/website
+      dockerfile: Dockerfile
+    container_name: subakeerthii_website
+    restart: always
+    ports:
+      - "5173:80"
+
+  admin:
+    build:
+      context: ./frontend/admin
+      dockerfile: Dockerfile
+    container_name: subakeerthii_admin
+    restart: always
+    ports:
+      - "5174:80"
+
+volumes:
+  pgdata:
+    driver: local

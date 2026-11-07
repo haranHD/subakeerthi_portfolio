@@ -1,0 +1,99 @@
+/* Who She Supports Styles */
+.audience-section {
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.85rem;
+}
+
+@media (min-width: 640px) {
+  .audience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .audience-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.audience-card {
+  background-color: var(--color-warm-beige-subtle);
+  border: 1px solid var(--color-warm-beige-border);
+  border-radius: var(--radius-md);
+  padding: 2.25rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.audience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-rose-border);
+}
+
+.audience-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.35rem;
+}
+
+.audience-icon-box {
+  width: 50px;
+  height: 50px;
+  background-color: var(--color-warm-white);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-rose-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audience-icon {
+  color: var(--color-burgundy);
+}
+
+.audience-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-burgundy);
+  background-color: var(--color-rose-light);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+.audience-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  margin-bottom: 0.85rem;
+  line-height: 1.35;
+}
+
+.audience-desc {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--color-charcoal-muted);
+  margin-bottom: 1.75rem;
+  flex-grow: 1;
+}
+
+.audience-action {
+  margin-top: auto;
+}
+
+.audience-cta-btn {
+  font-size: 0.82rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+}
+

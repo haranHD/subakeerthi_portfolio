@@ -1,0 +1,84 @@
+/* Approach Styles */
+.approach-section {
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.approach-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .approach-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.approach-card {
+  background-color: var(--color-warm-beige-subtle);
+  border: 1px solid var(--color-warm-beige-border);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.approach-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-rose-border);
+}
+
+.approach-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.approach-number {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-rose);
+  letter-spacing: 0.05em;
+}
+
+.approach-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-warm-white);
+  border: 1px solid var(--color-rose-border);
+  color: var(--color-burgundy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.approach-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  margin-bottom: 0.45rem;
+}
+
+.approach-headline {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  margin-bottom: 0.85rem;
+  line-height: 1.4;
+}
+
+.approach-description {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--color-charcoal-muted);
+}
+

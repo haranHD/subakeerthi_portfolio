@@ -1,0 +1,231 @@
+/* About Styles */
+.about-section {
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.5rem;
+  align-items: flex-start;
+}
+
+@media (min-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4.5rem;
+  }
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-lead {
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.75;
+  color: var(--color-charcoal);
+  margin-bottom: 1.25rem;
+}
+
+.about-text {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: var(--color-charcoal-muted);
+  margin-bottom: 1.15rem;
+}
+
+.about-principles-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-warm-beige-border);
+}
+
+@media (min-width: 640px) {
+  .about-principles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.principle-card {
+  display: flex;
+  gap: 1rem;
+  background-color: var(--color-warm-beige-subtle);
+  padding: 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-warm-beige-border);
+}
+
+.principle-icon-wrapper {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-rose-light);
+  border: 1px solid var(--color-rose-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.principle-icon {
+  color: var(--color-burgundy);
+}
+
+.principle-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-burgundy);
+  margin-bottom: 0.25rem;
+}
+
+.principle-desc {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--color-charcoal-muted);
+}
+
+/* Right Panel */
+.about-panel-container {
+  position: sticky;
+  top: 6rem;
+}
+
+.editorial-panel {
+  background-color: var(--color-warm-beige-light);
+  border: 1px solid var(--color-warm-beige-border);
+  border-radius: var(--radius-md);
+  padding: 2.25rem 1.85rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.panel-header {
+  margin-bottom: 1.85rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.panel-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  margin-bottom: 0.4rem;
+}
+
+.panel-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  color: var(--color-burgundy);
+  font-weight: 600;
+}
+
+.pillars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  margin-bottom: 2rem;
+}
+
+.pillar-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.pillar-num {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-rose);
+  padding-top: 0.15rem;
+}
+
+.pillar-body h4 {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--color-charcoal);
+  margin-bottom: 0.25rem;
+}
+
+.pillar-body p {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--color-charcoal-muted);
+}
+
+.panel-footer {
+  padding-top: 1rem;
+}
+
+/* Client Official Banner Showcase */
+.client-banner-showcase {
+  margin-top: 4.5rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--color-warm-beige-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.client-banner-frame {
+  width: 100%;
+  max-width: 980px;
+  background-color: var(--color-burgundy);
+  border: 1px solid var(--color-rose-border);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  box-shadow: 0 12px 36px rgba(167, 25, 48, 0.22);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.client-banner-frame:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 44px rgba(167, 25, 48, 0.28);
+}
+
+.client-banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: calc(var(--radius-md) - 4px);
+  object-fit: cover;
+}
+
+.client-banner-caption {
+  margin-top: 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.caption-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-burgundy);
+  background-color: var(--color-rose-light);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-rose-border);
+}
+
+.client-banner-caption p {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-charcoal-muted);
+  letter-spacing: 0.03em;
+}
+

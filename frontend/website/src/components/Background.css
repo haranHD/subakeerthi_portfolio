@@ -1,0 +1,285 @@
+/* Background Styles */
+.background-section {
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.background-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .background-columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+  }
+}
+
+.bg-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-warm-beige-border);
+}
+
+.col-icon-box {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-warm-white);
+  border: 1px solid var(--color-rose-border);
+  color: var(--color-burgundy);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.col-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  line-height: 1.25;
+}
+
+.col-subtitle {
+  font-size: 0.82rem;
+  color: var(--color-charcoal-muted);
+}
+
+/* Timeline Layout */
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marker-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--color-burgundy);
+  border: 3px solid var(--color-rose-light);
+  margin-top: 0.35rem;
+  z-index: 2;
+}
+
+.marker-line {
+  width: 2px;
+  flex-grow: 1;
+  background-color: var(--color-warm-beige-border);
+  margin: 0.5rem 0;
+}
+
+.timeline-card {
+  background-color: var(--color-warm-white);
+  border: 1px solid var(--color-warm-beige-border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.6rem;
+  margin-bottom: 1.75rem;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.timeline-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.timeline-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-burgundy);
+  background-color: var(--color-rose-light);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+
+.timeline-period {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-charcoal-muted);
+}
+
+.timeline-degree {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  margin-bottom: 0.35rem;
+}
+
+.timeline-institution {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  margin-bottom: 0.85rem;
+}
+
+.timeline-institution svg {
+  color: var(--color-rose);
+}
+
+.timeline-description {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--color-charcoal-muted);
+}
+
+/* Credentials List */
+.credentials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.credential-card {
+  background-color: var(--color-warm-white);
+  border: 1px solid var(--color-warm-beige-border);
+  border-left: 4px solid var(--color-burgundy);
+  border-radius: var(--radius-md);
+  padding: 1.85rem 1.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.credential-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.cred-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.cred-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  background-color: var(--color-warm-beige-light);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+
+.cred-year {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-charcoal-muted);
+}
+
+.cred-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+  margin-bottom: 0.65rem;
+}
+
+.cred-issuer {
+  font-size: 0.86rem;
+  margin-bottom: 0.6rem;
+  color: var(--color-charcoal);
+}
+
+.issuer-label {
+  color: var(--color-charcoal-muted);
+  margin-right: 0.4rem;
+}
+
+.cred-focus {
+  font-size: 0.84rem;
+  background-color: var(--color-warm-beige-light);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.85rem;
+}
+
+.focus-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  margin-bottom: 0.2rem;
+}
+
+.cred-desc {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--color-charcoal-muted);
+}
+
+/* Institutional Profile Card */
+.profile-request-card {
+  background-color: var(--color-warm-beige-subtle);
+  border: 1px dashed var(--color-warm-beige-border);
+  border-radius: var(--radius-md);
+  padding: 1.65rem;
+}
+
+.profile-req-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+
+.profile-req-icon {
+  color: var(--color-burgundy);
+}
+
+.profile-req-header h4 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-burgundy);
+}
+
+.profile-request-card p {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--color-charcoal-muted);
+  margin-bottom: 1.25rem;
+}
+
