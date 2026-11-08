@@ -74,8 +74,8 @@
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
-  border: 1px solid rgba(217, 130, 155, 0.35);
-  box-shadow: 0 2px 8px rgba(167, 25, 48, 0.14);
+  border: 1px solid rgba(47, 143, 111, 0.35);
+  box-shadow: 0 2px 8px rgba(20, 90, 67, 0.14);
 }
 
 @media (min-width: 1024px) {
@@ -266,7 +266,7 @@
   background-color: var(--color-burgundy);
   color: var(--color-warm-white);
   border-radius: var(--radius-sm);
-  box-shadow: 0 2px 6px rgba(167, 25, 48, 0.22);
+  box-shadow: 0 2px 6px rgba(20, 90, 67, 0.22);
   transition: background-color var(--transition-fast), transform var(--transition-fast);
   flex-shrink: 0;
   text-decoration: none;

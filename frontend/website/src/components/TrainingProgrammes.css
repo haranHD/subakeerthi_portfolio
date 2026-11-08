@@ -50,7 +50,7 @@
 
 .programme-card--expanded {
   border-color: var(--color-burgundy);
-  box-shadow: 0 6px 24px rgba(167, 25, 48, 0.1);
+  box-shadow: 0 6px 24px rgba(20, 90, 67, 0.1);
 }
 
 /* Clickable top button */

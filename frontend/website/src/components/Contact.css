@@ -138,7 +138,7 @@ a.contact-channel-card:hover {
 
 .form-card--prefilled {
   border-color: var(--color-burgundy);
-  box-shadow: 0 0 0 3px rgba(167, 25, 48, 0.1), var(--shadow-md);
+  box-shadow: 0 0 0 3px rgba(20, 90, 67, 0.1), var(--shadow-md);
 }
 
 .form-header {
@@ -233,7 +233,7 @@ a.contact-channel-card:hover {
 .form-select:focus,
 .form-textarea:focus {
   border-color: var(--color-burgundy);
-  box-shadow: 0 0 0 3px rgba(167, 25, 48, 0.12);
+  box-shadow: 0 0 0 3px rgba(20, 90, 67, 0.12);
   outline: none;
 }
 
@@ -505,7 +505,7 @@ a.contact-channel-card:hover {
 .form-select:focus,
 .form-textarea:focus {
   border-color: var(--color-burgundy);
-  box-shadow: 0 0 0 3px rgba(167, 25, 48, 0.12);
+  box-shadow: 0 0 0 3px rgba(20, 90, 67, 0.12);
   outline: none;
 }
 

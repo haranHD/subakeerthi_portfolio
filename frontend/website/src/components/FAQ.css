@@ -53,7 +53,7 @@
   background: var(--color-burgundy) !important;
   color: var(--color-warm-white) !important;
   border-color: var(--color-burgundy) !important;
-  box-shadow: 0 2px 8px rgba(167, 25, 48, 0.2);
+  box-shadow: 0 2px 8px rgba(20, 90, 67, 0.2);
 }
 
 .faq-search-wrapper {
@@ -75,7 +75,7 @@
 
 .faq-search-input:focus {
   border-color: var(--color-burgundy);
-  box-shadow: 0 0 0 3px rgba(167, 25, 48, 0.12);
+  box-shadow: 0 0 0 3px rgba(20, 90, 67, 0.12);
 }
 
 /* Accordion Container */
@@ -105,7 +105,7 @@
 
 .faq-item--open {
   border-color: var(--color-burgundy);
-  box-shadow: 0 6px 20px rgba(167, 25, 48, 0.08);
+  box-shadow: 0 6px 20px rgba(20, 90, 67, 0.08);
 }
 
 .faq-question-btn {

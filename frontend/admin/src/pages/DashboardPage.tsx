@@ -86,7 +86,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon" style={{ backgroundColor: '#FAF4EB', color: '#A71930' }}>
+            <div className="stat-icon" style={{ backgroundColor: '#EBF5F1', color: '#145A43' }}>
               <Layers size={22} />
             </div>
             <div>
@@ -96,7 +96,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div className="stat-card">
-            <div className="stat-icon" style={{ backgroundColor: '#FAF4EB', color: '#A71930' }}>
+            <div className="stat-icon" style={{ backgroundColor: '#EBF5F1', color: '#145A43' }}>
               <BookOpen size={22} />
             </div>
             <div>

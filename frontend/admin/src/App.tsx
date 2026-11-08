@@ -20,8 +20,8 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#1E171B' }}>
-        <Loader2 size={36} className="animate-spin" style={{ color: '#D9829B' }} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#14221D' }}>
+        <Loader2 size={36} className="animate-spin" style={{ color: '#2F8F6F' }} />
       </div>
     );
   }

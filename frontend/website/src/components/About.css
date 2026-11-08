@@ -402,7 +402,7 @@
   border: 1px solid var(--color-rose-border);
   border-radius: var(--radius-md);
   padding: 0.85rem;
-  box-shadow: 0 12px 36px rgba(167, 25, 48, 0.22);
+  box-shadow: 0 12px 36px rgba(20, 90, 67, 0.22);
   position: relative;
   overflow: hidden;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
@@ -410,7 +410,7 @@
 
 .client-banner-frame:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 44px rgba(167, 25, 48, 0.28);
+  box-shadow: 0 16px 44px rgba(20, 90, 67, 0.28);
 }
 
 .client-banner-img {

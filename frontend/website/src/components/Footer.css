@@ -3,7 +3,7 @@
   background-color: var(--color-burgundy);
   color: var(--color-warm-white);
   padding: 5rem 0 2.5rem 0;
-  border-top: 1px solid rgba(217, 130, 155, 0.25);
+  border-top: 1px solid rgba(215, 199, 161, 0.25);
 }
 
 .footer-container {
@@ -172,8 +172,8 @@
 
 /* Disclaimer Banner */
 .footer-disclaimer-box {
-  background-color: rgba(48, 36, 42, 0.35);
-  border: 1px solid rgba(217, 130, 155, 0.3);
+  background-color: rgba(20, 90, 67, 0.4);
+  border: 1px solid rgba(215, 199, 161, 0.35);
   border-radius: var(--radius-sm);
   padding: 1.25rem 1.5rem;
   margin-bottom: 2.5rem;
@@ -231,7 +231,7 @@
 
 .back-to-top-btn {
   background: none;
-  border: 1px solid rgba(217, 130, 155, 0.35);
+  border: 1px solid rgba(215, 199, 161, 0.35);
   color: var(--color-warm-white);
   padding: 0.45rem 0.95rem;
   border-radius: var(--radius-pill);

@@ -1,43 +1,61 @@
 /* ==========================================================================
-   Design Tokens & Color Palette
-   Burgundy: #A71930 (~20%)
-   Soft Rose Pink: #D9829B (~10%)
-   Warm Beige: #F4E8D8 (~35%)
-   Warm White: #FFFDFC (~35%)
-   Deep Charcoal: #30242A (Typography & High Contrast)
+   Design Tokens & Color Palette — Emerald, Jade & Warm Sand
+   Deep Emerald Green: #145A43 (Primary Brand ~25%)
+   Medium Jade Green: #2F8F6F (Secondary Accent ~15%)
+   Warm Sand / Gold: #D7C7A1 (Warm Neutral Accent ~30%)
+   Warm White: #FFFDFC (~30%)
+   Deep Forest Charcoal: #1C2723 (Typography & High Contrast)
    ========================================================================== */
 
 :root {
-  --color-burgundy: #A71930;
-  --color-burgundy-dark: #871224;
-  --color-burgundy-subtle: rgba(167, 25, 48, 0.08);
-  --color-burgundy-glow: rgba(167, 25, 48, 0.16);
-  
-  --color-rose: #D9829B;
-  --color-rose-light: #F9EBF0;
-  --color-rose-subtle: rgba(217, 130, 155, 0.18);
-  --color-rose-border: rgba(217, 130, 155, 0.35);
+  /* Primary Emerald Green */
+  --color-burgundy: #145A43;
+  --color-burgundy-dark: #0D3F2F;
+  --color-burgundy-subtle: rgba(20, 90, 67, 0.08);
+  --color-burgundy-glow: rgba(20, 90, 67, 0.16);
 
-  --color-warm-beige: #F4E8D8;
-  --color-warm-beige-light: #FAF4EB;
-  --color-warm-beige-subtle: #FCF8F2;
-  --color-warm-beige-border: #E8D9C5;
+  /* Modern aliases */
+  --color-emerald: #145A43;
+  --color-emerald-dark: #0D3F2F;
+  --color-emerald-subtle: rgba(20, 90, 67, 0.08);
 
+  /* Secondary Jade Green */
+  --color-rose: #2F8F6F;
+  --color-rose-light: #EBF5F1;
+  --color-rose-subtle: rgba(47, 143, 111, 0.18);
+  --color-rose-border: rgba(47, 143, 111, 0.35);
+
+  --color-jade: #2F8F6F;
+  --color-jade-light: #EBF5F1;
+  --color-jade-border: rgba(47, 143, 111, 0.35);
+
+  /* Warm Sand / Almond Beige */
+  --color-warm-beige: #D7C7A1;
+  --color-warm-beige-light: #F8F5EE;
+  --color-warm-beige-subtle: #FAF8F3;
+  --color-warm-beige-border: #E3D8BE;
+
+  --color-sand: #D7C7A1;
+  --color-sand-light: #F8F5EE;
+
+  /* Whites & Neutrals */
   --color-warm-white: #FFFDFC;
   --color-pure-white: #FFFFFF;
 
-  --color-charcoal: #30242A;
-  --color-charcoal-muted: #5E5057;
-  --color-charcoal-light: #82737B;
+  /* Forest-toned Charcoal for Typography */
+  --color-charcoal: #1C2723;
+  --color-charcoal-muted: #4A5852;
+  --color-charcoal-light: #6E7C76;
 
   --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
   --font-display: 'Cinzel', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
-  --shadow-sm: 0 1px 3px rgba(48, 36, 42, 0.06);
-  --shadow-md: 0 4px 14px rgba(48, 36, 42, 0.07);
-  --shadow-lg: 0 10px 30px rgba(48, 36, 42, 0.08);
-  --shadow-burgundy: 0 8px 24px rgba(167, 25, 48, 0.22);
+  --shadow-sm: 0 1px 3px rgba(28, 39, 35, 0.06);
+  --shadow-md: 0 4px 14px rgba(28, 39, 35, 0.08);
+  --shadow-lg: 0 10px 30px rgba(28, 39, 35, 0.09);
+  --shadow-burgundy: 0 8px 24px rgba(20, 90, 67, 0.22);
+  --shadow-emerald: 0 8px 24px rgba(20, 90, 67, 0.22);
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -239,12 +257,12 @@ textarea:focus-visible {
 .btn--primary {
   background-color: var(--color-burgundy);
   color: var(--color-warm-white);
-  box-shadow: 0 4px 12px rgba(167, 25, 48, 0.18);
+  box-shadow: 0 4px 12px rgba(20, 90, 67, 0.18);
 }
 
 .btn--primary:hover {
   background-color: var(--color-burgundy-dark);
-  box-shadow: 0 6px 18px rgba(167, 25, 48, 0.28);
+  box-shadow: 0 6px 18px rgba(20, 90, 67, 0.28);
   transform: translateY(-2px);
 }
 

@@ -3,18 +3,18 @@
    ============================================================ */
 
 :root {
-  --admin-burgundy: #A71930;
-  --admin-burgundy-dark: #871224;
-  --admin-rose: #D9829B;
-  --admin-rose-light: #F9EBF0;
-  --admin-sidebar-bg: #1E171B;
-  --admin-sidebar-hover: #2B2127;
-  --admin-sidebar-active: #A71930;
-  --admin-content-bg: #F8F5F2;
+  --admin-burgundy: #145A43;
+  --admin-burgundy-dark: #0D3F2F;
+  --admin-rose: #2F8F6F;
+  --admin-rose-light: #EBF5F1;
+  --admin-sidebar-bg: #14221D;
+  --admin-sidebar-hover: #1E332B;
+  --admin-sidebar-active: #145A43;
+  --admin-content-bg: #F8F6F0;
   --admin-card-bg: #FFFFFF;
-  --admin-border: #E8DFD8;
-  --admin-charcoal: #2A1F25;
-  --admin-muted: #6B5E65;
+  --admin-border: #E2D9C5;
+  --admin-charcoal: #1C2723;
+  --admin-muted: #56665F;
   --font-serif: 'Cinzel', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
