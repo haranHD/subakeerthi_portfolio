@@ -166,7 +166,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
                 <div className="portrait-features-list">
                   <div className="feature-item">
                     <CheckCircle2 size={16} className="feature-icon" />
-                    <span>LL.B. Candidate (Vijayalakshmi Law College)</span>
+                    <span>LL.B. Candidate</span>
                   </div>
                   <div className="feature-item">
                     <CheckCircle2 size={16} className="feature-icon" />

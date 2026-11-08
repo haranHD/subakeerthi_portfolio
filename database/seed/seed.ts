@@ -269,7 +269,7 @@ async function main() {
   const credentials = [
     {
       credentialType: 'EDUCATION',
-      institution: 'Vijayalakshmi Law College',
+      institution: '',
       qualification: 'Bachelor of Laws (LL.B.)',
       period: '2026 – 2029',
       status: 'Currently Pursuing',
@@ -280,7 +280,7 @@ async function main() {
     },
     {
       credentialType: 'EDUCATION',
-      institution: 'Harsha Mind Counselling',
+      institution: '',
       qualification: 'Diploma in Child Psychology',
       period: '2026',
       status: 'Listed Credential',
@@ -291,7 +291,7 @@ async function main() {
     },
     {
       credentialType: 'EDUCATION',
-      institution: 'Bharathiyar University',
+      institution: '',
       qualification: 'Bachelor of Science in Biotechnology',
       period: '2020 – 2023',
       status: 'Completed',

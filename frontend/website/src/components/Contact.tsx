@@ -253,7 +253,7 @@ export const Contact: React.FC = () => {
                     name="organisation"
                     value={formData.organisation}
                     onChange={handleChange}
-                    placeholder="e.g. Greenwood Matriculation School / Apex Tech Pvt Ltd"
+                    placeholder="e.g. Educational Trust / Apex Tech Pvt Ltd"
                     disabled={isSubmitting}
                     className={`form-input ${errors.organisation ? 'form-input--error' : ''}`}
                   />

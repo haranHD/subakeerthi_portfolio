@@ -122,10 +122,12 @@ export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
                     </div>
 
                     <h4 className="timeline-degree">{item.qualification}</h4>
-                    <div className="timeline-institution">
-                      <Building size={14} />
-                      <span>{item.institution}</span>
-                    </div>
+                    {item.institution && item.institution.trim() !== '' && (
+                      <div className="timeline-institution">
+                        <Building size={14} />
+                        <span>{item.institution}</span>
+                      </div>
+                    )}
 
                     <p className="timeline-description">
                       {item.details}
