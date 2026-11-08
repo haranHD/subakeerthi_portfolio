@@ -116,6 +116,7 @@
     flex-direction: column;
     align-items: stretch;
   }
+
   .hero-btn-main,
   .hero-btn-sub {
     width: 100%;
@@ -354,15 +355,24 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* On very small screens, collapse tag inside the frame so it doesn't overflow */
-@media (max-width: 479px) {
+.floating-tag-icon {
+  color: var(--color-rose-light);
+}
+
+/* On small screens, integrate the badge cleanly so it doesn't overlap or overflow */
+@media (max-width: 639px) {
   .floating-editorial-tag {
     position: static;
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
     align-self: center;
-    font-size: 0.72rem;
-    padding: 0.4rem 0.85rem;
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(167, 25, 48, 0.2);
   }
+
   .portrait-frame-wrapper {
     display: flex;
     flex-direction: column;
@@ -370,79 +380,11 @@
   }
 }
 
-.floating-tag-icon {
-  color: var(--color-rose-light);
-}
-
 /* Hero Key Impact Bar */
 .hero-metrics-container {
-  margin-top: 3rem;
+  margin-top: 3.5rem;
   position: relative;
   z-index: 2;
-}
-
-/* ── Mobile: horizontal scrolling strip (< 640px) ── */
-@media (max-width: 639px) {
-  .hero-metrics-container {
-    margin-top: 2rem;
-    /* allow strip to bleed edge-to-edge under the section padding */
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-  }
-
-  .hero-metrics-bar {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 0;
-    padding: 1rem 1.25rem;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    background: var(--color-pure-white);
-    border-top: 1px solid var(--color-warm-beige-border);
-    border-bottom: 1px solid var(--color-warm-beige-border);
-    box-shadow: 0 4px 16px rgba(48, 36, 42, 0.05);
-  }
-
-  .hero-metrics-bar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .metric-item {
-    min-width: 160px;
-    flex-shrink: 0;
-    padding: 0.5rem 1.25rem 0.5rem 0;
-  }
-
-  .metric-divider {
-    display: flex !important;
-    width: 1px;
-    min-height: 48px;
-    align-self: center;
-    background: var(--color-warm-beige-border);
-    flex-shrink: 0;
-    margin: 0 0.25rem;
-  }
-
-  .metric-badge {
-    font-size: 0.95rem;
-    padding: 0.35rem 0.6rem;
-    white-space: nowrap;
-  }
-
-  .metric-text strong {
-    font-size: 0.82rem;
-    white-space: nowrap;
-  }
-
-  .metric-text span {
-    font-size: 0.72rem;
-    white-space: normal;
-    max-width: 110px;
-  }
 }
 
 .hero-metrics-bar {
@@ -456,33 +398,14 @@
   gap: 1.25rem;
 }
 
-@media (min-width: 640px) {
-  .hero-metrics-bar {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .metric-divider {
-    display: none;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-metrics-bar {
-    grid-template-columns: 1.2fr auto 1.2fr auto 1.3fr auto 1.3fr;
-    gap: 1.25rem;
-    align-items: center;
-  }
-  .metric-divider {
-    display: block;
-    width: 1px;
-    height: 44px;
-    background-color: var(--color-warm-beige-border);
-  }
-}
-
 .metric-item {
   display: flex;
   align-items: center;
   gap: 0.9rem;
+}
+
+.metric-divider {
+  display: none;
 }
 
 .metric-badge {
@@ -495,6 +418,7 @@
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-rose-border);
   flex-shrink: 0;
+  text-align: center;
 }
 
 .metric-text {
@@ -512,4 +436,96 @@
   font-size: 0.76rem;
   color: var(--color-charcoal-muted);
   line-height: 1.35;
+}
+
+/* Tablet (640px - 1023px): 2x2 Grid */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero-metrics-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .metric-divider {
+    display: none;
+  }
+}
+
+/* Desktop (>= 1024px): 4-in-a-row with vertical dividers */
+@media (min-width: 1024px) {
+  .hero-metrics-bar {
+    grid-template-columns: 1.2fr auto 1.2fr auto 1.3fr auto 1.3fr;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .metric-divider {
+    display: block;
+    width: 1px;
+    height: 44px;
+    background-color: var(--color-warm-beige-border);
+  }
+}
+
+/* Mobile (< 640px): Smooth Horizontal Swipe Strip with Cards */
+@media (max-width: 639px) {
+  .hero-metrics-container {
+    margin-top: 2rem;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    padding: 0 1.25rem;
+  }
+
+  .hero-metrics-bar {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-warm-beige-border);
+    box-shadow: 0 4px 16px rgba(48, 36, 42, 0.05);
+  }
+
+  .hero-metrics-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .metric-item {
+    scroll-snap-align: start;
+    flex: 0 0 250px;
+    background: var(--color-warm-beige-light);
+    border: 1px solid var(--color-warm-beige-border);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .metric-divider {
+    display: none !important;
+  }
+
+  .metric-badge {
+    font-size: 0.95rem;
+    padding: 0.35rem 0.55rem;
+    min-width: 62px;
+  }
+
+  .metric-text strong {
+    font-size: 0.84rem;
+    line-height: 1.3;
+    margin-bottom: 0.15rem;
+  }
+
+  .metric-text span {
+    font-size: 0.73rem;
+    line-height: 1.35;
+  }
 }
