@@ -44,7 +44,8 @@ Thumbs.db
 # Uploaded media (use object storage in prod)
 backend/uploads/
 
-# PostgreSQL local socket (never commit)
+# PostgreSQL local database data (never commit)
+backend/data/
 /tmp/pgdata/
 
 # Coverage reports

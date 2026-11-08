@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "db:start": "/usr/lib/postgresql/16/bin/pg_isready -h /tmp || /usr/lib/postgresql/16/bin/pg_ctl -D ./data/pgdata -l ./data/pg.log -o \"-k /tmp -c listen_addresses=''\" start",
+    "dev": "npm run db:start && tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
