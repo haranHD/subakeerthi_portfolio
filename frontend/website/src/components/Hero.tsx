@@ -4,6 +4,7 @@ import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, Languages, Award, Sc
 import { Profile } from '../types';
 import { triggerEnquiry } from '../utils/enquiryEvents';
 import { ASSETS } from '../config/assets';
+import { getMediaUrl } from '../utils/media';
 import './Hero.css';
 
 interface HeroProps {
@@ -154,10 +155,16 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             <div className="portrait-editorial-frame">
               <div className="portrait-editorial-inner">
                 <img
-                  src={profile?.portraitUrl || ASSETS.portrait.src}
+                  src={profile?.portraitUrl ? getMediaUrl(profile.portraitUrl) : ASSETS.portrait.src}
                   alt={ASSETS.portrait.alt}
                   className="portrait-editorial-image"
                   loading="eager"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.src !== ASSETS.portrait.src && !img.src.endsWith(ASSETS.portrait.src)) {
+                      img.src = ASSETS.portrait.src;
+                    }
+                  }}
                 />
                 
                 {/* Subtle depth lighting overlay */}

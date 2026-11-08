@@ -43,6 +43,8 @@ Thumbs.db
 
 # Uploaded media (use object storage in prod)
 backend/uploads/
+uploads/
+uploads
 
 # PostgreSQL local database data (never commit)
 backend/data/

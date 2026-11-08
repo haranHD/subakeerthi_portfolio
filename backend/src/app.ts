@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import session from 'express-session';
 import path from 'path';
 import { env } from './config/env.js';
+import { UPLOADS_DIR } from './config/paths.js';
 import apiRoutes from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
@@ -49,8 +50,17 @@ app.use(
   })
 );
 
-// Static uploads directory
-app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
+// Static uploads directory (supports both backend/uploads and cwd uploads)
+const staticUploadOptions = {
+  setHeaders: (res: express.Response) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  },
+};
+app.use('/uploads', express.static(UPLOADS_DIR, staticUploadOptions));
+if (path.resolve(process.cwd(), 'uploads') !== UPLOADS_DIR) {
+  app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads'), staticUploadOptions));
+}
 
 // Health Check
 app.get('/health', (_req, res) => {

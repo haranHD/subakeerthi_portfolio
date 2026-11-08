@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { MediaAsset } from '../types/admin';
-import { Upload, Trash2, Copy, Check, Loader2 } from 'lucide-react';
+import { Upload, Trash2, Copy, Check, Loader2, Image as ImageIcon } from 'lucide-react';
+import { getMediaUrl } from '../utils/media';
 
 export const MediaPage: React.FC = () => {
   const [media, setMedia] = useState<MediaAsset[]>([]);
@@ -139,9 +140,17 @@ export const MediaPage: React.FC = () => {
               >
                 {item.mimeType.startsWith('image/') ? (
                   <img
-                    src={item.storageUrl}
+                    src={getMediaUrl(item.storageUrl)}
                     alt={item.originalName}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      // Fallback gracefully to direct relative URL or placeholder
+                      const img = e.currentTarget;
+                      if (!img.dataset.retried) {
+                        img.dataset.retried = 'true';
+                        img.src = item.storageUrl;
+                      }
+                    }}
                   />
                 ) : (
                   <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.8rem', color: '#666' }}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Profile } from '../types/admin';
 import { Save, CheckCircle, Loader2 } from 'lucide-react';
+import { getMediaUrl } from '../utils/media';
 
 export const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -149,8 +150,25 @@ export const ProfilePage: React.FC = () => {
                 name="portraitUrl"
                 value={profile?.portraitUrl || ''}
                 onChange={handleChange}
+                placeholder="/uploads/your-image.jpg or https://..."
                 className="form-input"
               />
+              {profile?.portraitUrl && (
+                <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem', background: '#f8faf9', borderRadius: 6, border: '1px solid #e2ece7' }}>
+                  <img
+                    src={getMediaUrl(profile.portraitUrl)}
+                    alt="Current Portrait Preview"
+                    style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 4, border: '1px solid #c9dcd4' }}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                  <div style={{ fontSize: '0.75rem', color: '#555' }}>
+                    <div style={{ fontWeight: 600, color: '#145A43' }}>Active Portrait Preview</div>
+                    <div>Source: {profile.portraitUrl}</div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
