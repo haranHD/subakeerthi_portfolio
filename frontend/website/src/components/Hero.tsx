@@ -185,7 +185,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
               </div>
             </div>
 
-            {/* Subtle Floating Interactive Tag */}
+            {/* Floating Editorial Tag */}
             <motion.div
               className="floating-editorial-tag"
               animate={{ y: [0, -6, 0] }}
@@ -194,48 +194,6 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
               <Languages size={15} className="floating-tag-icon" />
               <span>Bilingual Delivery (Tamil & English)</span>
             </motion.div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Interactive Key Impact Bar */}
-      <div className="container hero-metrics-container">
-        <motion.div
-          className="hero-metrics-bar"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.5 }}
-        >
-          <div className="metric-item">
-            <span className="metric-badge">100%</span>
-            <div className="metric-text">
-              <strong>Statutory Frameworks</strong>
-              <span>POSH Act 2013 & POCSO Act 2012 Compliance</span>
-            </div>
-          </div>
-          <div className="metric-divider" />
-          <div className="metric-item">
-            <span className="metric-badge">Bilingual</span>
-            <div className="metric-text">
-              <strong>Tamil & English Delivery</strong>
-              <span>Tailored for corporate, academic & community groups</span>
-            </div>
-          </div>
-          <div className="metric-divider" />
-          <div className="metric-item">
-            <span className="metric-badge">3-in-1</span>
-            <div className="metric-text">
-              <strong>Interdisciplinary Synergy</strong>
-              <span>Legal Scholarship + Child Psychology + Analytical Science</span>
-            </div>
-          </div>
-          <div className="metric-divider" />
-          <div className="metric-item">
-            <span className="metric-badge">Prevention</span>
-            <div className="metric-text">
-              <strong>Proactive Institutional Culture</strong>
-              <span>Empathy, non-retaliation & responsible reporting</span>
-            </div>
           </div>
         </motion.div>
       </div>

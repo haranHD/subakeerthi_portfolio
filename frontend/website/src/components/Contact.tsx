@@ -123,7 +123,7 @@ export const Contact: React.FC = () => {
       const serverMessage = err.response?.data?.message || err.message;
       setSubmitError(
         serverMessage ||
-          'Unable to deliver your enquiry at this moment. Please call or email Subakeerthii MP directly.'
+        'Unable to deliver your enquiry at this moment. Please call or email Subakeerthii MP directly.'
       );
     } finally {
       setIsSubmitting(false);
