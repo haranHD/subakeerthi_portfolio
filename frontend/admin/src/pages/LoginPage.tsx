@@ -30,7 +30,7 @@ export const LoginPage: React.FC = () => {
     <div className="login-screen">
       <div className="login-card">
         <div className="login-header">
-          <div className="login-monogram">SMP</div>
+          <div className="login-monogram">SK</div>
           <h1 className="login-title">Subakeerthii MP</h1>
           <p className="login-subtitle">Portfolio Administration Portal</p>
         </div>

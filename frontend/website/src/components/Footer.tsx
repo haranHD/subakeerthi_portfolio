@@ -24,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
           {/* Col 1: Identity & Bio */}
           <div className="footer-col footer-col--identity">
             <div className="footer-brand">
-              <div className="footer-monogram" aria-hidden="true">SMP</div>
+              <div className="footer-monogram" aria-hidden="true">SK</div>
               <div className="footer-brand-text">
                 <span className="footer-name">SUBAKEERTHII MP</span>
                 <span className="footer-tagline">LEGAL AWARENESS · POSH & POCSO TRAINING · CHILD SAFETY</span>

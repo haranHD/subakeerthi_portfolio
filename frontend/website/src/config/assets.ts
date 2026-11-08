@@ -30,7 +30,7 @@ export const ASSETS = {
   // Favicon / Icon
   favicon: {
     src: '/favicon.svg',
-    alt: 'SMP Monogram Crest',
+    alt: 'SK Monogram Crest',
     category: 'editorial' as const,
   },
 };

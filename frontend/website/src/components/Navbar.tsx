@@ -22,7 +22,7 @@ export const Navbar: React.FC = () => {
         {/* Brand / Logo */}
         <a href="#home" className="header-brand" onClick={closeMenu} aria-label="Subakeerthii MP Home">
           <div className="brand-monogram" aria-hidden="true">
-            <span>SMP</span>
+            <span>SK</span>
           </div>
           <div className="brand-text">
             <span className="brand-name">SUBAKEERTHII MP</span>

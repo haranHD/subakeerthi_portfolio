@@ -32,15 +32,16 @@
 }
 
 .faq-pill {
-  background: var(--color-pure-white);
-  border: 1px solid var(--color-warm-beige-border);
-  color: var(--color-charcoal-muted);
+  background: #FFFFFF;
+  border: 1px solid rgba(20, 90, 67, 0.22);
+  color: var(--color-burgundy);
   font-size: 0.82rem;
   font-weight: 600;
   padding: 0.45rem 1rem;
   border-radius: var(--radius-pill);
   cursor: pointer;
   transition: all var(--transition-fast);
+  box-shadow: 0 2px 6px rgba(20, 90, 67, 0.05);
 }
 
 .faq-pill:hover {
@@ -53,7 +54,7 @@
   background: var(--color-burgundy) !important;
   color: var(--color-warm-white) !important;
   border-color: var(--color-burgundy) !important;
-  box-shadow: 0 2px 8px rgba(20, 90, 67, 0.2);
+  box-shadow: 0 4px 12px rgba(20, 90, 67, 0.25);
 }
 
 .faq-search-wrapper {
@@ -91,21 +92,26 @@
 }
 
 .faq-item {
-  background: var(--color-pure-white);
-  border: 1px solid var(--color-warm-beige-border);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F9F7 100%);
+  border: 1px solid rgba(20, 90, 67, 0.16);
+  border-left: 4px solid rgba(47, 143, 111, 0.35);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: 0 3px 10px rgba(20, 90, 67, 0.04);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), border-left var(--transition-base);
 }
 
 .faq-item:hover {
   border-color: var(--color-rose-border);
-  box-shadow: var(--shadow-sm);
+  border-left-color: var(--color-rose);
+  box-shadow: 0 6px 16px rgba(20, 90, 67, 0.08);
 }
 
 .faq-item--open {
-  border-color: var(--color-burgundy);
-  box-shadow: 0 6px 20px rgba(20, 90, 67, 0.08);
+  background: linear-gradient(180deg, #FFFFFF 0%, #EEF6F3 100%);
+  border-color: rgba(20, 90, 67, 0.3);
+  border-left: 5px solid var(--color-burgundy);
+  box-shadow: 0 8px 24px rgba(20, 90, 67, 0.12);
 }
 
 .faq-question-btn {
@@ -132,9 +138,14 @@
 
 .faq-q-number {
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--color-rose);
+  color: var(--color-burgundy);
+  background: #EBF5F1;
+  border: 1px solid rgba(20, 90, 67, 0.18);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
   flex-shrink: 0;
 }
 

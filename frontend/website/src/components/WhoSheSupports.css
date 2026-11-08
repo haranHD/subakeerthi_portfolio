@@ -22,12 +22,14 @@
 }
 
 .audience-card {
-  background-color: var(--color-warm-beige-subtle);
-  border: 1px solid var(--color-warm-beige-border);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F9F7 100%);
+  border: 1px solid rgba(20, 90, 67, 0.16);
+  border-top: 4px solid var(--color-rose);
   border-radius: var(--radius-md);
   padding: 2.25rem 1.6rem;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 18px rgba(20, 90, 67, 0.06);
   opacity: 0;
   transform: translateY(22px);
   transition:
@@ -43,56 +45,70 @@
 }
 
 .audience-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--color-rose-border);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(20, 90, 67, 0.14);
+  border-color: var(--color-rose);
 }
 
 .audience-card--visible:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
 .audience-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed rgba(20, 90, 67, 0.16);
 }
 
 .audience-index {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--color-rose);
-  letter-spacing: 0.05em;
+  color: var(--color-burgundy);
+  background: #EBF5F1;
+  border: 1px solid rgba(20, 90, 67, 0.18);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.08em;
 }
 
 .audience-icon-box {
-  width: 44px;
-  height: 44px;
-  background-color: var(--color-warm-white);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-rose-border);
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #145A43 0%, #2F8F6F 100%);
+  border-radius: var(--radius-md);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(20, 90, 67, 0.24);
+  transition: transform var(--transition-fast);
+}
+
+.audience-card:hover .audience-icon-box {
+  transform: scale(1.06);
 }
 
 .audience-icon {
-  color: var(--color-burgundy);
+  color: #FFFDFC;
 }
 
 .audience-badge-wrap {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
 .audience-badge {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-burgundy);
-  background-color: var(--color-rose-light);
-  padding: 0.25rem 0.6rem;
+  background-color: #EBF5F1;
+  border: 1px solid rgba(47, 143, 111, 0.25);
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-pill);
 }
 
@@ -101,7 +117,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-burgundy);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   line-height: 1.35;
 }
 
@@ -109,20 +125,34 @@
   font-size: 0.88rem;
   line-height: 1.65;
   color: var(--color-charcoal-muted);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   flex-grow: 1;
 }
 
-.audience-action {
-  margin-top: auto;
+.audience-card-footer {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(20, 90, 67, 0.1);
 }
 
-.audience-cta-btn {
-  font-size: 0.82rem;
-  padding: 0.65rem 0.85rem;
-  border-radius: var(--radius-sm);
+.audience-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-burgundy);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  transition: gap var(--transition-fast), color var(--transition-fast);
 }
 
+.audience-action-btn:hover {
+  gap: 0.75rem;
+  color: var(--color-burgundy-dark);
+}
 
 /* ============================================================
    Mobile Responsiveness Overrides (< 480px)
@@ -130,8 +160,5 @@
 @media (max-width: 479px) {
   .audience-card {
     padding: 1.5rem 1.25rem;
-  }
-  .audience-title {
-    font-size: 1.1rem;
   }
 }

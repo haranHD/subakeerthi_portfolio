@@ -42,7 +42,7 @@ export const AdminLayout: React.FC = () => {
       {/* Sidebar */}
       <aside className="admin-sidebar">
         <div className="sidebar-brand">
-          <div className="brand-badge">SMP</div>
+          <div className="brand-badge">SK</div>
           <div className="brand-title">
             <h2>Subakeerthii MP</h2>
             <span>Admin Control Panel</span>
