@@ -166,7 +166,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
                     }
                   }}
                 />
-                
+
                 {/* Subtle depth lighting overlay */}
                 <div className="portrait-depth-gradient" aria-hidden="true" />
 
