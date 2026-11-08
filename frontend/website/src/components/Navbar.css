@@ -13,9 +13,10 @@
 }
 
 .site-header--scrolled {
-  box-shadow: 0 4px 20px rgba(48, 36, 42, 0.07);
-  background-color: rgba(255, 253, 252, 0.97);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(20, 90, 67, 0.08);
+  background-color: rgba(255, 253, 252, 0.98);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(215, 199, 161, 0.8);
 }
 
 /* ── Layout ───────────────────────────────────────────────── */
@@ -23,9 +24,9 @@
   display: flex;
   align-items: center;
   gap: 0;
-  min-height: 4rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  min-height: 3.75rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
 }
 
 /* Hidden spacer only shown on desktop to separate nav from actions */

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Shield, Sparkles, Heart, FileCheck2, Award, CheckCircle2 } from 'lucide-react';
+import { Shield, Sparkles, Heart } from 'lucide-react';
 import { Profile } from '../types';
-import { ASSETS } from '../config/assets';
 import './About.css';
 
 interface AboutProps {
@@ -65,7 +64,7 @@ export const About: React.FC<AboutProps> = () => {
         <div className="about-grid">
           {/* Left Column: Editorial Content */}
           <div className={`about-content about-animate ${visible ? 'about-animate--in' : ''}`}>
-            <div className="eyebrow">Professional Background & Vision</div>
+            <div className="eyebrow">PROFESSIONAL BACKGROUND & VISION</div>
             <h2 className="section-title">
               Law, Psychology & Prevention — Working Together.
             </h2>
@@ -127,43 +126,6 @@ export const About: React.FC<AboutProps> = () => {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Refined Credentials Strip Beneath Section */}
-        <div className={`about-credentials-strip about-animate ${visible ? 'about-animate--in' : ''}`} style={{ transitionDelay: '350ms' }}>
-          <div className="credentials-strip-inner">
-            <div className="strip-item">
-              <div className="strip-icon-box"><Award size={20} /></div>
-              <div className="strip-text">
-                <strong>Legal Scholarship</strong>
-                <span>LL.B. Candidate · Constitutional & Child Protection Law</span>
-              </div>
-            </div>
-            <div className="strip-divider" aria-hidden="true" />
-            <div className="strip-item">
-              <div className="strip-icon-box"><Shield size={20} /></div>
-              <div className="strip-text">
-                <strong>Certified POSH Trainer</strong>
-                <span>Workplace Harassment Prevention & IC Familiarisation</span>
-              </div>
-            </div>
-            <div className="strip-divider" aria-hidden="true" />
-            <div className="strip-item">
-              <div className="strip-icon-box"><FileCheck2 size={20} /></div>
-              <div className="strip-text">
-                <strong>Certified POCSO Trainer</strong>
-                <span>Statutory Child Protection & Institutional SOPs</span>
-              </div>
-            </div>
-            <div className="strip-divider" aria-hidden="true" />
-            <div className="strip-item">
-              <div className="strip-icon-box"><Heart size={20} /></div>
-              <div className="strip-text">
-                <strong>Child Psychology</strong>
-                <span>Developmental Communication & Non-Clinical Guidance</span>
               </div>
             </div>
           </div>
