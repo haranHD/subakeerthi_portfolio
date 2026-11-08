@@ -112,7 +112,13 @@ textarea:focus-visible {
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding: 0 1.5rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -123,8 +129,14 @@ textarea:focus-visible {
 
 /* Section Common */
 .section {
-  padding: 5.5rem 0;
+  padding: 3.5rem 0;
   position: relative;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 5rem 0;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -169,7 +181,7 @@ textarea:focus-visible {
 
 .section-title {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
   font-weight: 600;
   color: var(--color-burgundy);
   line-height: 1.25;

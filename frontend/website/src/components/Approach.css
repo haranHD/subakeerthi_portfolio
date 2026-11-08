@@ -96,3 +96,15 @@
   color: var(--color-charcoal-muted);
 }
 
+
+/* ============================================================
+   Mobile Responsiveness Overrides (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+  .approach-card {
+    padding: 1.75rem 1.25rem;
+  }
+  .approach-title {
+    font-size: 1.2rem;
+  }
+}

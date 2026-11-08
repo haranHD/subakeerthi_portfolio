@@ -309,3 +309,33 @@
   background: var(--color-rose-light);
   color: var(--color-burgundy-dark);
 }
+
+/* ============================================================
+   Mobile Responsiveness Overrides (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+  .faq-filter-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding-bottom: 0.25rem;
+  }
+  .faq-filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+  .faq-pill {
+    flex-shrink: 0;
+  }
+  .faq-search-wrapper {
+    max-width: 100%;
+  }
+  .faq-question-btn {
+    font-size: 0.95rem;
+    padding: 1rem 1.15rem;
+  }
+  .faq-support-banner {
+    padding: 1.5rem 1.25rem;
+  }
+}

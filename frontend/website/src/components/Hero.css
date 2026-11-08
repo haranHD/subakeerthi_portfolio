@@ -2,9 +2,15 @@
 .hero-section {
   background-color: var(--color-warm-beige-light);
   border-bottom: 1px solid var(--color-warm-beige-border);
-  padding: 3.5rem 0 3.5rem 0;
+  padding: 2.5rem 0 2.5rem 0;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .hero-section {
+    padding: 3.5rem 0 3.5rem 0;
+  }
 }
 
 @media (min-width: 768px) {
@@ -105,6 +111,18 @@
   align-items: center;
 }
 
+@media (max-width: 479px) {
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-btn-main,
+  .hero-btn-sub {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 .hero-btn-main {
   padding: 0.9rem 1.85rem;
   font-size: 0.96rem;
@@ -171,7 +189,19 @@
 .portrait-frame-wrapper {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 340px;
+}
+
+@media (min-width: 480px) {
+  .portrait-frame-wrapper {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 640px) {
+  .portrait-frame-wrapper {
+    max-width: 440px;
+  }
 }
 
 .portrait-backdrop-accent {
@@ -324,15 +354,95 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* On very small screens, collapse tag inside the frame so it doesn't overflow */
+@media (max-width: 479px) {
+  .floating-editorial-tag {
+    position: static;
+    margin-top: 0.75rem;
+    align-self: center;
+    font-size: 0.72rem;
+    padding: 0.4rem 0.85rem;
+  }
+  .portrait-frame-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .floating-tag-icon {
   color: var(--color-rose-light);
 }
 
 /* Hero Key Impact Bar */
 .hero-metrics-container {
-  margin-top: 3.5rem;
+  margin-top: 3rem;
   position: relative;
   z-index: 2;
+}
+
+/* ── Mobile: horizontal scrolling strip (< 640px) ── */
+@media (max-width: 639px) {
+  .hero-metrics-container {
+    margin-top: 2rem;
+    /* allow strip to bleed edge-to-edge under the section padding */
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+
+  .hero-metrics-bar {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0;
+    padding: 1rem 1.25rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    background: var(--color-pure-white);
+    border-top: 1px solid var(--color-warm-beige-border);
+    border-bottom: 1px solid var(--color-warm-beige-border);
+    box-shadow: 0 4px 16px rgba(48, 36, 42, 0.05);
+  }
+
+  .hero-metrics-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .metric-item {
+    min-width: 160px;
+    flex-shrink: 0;
+    padding: 0.5rem 1.25rem 0.5rem 0;
+  }
+
+  .metric-divider {
+    display: flex !important;
+    width: 1px;
+    min-height: 48px;
+    align-self: center;
+    background: var(--color-warm-beige-border);
+    flex-shrink: 0;
+    margin: 0 0.25rem;
+  }
+
+  .metric-badge {
+    font-size: 0.95rem;
+    padding: 0.35rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .metric-text strong {
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .metric-text span {
+    font-size: 0.72rem;
+    white-space: normal;
+    max-width: 110px;
+  }
 }
 
 .hero-metrics-bar {

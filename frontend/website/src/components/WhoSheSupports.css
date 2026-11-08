@@ -111,3 +111,15 @@
   border-radius: var(--radius-sm);
 }
 
+
+/* ============================================================
+   Mobile Responsiveness Overrides (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+  .audience-card {
+    padding: 1.5rem 1.25rem;
+  }
+  .audience-title {
+    font-size: 1.1rem;
+  }
+}

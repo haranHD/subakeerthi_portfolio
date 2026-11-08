@@ -248,3 +248,34 @@
   border-color: var(--color-rose);
 }
 
+
+/* ============================================================
+   Mobile Responsiveness Overrides (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+  .site-footer {
+    padding: 3rem 0 2rem 0;
+  }
+
+  .footer-grid {
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-name {
+    font-size: 1rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
+  .footer-contact-link {
+    font-size: 0.82rem;
+    word-break: break-all;
+  }
+}

@@ -332,3 +332,16 @@
   margin-bottom: 1.25rem;
 }
 
+
+/* ============================================================
+   Mobile Responsiveness Overrides (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+  .timeline-item {
+    gap: 1rem;
+  }
+
+  .col-title {
+    font-size: 1.2rem;
+  }
+}
