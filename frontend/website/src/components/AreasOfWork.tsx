@@ -1,15 +1,17 @@
-import React from 'react';
-import { 
-  Building2, 
-  ShieldCheck, 
-  HeartHandshake, 
-  Scale, 
-  Users2, 
-  HeartPulse, 
+import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import {
+  Building2,
+  ShieldCheck,
+  HeartHandshake,
+  Scale,
+  Users2,
+  HeartPulse,
   ArrowRight,
   LucideIcon
 } from 'lucide-react';
 import { Service } from '../types';
+import { triggerEnquiry } from '../utils/enquiryEvents';
 import './AreasOfWork.css';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -26,6 +28,28 @@ interface AreasOfWorkProps {
 }
 
 export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = (entry.target as HTMLElement).dataset.id;
+            if (id) setVisibleCards((prev) => new Set([...prev, id]));
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const cards = containerRef.current?.querySelectorAll('.area-card');
+    cards?.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, [services]);
+
   return (
     <section id="areas" className="section section--beige areas-section">
       <div className="container">
@@ -37,11 +61,17 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
           </p>
         </div>
 
-        <div className="areas-grid">
-          {services.map((area) => {
+        <div className="areas-grid" ref={containerRef}>
+          {services.map((area, index) => {
             const Icon = iconMap[area.icon] || ShieldCheck;
+            const isVisible = visibleCards.has(area.id);
             return (
-              <div key={area.id} className="area-card">
+              <div
+                key={area.id}
+                data-id={area.id}
+                className={`area-card ${isVisible ? 'area-card--visible' : ''}`}
+                style={{ transitionDelay: `${(index % 3) * 70}ms` }}
+              >
                 <div className="area-card-header">
                   <div className="area-icon-container">
                     <Icon size={24} className="area-icon" />
@@ -50,7 +80,7 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
                 </div>
 
                 <h3 className="area-card-title">{area.title}</h3>
-                
+
                 <p className="area-card-description">
                   {area.description}
                 </p>
@@ -60,10 +90,25 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
                 </div>
 
                 <div className="area-card-footer">
-                  <a href="#contact" className="area-link">
+                  <button
+                    type="button"
+                    className="area-link"
+                    onClick={() =>
+                      triggerEnquiry({
+                        category:
+                          area.category === 'Workplace Compliance'
+                            ? 'Workplace / Corporate Organisation'
+                            : area.category === 'Child Safeguarding'
+                              ? 'School / Educational Institution'
+                              : 'Other Collaboration',
+                        areaOfInterest: area.title,
+                        requirements: `I am interested in a session on "${area.title}" for our institution.`,
+                      })
+                    }
+                  >
                     <span>Enquire for session</span>
                     <ArrowRight size={15} />
-                  </a>
+                  </button>
                 </div>
               </div>
             );

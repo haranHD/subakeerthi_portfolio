@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Send, AlertCircle, CheckCircle2, ShieldAlert, Loader2 } from 'lucide-react';
 import { api } from '../services/api';
+import { EnquiryPrefill } from '../utils/enquiryEvents';
 import './Contact.css';
 
 interface FormState {
@@ -28,6 +29,26 @@ export const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // Listen for enquiry prefill events from service pills / cards
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const prefill = (event as CustomEvent<EnquiryPrefill>).detail;
+      setFormData((prev) => ({
+        ...prev,
+        ...(prefill.category ? { category: prefill.category } : {}),
+        ...(prefill.areaOfInterest ? { areaOfInterest: prefill.areaOfInterest } : {}),
+        ...(prefill.requirements ? { requirements: prefill.requirements } : {}),
+      }));
+      setSubmitSuccess(null);
+      setSubmitError(null);
+    };
+    window.addEventListener('subakeerthii:prefill-enquiry', handler);
+    return () => window.removeEventListener('subakeerthii:prefill-enquiry', handler);
+  }, []);
+
+  // Track whether form has been prefilled from external click
+  const hasPrefill = !!(formData.category || formData.areaOfInterest);
 
   const validate = () => {
     const errs: Partial<Record<keyof FormState, string>> = {};
@@ -170,11 +191,19 @@ export const Contact: React.FC = () => {
 
           {/* Right Column: Enquiry Form */}
           <div className="contact-form-side">
-            <div className="form-card">
+            <div className={`form-card ${hasPrefill ? 'form-card--prefilled' : ''}`}>
               <div className="form-header">
                 <h3>Discuss a Training Session</h3>
                 <p>Provide preliminary details regarding your institution or event to tailor the session format.</p>
               </div>
+
+              {/* Prefill notice banner */}
+              {hasPrefill && !submitSuccess && (
+                <div className="form-prefill-banner">
+                  <CheckCircle2 size={15} />
+                  <span>Form pre-filled based on your selection — review and submit below.</span>
+                </div>
+              )}
 
               {submitSuccess && (
                 <div className="demo-notice-alert" style={{ borderColor: 'var(--color-burgundy)', backgroundColor: 'var(--color-rose-light)' }}>

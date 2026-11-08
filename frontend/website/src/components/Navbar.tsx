@@ -39,6 +39,7 @@ export const Navbar: React.FC = () => {
             <li><a href="#training" className="nav-link">Programmes</a></li>
             <li><a href="#approach" className="nav-link">Approach</a></li>
             <li><a href="#background" className="nav-link">Credentials</a></li>
+            <li><a href="#faq" className="nav-link">FAQ</a></li>
             <li><a href="#contact" className="nav-link">Contact</a></li>
           </ul>
         </nav>
@@ -92,7 +93,8 @@ export const Navbar: React.FC = () => {
             <li><a href="#training" className="mobile-nav-link" onClick={closeMenu}><span>Training Programmes</span><span className="nav-index">05</span></a></li>
             <li><a href="#approach" className="mobile-nav-link" onClick={closeMenu}><span>Professional Approach</span><span className="nav-index">06</span></a></li>
             <li><a href="#background" className="mobile-nav-link" onClick={closeMenu}><span>Credentials & Education</span><span className="nav-index">07</span></a></li>
-            <li><a href="#contact" className="mobile-nav-link" onClick={closeMenu}><span>Contact & Enquiries</span><span className="nav-index">08</span></a></li>
+            <li><a href="#faq" className="mobile-nav-link" onClick={closeMenu}><span>FAQ</span><span className="nav-index">08</span></a></li>
+            <li><a href="#contact" className="mobile-nav-link" onClick={closeMenu}><span>Contact & Enquiries</span><span className="nav-index">09</span></a></li>
           </ul>
 
           <div className="mobile-drawer-footer">

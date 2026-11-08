@@ -8,6 +8,7 @@ import { WhoSheSupports } from './components/WhoSheSupports';
 import { TrainingProgrammes } from './components/TrainingProgrammes';
 import { Approach } from './components/Approach';
 import { Background } from './components/Background';
+import { FAQ } from './components/FAQ';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { api } from './services/api';
@@ -323,6 +324,7 @@ export const App: React.FC = () => {
         <TrainingProgrammes programmes={programmes} />
         <Approach />
         <Background credentials={credentials} />
+        <FAQ />
         <Contact />
       </main>
       <Footer profile={profile} />

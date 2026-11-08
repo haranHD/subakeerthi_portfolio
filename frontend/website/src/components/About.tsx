@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Shield, Sparkles, Heart, FileCheck2 } from 'lucide-react';
 import { Profile } from '../types';
 import './About.css';
@@ -8,17 +8,54 @@ interface AboutProps {
 }
 
 export const About: React.FC<AboutProps> = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(el); } },
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const principles = [
+    {
+      icon: Shield,
+      title: 'Practical Awareness',
+      desc: 'Demystifying legal safeguards into clear, actionable understanding for non-legal audiences.',
+    },
+    {
+      icon: Sparkles,
+      title: 'Prevention First',
+      desc: 'Fostering institutional empathy and compliance before grievances or safety breaches occur.',
+    },
+    {
+      icon: Heart,
+      title: 'Child Protection',
+      desc: 'Safeguarding child welfare through age-appropriate education and trauma-informed sensitivity.',
+    },
+    {
+      icon: FileCheck2,
+      title: 'Responsible Reporting',
+      desc: 'Educating communities on ethical disclosure and legally prescribed reporting pathways.',
+    },
+  ];
+
   return (
-    <section id="about" className="section section--white about-section">
+    <section id="about" className="section section--white about-section" ref={sectionRef}>
       <div className="container">
         <div className="about-grid">
           {/* Left Column: Editorial Content */}
-          <div className="about-content">
+          <div className={`about-content about-animate ${visible ? 'about-animate--in' : ''}`}>
             <div className="eyebrow">Professional Background & Vision</div>
             <h2 className="section-title">
               A Purpose Rooted in Awareness and Protection
             </h2>
-            
+
             <p className="about-lead">
               Combining a foundational education in science with ongoing legal scholarship and specialised training, Subakeerthii MP works to create safer environments for educational institutions, workplaces, and families.
             </p>
@@ -33,50 +70,29 @@ export const About: React.FC<AboutProps> = () => {
 
             {/* Core Values Matrix */}
             <div className="about-principles-grid">
-              <div className="principle-card">
-                <div className="principle-icon-wrapper">
-                  <Shield size={20} className="principle-icon" />
-                </div>
-                <div>
-                  <h4 className="principle-title">Practical Awareness</h4>
-                  <p className="principle-desc">Demystifying legal safeguards into clear, actionable understanding for non-legal audiences.</p>
-                </div>
-              </div>
-
-              <div className="principle-card">
-                <div className="principle-icon-wrapper">
-                  <Sparkles size={20} className="principle-icon" />
-                </div>
-                <div>
-                  <h4 className="principle-title">Prevention First</h4>
-                  <p className="principle-desc">Fostering institutional empathy and compliance before grievances or safety breaches occur.</p>
-                </div>
-              </div>
-
-              <div className="principle-card">
-                <div className="principle-icon-wrapper">
-                  <Heart size={20} className="principle-icon" />
-                </div>
-                <div>
-                  <h4 className="principle-title">Child Protection</h4>
-                  <p className="principle-desc">Safeguarding child welfare through age-appropriate education and trauma-informed sensitivity.</p>
-                </div>
-              </div>
-
-              <div className="principle-card">
-                <div className="principle-icon-wrapper">
-                  <FileCheck2 size={20} className="principle-icon" />
-                </div>
-                <div>
-                  <h4 className="principle-title">Responsible Reporting</h4>
-                  <p className="principle-desc">Educating communities on ethical disclosure and legally prescribed reporting pathways.</p>
-                </div>
-              </div>
+              {principles.map((p, i) => {
+                const Icon = p.icon;
+                return (
+                  <div
+                    key={p.title}
+                    className={`principle-card principle-card--animated ${visible ? 'principle-card--visible' : ''}`}
+                    style={{ transitionDelay: `${200 + i * 80}ms` }}
+                  >
+                    <div className="principle-icon-wrapper">
+                      <Icon size={20} className="principle-icon" />
+                    </div>
+                    <div>
+                      <h4 className="principle-title">{p.title}</h4>
+                      <p className="principle-desc">{p.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
           {/* Right Column: Key Pillars Panel */}
-          <div className="about-panel-container">
+          <div className={`about-panel-container about-animate about-animate--delay ${visible ? 'about-animate--in' : ''}`}>
             <div className="editorial-panel">
               <div className="panel-header">
                 <span className="panel-badge">Interdisciplinary Foundations</span>
@@ -84,61 +100,42 @@ export const About: React.FC<AboutProps> = () => {
               </div>
 
               <div className="pillars-list">
-                <div className="pillar-item">
-                  <div className="pillar-num">01</div>
-                  <div className="pillar-body">
-                    <h4>Legal Scholarship (LL.B.)</h4>
-                    <p>Rigorous study of Indian jurisprudence, statutory child-protection frameworks, and workplace anti-harassment mandates.</p>
+                {[
+                  {
+                    num: '01',
+                    title: 'Legal Scholarship (LL.B.)',
+                    text: 'Rigorous study of Indian jurisprudence, statutory child-protection frameworks, and workplace anti-harassment mandates.',
+                  },
+                  {
+                    num: '02',
+                    title: 'Scientific & Analytical Foundation',
+                    text: 'Bachelor of Science in Biotechnology, instilling structured enquiry, systematic methodology, and evidence-guided communication.',
+                  },
+                  {
+                    num: '03',
+                    title: 'Child Psychology Expertise',
+                    text: 'Diploma in Child Psychology providing developmental insights, trauma-informed communication, and age-calibrated guidance techniques.',
+                  },
+                  {
+                    num: '04',
+                    title: 'Certified Training Accreditations',
+                    text: 'Certified by established bodies in both POSH (workplace harassment) and POCSO (child protection) training, ensuring institutional-grade programme delivery.',
+                  },
+                ].map((pillar, i) => (
+                  <div
+                    key={pillar.num}
+                    className={`pillar-item pillar-item--animated ${visible ? 'pillar-item--visible' : ''}`}
+                    style={{ transitionDelay: `${250 + i * 90}ms` }}
+                  >
+                    <div className="pillar-num">{pillar.num}</div>
+                    <div className="pillar-body">
+                      <h4>{pillar.title}</h4>
+                      <p>{pillar.text}</p>
+                    </div>
                   </div>
-                </div>
-
-                <div className="pillar-item">
-                  <div className="pillar-num">02</div>
-                  <div className="pillar-body">
-                    <h4>Scientific & Analytical Foundation</h4>
-                    <p>Bachelor of Science in Biotechnology, instilling structured enquiry, systematic methodology, and evidence-guided communication.</p>
-                  </div>
-                </div>
-
-                <div className="pillar-item">
-                  <div className="pillar-num">03</div>
-                  <div className="pillar-body">
-                    <h4>Child Psychology & Counselling</h4>
-                    <p>Formal diploma training in child psychology, enabling empathetic engagement with young minds, parents, and educators.</p>
-                  </div>
-                </div>
-
-                <div className="pillar-item">
-                  <div className="pillar-num">04</div>
-                  <div className="pillar-body">
-                    <h4>Certified Institutional Training</h4>
-                    <p>Certified trainer credentials in POSH (Harsha Counselling Academy) and POCSO (AK Law Associates).</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="panel-footer">
-                <a href="#training" className="btn btn--secondary btn--sm btn--full">
-                  Explore Training Programmes
-                </a>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Client Official Competency & Credentials Banner */}
-        <div className="client-banner-showcase">
-          <div className="client-banner-frame">
-            <img 
-              src="/client-banner.png" 
-              alt="Subakeerthii MP Core Competencies: Law, POCSO, POSH, Biotechnology, Child Psychology" 
-              className="client-banner-img"
-              loading="lazy"
-            />
-          </div>
-          <div className="client-banner-caption">
-            <span className="caption-badge">Core Competency Matrix</span>
-            <p>Law · POCSO Child Safeguarding · POSH Workplace Compliance · Biotechnology · Child Psychology</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { School, Heart, Sparkles, Briefcase, ArrowUpRight, LucideIcon } from 'lucide-react';
 import { AudienceGroup } from '../types';
+import { triggerEnquiry } from '../utils/enquiryEvents';
 import './WhoSheSupports.css';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -10,11 +11,38 @@ const iconMap: Record<string, LucideIcon> = {
   Briefcase,
 };
 
+const audienceCategoryMap: Record<string, string> = {
+  schools: 'School / Educational Institution',
+  parents: 'Parent or Caregiver Group',
+  children: 'School / Educational Institution',
+  workplaces: 'Workplace / Corporate Organisation',
+};
+
 interface WhoSheSupportsProps {
   audiences: AudienceGroup[];
 }
 
 export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = (entry.target as HTMLElement).dataset.id;
+            if (id) setVisibleCards((prev) => new Set([...prev, id]));
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
+    );
+    const cards = containerRef.current?.querySelectorAll('.audience-card');
+    cards?.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, [audiences]);
+
   return (
     <section id="audience" className="section section--white audience-section">
       <div className="container">
@@ -26,11 +54,18 @@ export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => 
           </p>
         </div>
 
-        <div className="audience-grid">
-          {audiences.map((aud) => {
+        <div className="audience-grid" ref={containerRef}>
+          {audiences.map((aud, index) => {
             const Icon = iconMap[aud.icon] || School;
+            const isVisible = visibleCards.has(aud.id);
+            const category = audienceCategoryMap[aud.id] || 'Other Collaboration';
             return (
-              <div key={aud.id} className="audience-card">
+              <div
+                key={aud.id}
+                data-id={aud.id}
+                className={`audience-card ${isVisible ? 'audience-card--visible' : ''}`}
+                style={{ transitionDelay: `${(index % 4) * 80}ms` }}
+              >
                 <div className="audience-card-top">
                   <div className="audience-icon-box">
                     <Icon size={26} className="audience-icon" />
@@ -45,10 +80,20 @@ export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => 
                 </p>
 
                 <div className="audience-action">
-                  <a href="#contact" className="btn btn--rose btn--sm btn--full audience-cta-btn">
+                  <button
+                    type="button"
+                    className="btn btn--rose btn--sm btn--full audience-cta-btn"
+                    onClick={() =>
+                      triggerEnquiry({
+                        category,
+                        areaOfInterest: aud.actionText.replace('Enquire for ', ''),
+                        requirements: `Interested in: ${aud.title} — ${aud.actionText}`,
+                      })
+                    }
+                  >
                     <span>{aud.actionText}</span>
                     <ArrowUpRight size={15} />
-                  </a>
+                  </button>
                 </div>
               </div>
             );

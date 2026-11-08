@@ -22,13 +22,27 @@
   padding: 2.5rem 2.25rem;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.approach-card--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .approach-card:hover {
-  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-rose-border);
+}
+
+.approach-card--visible:hover {
+  transform: translateY(-4px);
 }
 
 .approach-card-header {

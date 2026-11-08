@@ -9,7 +9,7 @@
   gap: 1.75rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .areas-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -21,6 +21,7 @@
   }
 }
 
+/* Scroll-reveal animation */
 .area-card {
   background-color: var(--color-warm-white);
   border: 1px solid var(--color-warm-beige-border);
@@ -28,15 +29,30 @@
   padding: 2.25rem 1.85rem;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
   position: relative;
   box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.area-card--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .area-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--color-rose-border);
+}
+
+.area-card--visible:hover {
+  transform: translateY(-4px);
 }
 
 .area-card-header {
@@ -116,6 +132,11 @@
   font-size: 0.86rem;
   font-weight: 600;
   color: var(--color-burgundy);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
   transition: gap var(--transition-fast), color var(--transition-fast);
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Compass, MessageSquare, ShieldAlert, Award } from 'lucide-react';
 import './Approach.css';
 
@@ -34,6 +34,26 @@ const principles = [
 ];
 
 export const Approach: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = (entry.target as HTMLElement).dataset.num;
+            if (id) setVisibleCards((prev) => new Set([...prev, id]));
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    const cards = containerRef.current?.querySelectorAll('.approach-card');
+    cards?.forEach((c) => observer.observe(c));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="approach" className="section section--white approach-section">
       <div className="container">
@@ -45,11 +65,17 @@ export const Approach: React.FC = () => {
           </p>
         </div>
 
-        <div className="approach-grid">
-          {principles.map((principle) => {
+        <div className="approach-grid" ref={containerRef}>
+          {principles.map((principle, index) => {
             const Icon = principle.icon;
+            const isVisible = visibleCards.has(principle.number);
             return (
-              <div key={principle.number} className="approach-card">
+              <div
+                key={principle.number}
+                data-num={principle.number}
+                className={`approach-card ${isVisible ? 'approach-card--visible' : ''}`}
+                style={{ transitionDelay: `${(index % 2) * 90}ms` }}
+              >
                 <div className="approach-card-header">
                   <span className="approach-number">{principle.number}</span>
                   <div className="approach-icon-circle">
