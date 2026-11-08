@@ -111,7 +111,7 @@ export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
                     <span className="marker-dot"></span>
                     {index < educationData.length - 1 && <span className="marker-line"></span>}
                   </div>
-                  
+
                   <div className="timeline-card">
                     <div className="timeline-top">
                       <span className="timeline-badge">{item.status}</span>
@@ -168,7 +168,7 @@ export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
                   </div>
 
                   <h4 className="cred-title">{cred.qualification}</h4>
-                  
+
                   <div className="cred-issuer">
                     <span className="issuer-label">Accredited by:</span>
                     <strong>{cred.issuingBody || cred.institution}</strong>
