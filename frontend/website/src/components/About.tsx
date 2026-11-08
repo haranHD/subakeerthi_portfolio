@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Shield, Sparkles, Heart, FileCheck2 } from 'lucide-react';
+import { Shield, Sparkles, Heart, FileCheck2, Award, CheckCircle2 } from 'lucide-react';
 import { Profile } from '../types';
+import { ASSETS } from '../config/assets';
 import './About.css';
 
 interface AboutProps {
@@ -26,22 +27,35 @@ export const About: React.FC<AboutProps> = () => {
     {
       icon: Shield,
       title: 'Practical Awareness',
-      desc: 'Demystifying legal safeguards into clear, actionable understanding for non-legal audiences.',
+      desc: 'Demystifying statutory safeguards into accessible, actionable understanding for non-legal audiences.',
     },
     {
       icon: Sparkles,
       title: 'Prevention First',
-      desc: 'Fostering institutional empathy and compliance before grievances or safety breaches occur.',
+      desc: 'Cultivating institutional empathy, clear boundaries, and compliant practices before grievances occur.',
     },
     {
       icon: Heart,
       title: 'Child Protection',
-      desc: 'Safeguarding child welfare through age-appropriate education and trauma-informed sensitivity.',
+      desc: 'Safeguarding child welfare through developmentally calibrated education and trauma-informed sensitivity.',
+    },
+  ];
+
+  const pillars = [
+    {
+      num: '01',
+      title: 'Statutory Precision',
+      desc: 'Rigorous application of the POSH Act 2013 and POCSO Act 2012, translating formal statutory mandates into compliant institutional procedures.',
     },
     {
-      icon: FileCheck2,
-      title: 'Responsible Reporting',
-      desc: 'Educating communities on ethical disclosure and legally prescribed reporting pathways.',
+      num: '02',
+      title: 'Empathetic Communication',
+      desc: 'Developmentally calibrated dialogues and child psychology insights that encourage shame-free, respectful, and non-retaliatory reporting.',
+    },
+    {
+      num: '03',
+      title: 'Institutional Prevention',
+      desc: 'Fostering proactive organisational resilience across workplaces, schools, and families to preempt safety breaches before they emerge.',
     },
   ];
 
@@ -53,7 +67,7 @@ export const About: React.FC<AboutProps> = () => {
           <div className={`about-content about-animate ${visible ? 'about-animate--in' : ''}`}>
             <div className="eyebrow">Professional Background & Vision</div>
             <h2 className="section-title">
-              A Purpose Rooted in Awareness and Protection
+              Law, Psychology & Prevention — Working Together.
             </h2>
 
             <p className="about-lead">
@@ -61,11 +75,11 @@ export const About: React.FC<AboutProps> = () => {
             </p>
 
             <p className="about-text">
-              Her professional orientation brings together legal awareness, child protection standards, and child-centred counselling insights. With active preparation as an LL.B. scholar and certified credentials in POSH and POCSO training, her approach prioritises proactive prevention over reactive dispute management.
+              Her professional orientation brings together statutory awareness, child protection standards, and child-centred counselling insights. With active preparation as an LL.B. scholar and certified credentials in POSH and POCSO training, her approach prioritises proactive prevention over reactive dispute management.
             </p>
 
             <p className="about-text">
-              Whether conducting sensitisation sessions for corporate teams, guiding school educators on statutory child protection obligations, or assisting parents in fostering open communication, her sessions are structured with empathy, factual clarity, and respect for every individual's dignity.
+              Whether conducting sensitisation sessions for corporate leadership, guiding school educators on statutory child protection obligations, or assisting parents in fostering open communication, her sessions are structured with empathy, factual clarity, and respect for every individual's dignity.
             </p>
 
             {/* Core Values Matrix */}
@@ -91,37 +105,16 @@ export const About: React.FC<AboutProps> = () => {
             </div>
           </div>
 
-          {/* Right Column: Key Pillars Panel */}
+          {/* Right Column: Three-Pillar Composition */}
           <div className={`about-panel-container about-animate about-animate--delay ${visible ? 'about-animate--in' : ''}`}>
             <div className="editorial-panel">
               <div className="panel-header">
-                <span className="panel-badge">Interdisciplinary Foundations</span>
-                <h3 className="panel-title">Multi-Disciplinary Synergy</h3>
+                <span className="panel-badge">Core Pillars</span>
+                <h3 className="panel-title">Institutional Pillars</h3>
               </div>
 
               <div className="pillars-list">
-                {[
-                  {
-                    num: '01',
-                    title: 'Legal Scholarship (LL.B.)',
-                    text: 'Rigorous study of Indian jurisprudence, statutory child-protection frameworks, and workplace anti-harassment mandates.',
-                  },
-                  {
-                    num: '02',
-                    title: 'Scientific & Analytical Foundation',
-                    text: 'Bachelor of Science in Biotechnology, instilling structured enquiry, systematic methodology, and evidence-guided communication.',
-                  },
-                  {
-                    num: '03',
-                    title: 'Child Psychology Expertise',
-                    text: 'Diploma in Child Psychology providing developmental insights, trauma-informed communication, and age-calibrated guidance techniques.',
-                  },
-                  {
-                    num: '04',
-                    title: 'Certified Training Accreditations',
-                    text: 'Certified by established bodies in both POSH (workplace harassment) and POCSO (child protection) training, ensuring institutional-grade programme delivery.',
-                  },
-                ].map((pillar, i) => (
+                {pillars.map((pillar, i) => (
                   <div
                     key={pillar.num}
                     className={`pillar-item pillar-item--animated ${visible ? 'pillar-item--visible' : ''}`}
@@ -130,10 +123,47 @@ export const About: React.FC<AboutProps> = () => {
                     <div className="pillar-num">{pillar.num}</div>
                     <div className="pillar-body">
                       <h4>{pillar.title}</h4>
-                      <p>{pillar.text}</p>
+                      <p>{pillar.desc}</p>
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Refined Credentials Strip Beneath Section */}
+        <div className={`about-credentials-strip about-animate ${visible ? 'about-animate--in' : ''}`} style={{ transitionDelay: '350ms' }}>
+          <div className="credentials-strip-inner">
+            <div className="strip-item">
+              <div className="strip-icon-box"><Award size={20} /></div>
+              <div className="strip-text">
+                <strong>Legal Scholarship</strong>
+                <span>LL.B. Candidate · Constitutional & Child Protection Law</span>
+              </div>
+            </div>
+            <div className="strip-divider" aria-hidden="true" />
+            <div className="strip-item">
+              <div className="strip-icon-box"><Shield size={20} /></div>
+              <div className="strip-text">
+                <strong>Certified POSH Trainer</strong>
+                <span>Workplace Harassment Prevention & IC Familiarisation</span>
+              </div>
+            </div>
+            <div className="strip-divider" aria-hidden="true" />
+            <div className="strip-item">
+              <div className="strip-icon-box"><FileCheck2 size={20} /></div>
+              <div className="strip-text">
+                <strong>Certified POCSO Trainer</strong>
+                <span>Statutory Child Protection & Institutional SOPs</span>
+              </div>
+            </div>
+            <div className="strip-divider" aria-hidden="true" />
+            <div className="strip-item">
+              <div className="strip-icon-box"><Heart size={20} /></div>
+              <div className="strip-text">
+                <strong>Child Psychology</strong>
+                <span>Developmental Communication & Non-Clinical Guidance</span>
               </div>
             </div>
           </div>

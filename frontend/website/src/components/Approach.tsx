@@ -6,30 +6,30 @@ const principles = [
   {
     number: '01',
     icon: Compass,
-    title: 'Practical Awareness',
-    headline: 'Actionable insight over theoretical jargon',
-    description: 'Legal frameworks often feel distant or intimidating. Subakeerthii translates complex statutory mandates into accessible, scenario-based understandings with real-world case examples, enabling audiences to grasp both their civic duties and practical safety boundaries.'
+    title: 'PREVENTIVE FIRST',
+    headline: 'Proactive culture over reactive management',
+    description: 'Building a culture of awareness, mutual respect, and safeguards before issues arise. Sessions focus on early boundary recognition, institutional transparency, and preventing harassment or distress before grievances emerge.'
   },
   {
     number: '02',
-    icon: MessageSquare,
-    title: 'Age-Appropriate Communication',
-    headline: 'Calibrated vocabulary tailored for every developmental phase',
-    description: 'Child-protection guidance must inspire confidence, not fear. Sessions for children use gentle, creative, and boundary-focused approaches, while modules for educators and parents emphasize vigilance, open communication, and protective responsibility.'
+    icon: ShieldAlert,
+    title: 'STATUTORY RIGOUR',
+    headline: 'Faithful and actionable legal interpretation',
+    description: 'Accurate and responsible interpretation of the POSH Act 2013 and POCSO Act 2012. Legal frameworks are demystified into clear Standard Operating Procedures (SOPs) and compliance checklists for institutional leadership.'
   },
   {
     number: '03',
     icon: Award,
-    title: 'Respect, Dignity & Confidentiality',
-    headline: 'A supportive, dignified, and trauma-informed space',
-    description: 'Fostering environments where difficult topics can be discussed candidly and with dignity. Sensitive communications are handled with high discretion and ethical care, balancing individual privacy with statutory duty mandates.'
+    title: 'EMPATHETIC DELIVERY',
+    headline: 'Dignified and shame-free dialogues',
+    description: 'Encouraging shame-free, respectful, and non-retaliatory communication. Sensitive topics around boundaries, child safety, and workplace conduct are approached with trauma-informed sensitivity, confidentiality, and deep human empathy.'
   },
   {
     number: '04',
-    icon: ShieldAlert,
-    title: 'Prevention & Responsible Reporting',
-    headline: 'Proactive safeguards alongside clear reporting pathways',
-    description: 'Prioritizing prevention by creating culture-first safeguards in workplaces and schools. When breaches occur, clear orientation is provided on prescribed reporting channels (such as IC mechanisms and Childline/POCSO reporting) without stigma or fear.'
+    icon: MessageSquare,
+    title: 'AUDIENCE-CENTRED',
+    headline: 'Bilingual accessibility tailored to context',
+    description: 'Accessible delivery in Tamil or professional English, calibrated to participant needs. From factory floor workers and non-teaching school staff to corporate C-suites and child groups, sessions resonate directly with their lived realities.'
   }
 ];
 

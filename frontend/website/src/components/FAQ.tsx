@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle, Sparkles, MessageCircle, ArrowRight } from 'lucide-react';
+import { ChevronDown, HelpCircle, Sparkles, MessageCircle, ArrowRight, ShieldAlert } from 'lucide-react';
 import { triggerEnquiry } from '../utils/enquiryEvents';
 import './FAQ.css';
 
 interface FAQItem {
   id: string;
-  category: 'posh' | 'pocso' | 'counselling' | 'general';
+  category: 'posh' | 'pocso' | 'counselling' | 'bilingual';
   question: string;
   answer: string;
   highlight?: string;
@@ -20,7 +20,7 @@ interface FAQItem {
 const faqsData: FAQItem[] = [
   {
     id: 'bilingual',
-    category: 'general',
+    category: 'bilingual',
     question: 'Are training sessions and workshops conducted in Tamil as well as English?',
     answer: 'Yes, absolutely. Sessions are fluently delivered in both Tamil and English (or a bilingual blend) depending on participant preferences. For factory floors, non-teaching school staff, and community groups, presentations and role-plays are conducted in accessible everyday Tamil. For corporate leadership and IC committees, sessions can be bilingual or English-led.',
     highlight: 'Bilingual Delivery in Tamil & English across Tamil Nadu and online.',
@@ -63,21 +63,21 @@ const faqsData: FAQItem[] = [
   },
   {
     id: 'customisation-size',
-    category: 'general',
+    category: 'bilingual',
     question: 'Can session duration and curriculum be tailored to our institutional schedule?',
     answer: 'Yes. All modules are customized to align with your organization’s schedule and audience profile. Formats range from focused 90-minute awareness talks and interactive half-day seminars to intensive full-day certification workshops. In-person delivery is available throughout Erode, Coimbatore, Salem, Tirupur, Chennai, and the broader Tamil Nadu region, as well as live virtual delivery pan-India.',
     highlight: 'Flexible formats from 90-minute modules to full-day workshops.',
   },
   {
     id: 'advocate-clarification',
-    category: 'general',
+    category: 'posh',
     question: 'Does Subakeerthii MP provide individual courtroom representation?',
     answer: 'Subakeerthii MP is a dedicated Legal Scholar currently pursuing her Bachelor of Laws (LL.B.) and is certified in POSH and POCSO training. In accordance with professional standards and statutory rules, she does not offer courtroom representation or practice as a licensed advocate. Her work focuses on preventive legal education, compliance awareness, training workshops, and child counselling guidance.',
     highlight: 'Dedicated to education, preventative compliance, and community awareness.',
   },
 ];
 
-type CategoryFilter = 'all' | 'posh' | 'pocso' | 'counselling' | 'general';
+type CategoryFilter = 'all' | 'posh' | 'pocso' | 'counselling' | 'bilingual';
 
 export const FAQ: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
@@ -131,7 +131,7 @@ export const FAQ: React.FC = () => {
               role="tab"
               aria-selected={activeCategory === 'posh'}
             >
-              Workplace POSH
+              POSH
             </button>
             <button
               type="button"
@@ -140,7 +140,7 @@ export const FAQ: React.FC = () => {
               role="tab"
               aria-selected={activeCategory === 'pocso'}
             >
-              School POCSO
+              POCSO
             </button>
             <button
               type="button"
@@ -149,16 +149,16 @@ export const FAQ: React.FC = () => {
               role="tab"
               aria-selected={activeCategory === 'counselling'}
             >
-              Child Support
+              Counselling
             </button>
             <button
               type="button"
-              className={`faq-pill ${activeCategory === 'general' ? 'faq-pill--active' : ''}`}
-              onClick={() => setActiveCategory('general')}
+              className={`faq-pill ${activeCategory === 'bilingual' ? 'faq-pill--active' : ''}`}
+              onClick={() => setActiveCategory('bilingual')}
               role="tab"
-              aria-selected={activeCategory === 'general'}
+              aria-selected={activeCategory === 'bilingual'}
             >
-              Format & Delivery
+              Bilingual
             </button>
           </div>
 
@@ -264,6 +264,19 @@ export const FAQ: React.FC = () => {
               </div>
             )}
           </AnimatePresence>
+        </div>
+
+        {/* Emergency Guidance & Statutory Support Notice */}
+        <div className="faq-emergency-notice">
+          <div className="emergency-notice-icon">
+            <ShieldAlert size={22} />
+          </div>
+          <div className="emergency-notice-text">
+            <strong>Emergency Child Safeguarding & Statutory Notice:</strong>
+            <p>
+              Professional training programmes are designed for proactive institutional education and preventative compliance. If you are aware of an immediate child safety crisis or active abuse disclosure, please contact the national emergency toll-free helpline <strong>Childline at 1098</strong> or local police/Special Juvenile Police Unit (SJPU) immediately pursuant to Section 19 mandatory reporting under the POCSO Act 2012. Educational workshops do not substitute for statutory crisis intervention.
+            </p>
+          </div>
         </div>
 
         {/* Bottom Banner */}

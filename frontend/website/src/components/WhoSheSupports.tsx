@@ -59,6 +59,7 @@ export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => 
             const Icon = iconMap[aud.icon] || School;
             const isVisible = visibleCards.has(aud.id);
             const category = audienceCategoryMap[aud.id] || 'Other Collaboration';
+            const numStr = String(index + 1).padStart(2, '0');
             return (
               <div
                 key={aud.id}
@@ -67,9 +68,13 @@ export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => 
                 style={{ transitionDelay: `${(index % 4) * 80}ms` }}
               >
                 <div className="audience-card-top">
+                  <span className="audience-index">{numStr}</span>
                   <div className="audience-icon-box">
-                    <Icon size={26} className="audience-icon" />
+                    <Icon size={22} className="audience-icon" />
                   </div>
+                </div>
+
+                <div className="audience-badge-wrap">
                   <span className="audience-badge">{aud.badge}</span>
                 </div>
 

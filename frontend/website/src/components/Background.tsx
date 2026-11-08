@@ -189,14 +189,14 @@ export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
                 </div>
               ))}
 
-              {/* Contact for Profile Notice */}
+              {/* Due Diligence Notice */}
               <div className="profile-request-card">
                 <div className="profile-req-header">
                   <FileText size={20} className="profile-req-icon" />
                   <h4>Institutional Due Diligence</h4>
                 </div>
                 <p>
-                  For institutional verification or detailed syllabi for compliance training, educational bodies and corporate HR teams are welcome to request her complete profile details directly.
+                  Institutional verification documents may be requested directly for professional evaluation. Educational bodies and corporate HR teams are welcome to request full syllabi and certification credentials.
                 </p>
                 <button
                   type="button"
@@ -205,11 +205,11 @@ export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
                     triggerEnquiry({
                       category: 'Other Collaboration',
                       areaOfInterest: 'Custom Programme Consultation',
-                      requirements: 'We are requesting complete professional profile details for institutional due diligence and verification.',
+                      requirements: 'Institutional verification documents may be requested directly for professional evaluation.',
                     })
                   }
                 >
-                  <span>Contact for Professional Profile</span>
+                  <span>Request Verification Documents</span>
                   <ArrowRight size={15} />
                 </button>
               </div>

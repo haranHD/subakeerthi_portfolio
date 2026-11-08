@@ -72,6 +72,7 @@ export interface EnquiryPayload {
   phone?: string;
   category: string;
   areaOfInterest: string;
+  preferredLanguage?: string;
   requirements: string;
 }
 

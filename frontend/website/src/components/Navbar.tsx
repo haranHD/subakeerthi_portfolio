@@ -33,9 +33,9 @@ export const Navbar: React.FC = () => {
         {/* Desktop Navigation */}
         <nav className="desktop-nav" aria-label="Main Navigation">
           <ul className="nav-list">
-            <li><a href="#home" className="nav-link">Home</a></li>
             <li><a href="#about" className="nav-link">About</a></li>
-            <li><a href="#areas" className="nav-link">Areas of Work</a></li>
+            <li><a href="#areas" className="nav-link">Expertise</a></li>
+            <li><a href="#audience" className="nav-link">Audiences</a></li>
             <li><a href="#training" className="nav-link">Programmes</a></li>
             <li><a href="#approach" className="nav-link">Approach</a></li>
             <li><a href="#background" className="nav-link">Credentials</a></li>
@@ -50,7 +50,7 @@ export const Navbar: React.FC = () => {
         {/* Header Actions */}
         <div className="header-actions">
           <a href="#contact" className="btn btn--primary btn--sm header-cta-desktop">
-            <span>Invite for a Session</span>
+            <span>Book a Session</span>
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
 
@@ -58,8 +58,8 @@ export const Navbar: React.FC = () => {
           <a
             href="#contact"
             className="header-cta-mobile"
-            title="Invite for a Session"
-            aria-label="Invite for a Session"
+            title="Book a Session"
+            aria-label="Book a Session"
           >
             <ArrowUpRight size={18} />
           </a>
@@ -86,15 +86,14 @@ export const Navbar: React.FC = () => {
       >
         <div className="mobile-drawer-inner">
           <ul className="mobile-nav-list">
-            <li><a href="#home" className="mobile-nav-link" onClick={closeMenu}><span>Home</span><span className="nav-index">01</span></a></li>
-            <li><a href="#about" className="mobile-nav-link" onClick={closeMenu}><span>About</span><span className="nav-index">02</span></a></li>
-            <li><a href="#areas" className="mobile-nav-link" onClick={closeMenu}><span>Areas of Work</span><span className="nav-index">03</span></a></li>
-            <li><a href="#audience" className="mobile-nav-link" onClick={closeMenu}><span>Who She Supports</span><span className="nav-index">04</span></a></li>
-            <li><a href="#training" className="mobile-nav-link" onClick={closeMenu}><span>Training Programmes</span><span className="nav-index">05</span></a></li>
-            <li><a href="#approach" className="mobile-nav-link" onClick={closeMenu}><span>Professional Approach</span><span className="nav-index">06</span></a></li>
-            <li><a href="#background" className="mobile-nav-link" onClick={closeMenu}><span>Credentials & Education</span><span className="nav-index">07</span></a></li>
-            <li><a href="#faq" className="mobile-nav-link" onClick={closeMenu}><span>FAQ</span><span className="nav-index">08</span></a></li>
-            <li><a href="#contact" className="mobile-nav-link" onClick={closeMenu}><span>Contact & Enquiries</span><span className="nav-index">09</span></a></li>
+            <li><a href="#about" className="mobile-nav-link" onClick={closeMenu}><span>01 — About</span></a></li>
+            <li><a href="#areas" className="mobile-nav-link" onClick={closeMenu}><span>02 — Areas of Work</span></a></li>
+            <li><a href="#audience" className="mobile-nav-link" onClick={closeMenu}><span>03 — Who She Supports</span></a></li>
+            <li><a href="#training" className="mobile-nav-link" onClick={closeMenu}><span>04 — Programmes</span></a></li>
+            <li><a href="#approach" className="mobile-nav-link" onClick={closeMenu}><span>05 — Approach</span></a></li>
+            <li><a href="#background" className="mobile-nav-link" onClick={closeMenu}><span>06 — Credentials</span></a></li>
+            <li><a href="#faq" className="mobile-nav-link" onClick={closeMenu}><span>07 — FAQ</span></a></li>
+            <li><a href="#contact" className="mobile-nav-link" onClick={closeMenu}><span>08 — Contact</span></a></li>
           </ul>
 
           <div className="mobile-drawer-footer">

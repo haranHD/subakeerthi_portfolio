@@ -45,14 +45,14 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
           <div className="footer-col">
             <h4 className="footer-col-title">Quick Navigation</h4>
             <ul className="footer-links-list">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About & Vision</a></li>
+              <li><a href="#about">About</a></li>
               <li><a href="#areas">Areas of Work</a></li>
               <li><a href="#audience">Who She Supports</a></li>
-              <li><a href="#training">Training Programmes</a></li>
-              <li><a href="#approach">Professional Approach</a></li>
-              <li><a href="#background">Credentials & Education</a></li>
-              <li><a href="#contact">Contact & Enquiries</a></li>
+              <li><a href="#training">Programmes</a></li>
+              <li><a href="#approach">Approach</a></li>
+              <li><a href="#background">Credentials</a></li>
+              <li><a href="#faq">Frequently Asked Questions</a></li>
+              <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
 
@@ -90,10 +90,10 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
         <div className="footer-disclaimer-box">
           <div className="disclaimer-title-wrap">
             <ShieldCheck size={18} className="disclaimer-icon" />
-            <strong>Professional Disclaimer</strong>
+            <strong>Professional & Statutory Disclaimer</strong>
           </div>
           <p className="disclaimer-text">
-            Website information is provided for general awareness about professional services. It does not constitute case-specific legal advice or emergency support. Subakeerthii MP is currently pursuing her LL.B. degree and is not a practising advocate or legal practitioner. For urgent child protection emergencies, contact Childline at 1098 or local law enforcement authorities.
+            Subakeerthii MP is an LL.B. candidate and certified trainer. She is not represented on this website as a practicing advocate or litigation lawyer. Information on this website is for awareness and educational purposes and does not constitute personalised legal advice.
           </p>
         </div>
 

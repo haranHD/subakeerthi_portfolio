@@ -94,6 +94,10 @@ export const PublicController = {
       const ip = (req.headers['x-forwarded-for'] as string) || req.socket.remoteAddress || 'unknown';
       const ipHash = crypto.createHash('sha256').update(ip).digest('hex').substring(0, 16);
 
+      const formattedRequirements = validatedData.preferredLanguage
+        ? `${validatedData.requirements}\n\n[Delivery Language: ${validatedData.preferredLanguage}]`
+        : validatedData.requirements;
+
       const enquiry = await ContentRepository.createEnquiry({
         fullName: validatedData.fullName,
         organisation: validatedData.organisation,
@@ -101,7 +105,7 @@ export const PublicController = {
         phone: validatedData.phone || null,
         category: validatedData.category,
         areaOfInterest: validatedData.areaOfInterest,
-        requirements: validatedData.requirements,
+        requirements: formattedRequirements,
         ipHash,
         status: 'NEW',
       });

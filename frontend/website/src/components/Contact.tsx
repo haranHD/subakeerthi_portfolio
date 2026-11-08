@@ -11,6 +11,7 @@ interface FormState {
   phone: string;
   category: string;
   areaOfInterest: string;
+  preferredLanguage: string;
   requirements: string;
 }
 
@@ -22,6 +23,7 @@ export const Contact: React.FC = () => {
     phone: '',
     category: '',
     areaOfInterest: '',
+    preferredLanguage: 'Bilingual (Tamil & English)',
     requirements: '',
   });
 
@@ -38,6 +40,7 @@ export const Contact: React.FC = () => {
         ...prev,
         ...(prefill.category ? { category: prefill.category } : {}),
         ...(prefill.areaOfInterest ? { areaOfInterest: prefill.areaOfInterest } : {}),
+        ...(prefill.preferredLanguage ? { preferredLanguage: prefill.preferredLanguage } : {}),
         ...(prefill.requirements ? { requirements: prefill.requirements } : {}),
       }));
       setSubmitSuccess(null);
@@ -113,6 +116,7 @@ export const Contact: React.FC = () => {
           phone: '',
           category: '',
           areaOfInterest: '',
+          preferredLanguage: 'Bilingual (Tamil & English)',
           requirements: '',
         });
       } else {
@@ -177,13 +181,16 @@ export const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Crucial Ethical Boundary Notice */}
+            {/* Crucial Ethical Boundary & Due Diligence Notice */}
             <div className="ethical-notice-card">
               <ShieldAlert size={20} className="notice-icon" />
               <div>
                 <h5>Safety & Ethical Protocol</h5>
                 <p>
-                  Please do not submit confidential case records, sensitive disclosures, or specific allegations of child abuse through web forms. For active child protection emergencies, immediately notify local authorities or contact <strong>Childline (1098)</strong>.
+                  Subakeerthii MP delivers prevention-first statutory awareness and educational programmes. For active emergency child protection matters, contact local authorities or <strong>Childline (1098)</strong>.
+                </p>
+                <p style={{ marginTop: '0.45rem', fontSize: '0.8rem', opacity: 0.9 }}>
+                  Please do not submit confidential case records or sensitive legal disclosures through web forms.
                 </p>
               </div>
             </div>
@@ -346,13 +353,37 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="requirements" className="form-label">
-                    Programme Requirements & Notes <span className="req">*</span>
+                  <label htmlFor="preferredLanguage" className="form-label">
+                    Preferred Language for Session
                   </label>
+                  <select
+                    id="preferredLanguage"
+                    name="preferredLanguage"
+                    value={formData.preferredLanguage}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    className="form-select"
+                  >
+                    <option value="Bilingual (Tamil & English)">Bilingual (Tamil & English) — Recommended</option>
+                    <option value="Tamil">Tamil (தமிழ்)</option>
+                    <option value="English">English</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <div className="form-label-row">
+                    <label htmlFor="requirements" className="form-label">
+                      Programme Requirements & Notes <span className="req">*</span>
+                    </label>
+                    <span className={`char-counter ${formData.requirements.length >= 950 ? 'char-counter--limit' : ''}`}>
+                      {formData.requirements.length} / 1000 characters
+                    </span>
+                  </div>
                   <textarea
                     id="requirements"
                     name="requirements"
                     rows={4}
+                    maxLength={1000}
                     value={formData.requirements}
                     onChange={handleChange}
                     disabled={isSubmitting}

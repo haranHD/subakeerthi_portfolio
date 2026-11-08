@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, HeartHandshake, BookOpen, CheckCircle2, Award, Sparkles, Languages } from 'lucide-react';
 import { Profile } from '../types';
 import { triggerEnquiry } from '../utils/enquiryEvents';
+import { ASSETS } from '../config/assets';
 import './Hero.css';
 
 interface HeroProps {
@@ -12,15 +13,14 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ profile }) => {
   const headline = 'Building Safer Schools, Workplaces & Communities.';
   const description =
-    profile?.biography ||
-    'Promoting awareness, prevention, protection and responsible reporting through POSH and POCSO awareness programmes, legal education, and child-centred counselling support.';
+    'Combining legal scholarship, child psychology, and scientific understanding to deliver practical, prevention-first awareness and training for safer institutions and communities.';
 
-  const handleHeroCTA = (e: React.MouseEvent) => {
+  const handleConsultation = (e: React.MouseEvent) => {
     e.preventDefault();
     triggerEnquiry({
       category: 'School / Educational Institution',
       areaOfInterest: 'POCSO School Awareness',
-      requirements: 'I am interested in scheduling a comprehensive awareness session for our institution.',
+      requirements: 'I would like to schedule a professional consultation regarding institutional awareness training.',
     });
   };
 
@@ -44,7 +44,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <span className="eyebrow-dot"></span>
-            <span>LEGAL AWARENESS · CHILD SAFETY · WORKPLACE AWARENESS</span>
+            <span>BILINGUAL STATUTORY EDUCATION · ERODE, TAMIL NADU</span>
           </motion.div>
 
           <motion.h1
@@ -71,12 +71,12 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.34 }}
           >
-            <a href="#contact" onClick={handleHeroCTA} className="btn btn--primary hero-btn-main">
-              <span>Invite for a Training Session</span>
+            <a href="#training" className="btn btn--primary hero-btn-main">
+              <span>Explore Training Programmes</span>
               <ArrowRight size={18} className="btn-icon-animated" />
             </a>
-            <a href="#areas" className="btn btn--secondary hero-btn-sub">
-              <span>Explore My Work</span>
+            <a href="#contact" onClick={handleConsultation} className="btn btn--secondary hero-btn-sub">
+              <span>Schedule a Consultation</span>
             </a>
           </motion.div>
 
@@ -149,8 +149,8 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
                 <div className="monogram-badge">
                   <div className="portrait-image-wrapper">
                     <img
-                      src={profile?.portraitUrl || '/subakeerthii-portrait.png'}
-                      alt="Subakeerthii MP — Legal Scholar, Certified POSH & POCSO Trainer, Child Counsellor"
+                      src={profile?.portraitUrl || ASSETS.portrait.src}
+                      alt={ASSETS.portrait.alt}
                       className="portrait-avatar-img"
                       loading="eager"
                     />
@@ -192,7 +192,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
               transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
             >
               <Languages size={15} className="floating-tag-icon" />
-              <span>Bilingual Delivery (Tamil & English)</span>
+              <span>Tamil & English Delivery</span>
             </motion.div>
           </div>
         </motion.div>

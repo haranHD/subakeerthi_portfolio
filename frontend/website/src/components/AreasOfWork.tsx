@@ -65,6 +65,7 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
           {services.map((area, index) => {
             const Icon = iconMap[area.icon] || ShieldCheck;
             const isVisible = visibleCards.has(area.id);
+            const numStr = String(index + 1).padStart(2, '0');
             return (
               <div
                 key={area.id}
@@ -72,21 +73,24 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
                 className={`area-card ${isVisible ? 'area-card--visible' : ''}`}
                 style={{ transitionDelay: `${(index % 3) * 70}ms` }}
               >
-                <div className="area-card-header">
-                  <div className="area-icon-container">
-                    <Icon size={24} className="area-icon" />
-                  </div>
+                <div className="area-card-top-bar">
+                  <span className="area-card-number">{numStr}</span>
                   <span className="area-tag">{area.tag}</span>
                 </div>
 
-                <h3 className="area-card-title">{area.title}</h3>
+                <div className="area-card-header">
+                  <div className="area-icon-container">
+                    <Icon size={22} className="area-icon" />
+                  </div>
+                  <h3 className="area-card-title">{area.title}</h3>
+                </div>
 
                 <p className="area-card-description">
                   {area.description}
                 </p>
 
                 <div className="area-card-audience">
-                  <strong>Audience Focus:</strong> {area.audience}
+                  <strong>Audience:</strong> {area.audience}
                 </div>
 
                 <div className="area-card-footer">
@@ -106,7 +110,7 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
                       })
                     }
                   >
-                    <span>Enquire for session</span>
+                    <span>Enquire for this Area</span>
                     <ArrowRight size={15} />
                   </button>
                 </div>

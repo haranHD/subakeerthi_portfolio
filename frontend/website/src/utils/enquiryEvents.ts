@@ -1,6 +1,7 @@
 export interface EnquiryPrefill {
   category?: string;
   areaOfInterest?: string;
+  preferredLanguage?: string;
   requirements?: string;
   source?: string;
 }
