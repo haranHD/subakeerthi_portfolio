@@ -108,14 +108,14 @@ export const TrainingProgrammes: React.FC<TrainingProgrammesProps> = ({ programm
                             {
                               category: prog.intendedAudience.toLowerCase().includes('school') ||
                                 prog.intendedAudience.toLowerCase().includes('student')
-                                  ? 'School / Educational Institution'
-                                  : prog.intendedAudience.toLowerCase().includes('parent')
+                                ? 'School / Educational Institution'
+                                : prog.intendedAudience.toLowerCase().includes('parent')
                                   ? 'Parent or Caregiver Group'
                                   : prog.intendedAudience.toLowerCase().includes('employee') ||
                                     prog.intendedAudience.toLowerCase().includes('corporate') ||
                                     prog.intendedAudience.toLowerCase().includes('hr')
-                                  ? 'Workplace / Corporate Organisation'
-                                  : 'Other Collaboration',
+                                    ? 'Workplace / Corporate Organisation'
+                                    : 'Other Collaboration',
                               areaOfInterest: prog.title.substring(0, 60),
                               requirements: `I would like to enquire about the "${prog.title}" programme for my institution.`,
                             },
