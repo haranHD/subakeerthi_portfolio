@@ -100,9 +100,9 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
           <p className="footer-copyright">
             © {new Date().getFullYear()} Subakeerthii MP. All rights reserved. Designed for professional awareness and institutional safety.
           </p>
-          <button 
-            type="button" 
-            onClick={scrollToTop} 
+          <button
+            type="button"
+            onClick={scrollToTop}
             className="back-to-top-btn"
             aria-label="Scroll back to top of page"
           >
