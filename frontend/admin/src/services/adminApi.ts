@@ -161,9 +161,7 @@ export const adminApi = {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('assetType', assetType);
-    const res = await adminClient.post('/admin/media', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const res = await adminClient.post('/admin/media', formData);
     return res.data.data;
   },
 

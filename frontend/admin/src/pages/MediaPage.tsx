@@ -10,6 +10,8 @@ export const MediaPage: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const [assetType, setAssetType] = useState('OTHER');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     loadMedia();
@@ -19,8 +21,9 @@ export const MediaPage: React.FC = () => {
     try {
       const data = await adminApi.getMedia();
       setMedia(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setUploadError(err?.response?.data?.message || err?.message || 'Failed to load media');
     } finally {
       setLoading(false);
     }
@@ -31,11 +34,16 @@ export const MediaPage: React.FC = () => {
     if (!file) return;
 
     setUploading(true);
+    setUploadError(null);
+    setUploadSuccess(null);
     try {
       await adminApi.uploadMedia(file, assetType);
+      setUploadSuccess(`Successfully uploaded "${file.name}"`);
       await loadMedia();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err?.response?.data?.message || err?.message || 'Failed to upload image. Please try again.';
+      setUploadError(msg);
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -73,6 +81,18 @@ export const MediaPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
+        {uploadError && (
+          <div style={{ padding: '0.85rem 1.25rem', marginBottom: '1.25rem', background: '#FEE2E2', border: '1px solid #FCA5A5', borderRadius: 8, color: '#991B1B', fontSize: '0.88rem' }}>
+            ⚠️ {uploadError}
+          </div>
+        )}
+
+        {uploadSuccess && (
+          <div style={{ padding: '0.85rem 1.25rem', marginBottom: '1.25rem', background: '#E8F5E9', border: '1px solid #A5D6A7', borderRadius: 8, color: '#1B5E20', fontSize: '0.88rem' }}>
+            ✅ {uploadSuccess}
+          </div>
+        )}
+
         {/* Upload Card */}
         <div className="data-card" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
           <h2 className="card-title" style={{ marginBottom: '1rem' }}>Upload Official Assets</h2>
