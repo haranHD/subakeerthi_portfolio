@@ -91,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
             <strong>Professional & Statutory Disclaimer</strong>
           </div>
           <p className="disclaimer-text">
-            Subakeerthii MP is an LL.B. candidate and certified trainer. She is not represented on this website as a practicing advocate or litigation lawyer. Information on this website is for awareness and educational purposes and does not constitute personalised legal advice.
+            Subakeerthii MP is currently pursuing her LL.B. and is a certified trainer. She is not represented on this website as a practicing advocate or litigation lawyer. Information on this website is for awareness and educational purposes and does not constitute personalised legal advice.
           </p>
         </div>
 

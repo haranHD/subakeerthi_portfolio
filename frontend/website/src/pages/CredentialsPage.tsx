@@ -17,7 +17,7 @@ export const CredentialsPage: React.FC<CredentialsPageProps> = ({ credentials })
         <title>Academic & Professional Credentials | Subakeerthii MP</title>
         <meta
           name="description"
-          content="Review verified credentials of Subakeerthii MP: LL.B. Candidate, Certified POSH Trainer, Certified POCSO Trainer, and Diploma in Child Psychology."
+          content="Review verified credentials of Subakeerthii MP: LL.B. (Pursuing), Certified POSH Trainer, Certified POCSO Trainer, and Diploma in Child Psychology."
         />
       </Helmet>
 
@@ -54,7 +54,7 @@ export const CredentialsPage: React.FC<CredentialsPageProps> = ({ credentials })
               Statutory Accuracy & Professional Discretion
             </h4>
             <p style={{ fontSize: '0.88rem', lineHeight: 1.6, color: '#4A5852', margin: 0 }}>
-              Subakeerthii MP delivers statutory awareness and education as an LL.B. candidate and certified trainer. Institutional privacy is strictly honored, and all documentation is verified for educational and compliance accreditation.
+              Subakeerthii MP delivers statutory awareness and education as an LL.B. scholar (currently pursuing) and certified trainer. Institutional privacy is strictly honored, and all documentation is verified for educational and compliance accreditation.
             </p>
           </div>
         </div>

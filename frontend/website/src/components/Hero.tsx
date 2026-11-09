@@ -178,8 +178,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
               </div>
               <div className="hero-strip-text">
                 <span className="hero-strip-tag">01 · LEGAL SCHOLARSHIP</span>
-                <strong className="hero-strip-title">LL.B. Candidate</strong>
-                <span className="hero-strip-desc">Statutory Jurisprudence & Human Rights</span>
+                <strong className="hero-strip-title">LL.B. — Pursuing</strong>
               </div>
             </div>
 
