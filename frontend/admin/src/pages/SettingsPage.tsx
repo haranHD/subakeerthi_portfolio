@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { SiteSetting } from '../types/admin';
 import { Save, CheckCircle, Loader2 } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const SettingsPage: React.FC = () => {
   const [settings, setSettings] = useState<SiteSetting[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [savingKey, setSavingKey] = useState<string | null>(null);
   const [successKey, setSuccessKey] = useState<string | null>(null);
 
@@ -15,10 +17,16 @@ export const SettingsPage: React.FC = () => {
 
   const loadSettings = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getSettings();
       setSettings(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load site settings';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -43,14 +51,6 @@ export const SettingsPage: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
-
   return (
     <>
       <header className="admin-header">
@@ -58,7 +58,15 @@ export const SettingsPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        <div className="data-card" style={{ maxWidth: 840, padding: '1.5rem' }}>
+        {loading || error ? (
+          <PageLoader
+            title="Site Settings"
+            message="Loading operational keys, helpline notices, and brand flags..."
+            error={error}
+            onRetry={loadSettings}
+          />
+        ) : (
+          <div className="data-card" style={{ maxWidth: 840, padding: '1.5rem' }}>
           <h2 className="card-title" style={{ marginBottom: '1.5rem' }}>Global Content & Contact Parameters</h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -107,6 +115,7 @@ export const SettingsPage: React.FC = () => {
             ))}
           </div>
         </div>
+        )}
       </div>
     </>
   );

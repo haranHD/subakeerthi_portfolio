@@ -445,3 +445,236 @@ body {
   font-size: 0.82rem;
   color: var(--admin-muted);
 }
+
+/* Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile Navigation Bar & Drawer Styles */
+.admin-mobile-topbar {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.mobile-sidebar-close {
+  display: none;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-mobile-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    background-color: var(--admin-sidebar-bg);
+    color: #FFFFFF;
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 95;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-hamburger-btn {
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+  }
+
+  .mobile-hamburger-btn:active,
+  .mobile-hamburger-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .brand-badge-sm {
+    width: 28px;
+    height: 28px;
+    background-color: var(--admin-burgundy);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #FFFFFF;
+  }
+
+  .mobile-brand-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+    letter-spacing: 0.03em;
+  }
+
+  .mobile-logout-icon {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.15s ease;
+  }
+
+  .mobile-logout-icon:hover {
+    color: #FF6B6B;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: 98;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    z-index: 99;
+    transform: translateX(-100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-sidebar-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 6px;
+    margin-left: auto;
+    border-radius: 4px;
+  }
+
+  .mobile-sidebar-close:hover {
+    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .admin-header {
+    padding: 0.85rem 1.25rem;
+    height: auto;
+    min-height: 56px;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .admin-body {
+    padding: 1.25rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .page-title {
+    font-size: 1.1rem;
+  }
+
+  .admin-body {
+    padding: 0.85rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .data-card {
+    padding: 1rem !important;
+  }
+
+  .media-upload-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .media-upload-controls select,
+  .media-upload-controls label {
+    width: 100% !important;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .table-responsive {
+    margin: 0 -0.5rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 0.75rem 0.65rem;
+    font-size: 0.8rem;
+  }
+}

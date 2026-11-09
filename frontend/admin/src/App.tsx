@@ -13,16 +13,18 @@ import { EnquiriesPage } from './pages/EnquiriesPage';
 import { MediaPage } from './pages/MediaPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AuditLogsPage } from './pages/AuditLogsPage';
-import { Loader2 } from 'lucide-react';
+import { PageLoader } from './components/PageLoader';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#14221D' }}>
-        <Loader2 size={36} className="animate-spin" style={{ color: '#2F8F6F' }} />
-      </div>
+      <PageLoader
+        title="Admin Control Panel"
+        message="Authenticating session and verifying credentials..."
+        fullScreen={true}
+      />
     );
   }
 

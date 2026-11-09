@@ -20,7 +20,11 @@ export const LoginPage: React.FC = () => {
       await login(email, password);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed. Please check credentials.');
+      const msg =
+        err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+          ? 'Server is waking up from idle. Please wait a few seconds and try again.'
+          : err.response?.data?.message || 'Login failed. Please check credentials.';
+      setError(msg);
     } finally {
       setLoading(false);
     }

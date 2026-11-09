@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Programme } from '../types/admin';
 import { Plus, Edit, Trash2, Eye, EyeOff, Check, X, Loader2 } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const ProgrammesPage: React.FC = () => {
   const [programmes, setProgrammes] = useState<Programme[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Partial<Programme> | null>(null);
   const [highlightsInput, setHighlightsInput] = useState('');
 
@@ -15,10 +17,16 @@ export const ProgrammesPage: React.FC = () => {
 
   const loadProgrammes = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getProgrammes();
       setProgrammes(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load programmes';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -75,14 +83,6 @@ export const ProgrammesPage: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
-
   return (
     <>
       <header className="admin-header">
@@ -108,7 +108,16 @@ export const ProgrammesPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        {editing && (
+        {loading || error ? (
+          <PageLoader
+            title="Training Programmes"
+            message="Loading POSH, POCSO, and institutional training modules..."
+            error={error}
+            onRetry={loadProgrammes}
+          />
+        ) : (
+          <>
+            {editing && (
           <div className="data-card" style={{ marginBottom: '2rem', padding: '1.5rem' }}>
             <h2 className="card-title" style={{ marginBottom: '1.25rem' }}>
               {editing.id ? 'Edit Programme Module' : 'Create Programme Module'}
@@ -268,6 +277,8 @@ export const ProgrammesPage: React.FC = () => {
             </table>
           </div>
         </div>
+          </>
+        )}
       </div>
     </>
   );

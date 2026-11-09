@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Enquiry } from '../types/admin';
 import { Search, Filter, Loader2, MessageSquare, Phone, Mail, Building } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const EnquiriesPage: React.FC = () => {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
@@ -17,10 +19,16 @@ export const EnquiriesPage: React.FC = () => {
 
   const loadEnquiries = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getEnquiries(statusFilter || undefined);
       setEnquiries(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load enquiries';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -53,14 +61,6 @@ export const EnquiriesPage: React.FC = () => {
     );
   });
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
-
   return (
     <>
       <header className="admin-header">
@@ -68,6 +68,15 @@ export const EnquiriesPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
+        {loading || error ? (
+          <PageLoader
+            title="Training Enquiries"
+            message="Loading incoming consultation requests and corporate booking enquiries..."
+            error={error}
+            onRetry={loadEnquiries}
+          />
+        ) : (
+          <>
         {/* Detail Modal */}
         {selectedEnquiry && (
           <div
@@ -273,6 +282,8 @@ export const EnquiriesPage: React.FC = () => {
             </table>
           </div>
         </div>
+          </>
+        )}
       </div>
     </>
   );

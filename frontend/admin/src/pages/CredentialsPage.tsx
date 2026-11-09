@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Credential } from '../types/admin';
 import { Plus, Edit, Trash2, Eye, EyeOff, Check, X, Loader2 } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const CredentialsPage: React.FC = () => {
   const [credentials, setCredentials] = useState<Credential[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Partial<Credential> | null>(null);
 
   useEffect(() => {
@@ -14,10 +16,16 @@ export const CredentialsPage: React.FC = () => {
 
   const loadCredentials = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getCredentials();
       setCredentials(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load credentials';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -59,14 +67,6 @@ export const CredentialsPage: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
-
   return (
     <>
       <header className="admin-header">
@@ -91,7 +91,16 @@ export const CredentialsPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        {editing && (
+        {loading || error ? (
+          <PageLoader
+            title="Credentials Timeline"
+            message="Loading academic degrees, certifications, and appointments..."
+            error={error}
+            onRetry={loadCredentials}
+          />
+        ) : (
+          <>
+            {editing && (
           <div className="data-card" style={{ marginBottom: '2rem', padding: '1.5rem' }}>
             <h2 className="card-title" style={{ marginBottom: '1.25rem' }}>
               {editing.id ? 'Edit Credential' : 'Create Credential'}
@@ -259,6 +268,8 @@ export const CredentialsPage: React.FC = () => {
             </table>
           </div>
         </div>
+          </>
+        )}
       </div>
     </>
   );

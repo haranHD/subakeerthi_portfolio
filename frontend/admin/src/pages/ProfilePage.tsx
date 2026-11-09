@@ -3,10 +3,12 @@ import { adminApi } from '../services/adminApi';
 import { Profile } from '../types/admin';
 import { Save, CheckCircle, Loader2 } from 'lucide-react';
 import { getMediaUrl } from '../utils/media';
+import { PageLoader } from '../components/PageLoader';
 
 export const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -16,10 +18,16 @@ export const ProfilePage: React.FC = () => {
 
   const loadProfile = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getProfile();
       setProfile(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be waking up.'
+        : err?.response?.data?.message || err?.message || 'Failed to load profile';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -50,14 +58,6 @@ export const ProfilePage: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
-
   return (
     <>
       <header className="admin-header">
@@ -70,7 +70,15 @@ export const ProfilePage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        <div className="data-card" style={{ maxWidth: 840 }}>
+        {loading || error ? (
+          <PageLoader
+            title="Client Profile"
+            message="Loading biographical data, contact details, and credentials..."
+            error={error}
+            onRetry={loadProfile}
+          />
+        ) : (
+          <div className="data-card" style={{ maxWidth: 840 }}>
           <div className="card-header">
             <h2 className="card-title">Personal & Professional Identity</h2>
           </div>
@@ -189,6 +197,7 @@ export const ProfilePage: React.FC = () => {
             </button>
           </form>
         </div>
+        )}
       </div>
     </>
   );

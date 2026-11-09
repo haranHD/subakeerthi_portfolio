@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { DashboardData } from '../types/admin';
-import { Inbox, CheckCircle, Clock, Archive, Layers, BookOpen, Loader2 } from 'lucide-react';
+import { Inbox, CheckCircle, Clock, Archive, Layers, BookOpen } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const DashboardPage: React.FC = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadDashboard();
@@ -13,10 +15,16 @@ export const DashboardPage: React.FC = () => {
 
   const loadDashboard = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const res = await adminApi.getDashboard();
       setData(res);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend server timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load dashboard data';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -30,14 +38,6 @@ export const DashboardPage: React.FC = () => {
       console.error(err);
     }
   };
-
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
 
   const metrics = data?.metrics || {
     totalEnquiries: 0,
@@ -55,7 +55,16 @@ export const DashboardPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        {/* Metric Cards */}
+        {loading || error ? (
+          <PageLoader
+            title="Operational Overview"
+            message="Loading editorial metrics, recent enquiries, and system logs..."
+            error={error}
+            onRetry={loadDashboard}
+          />
+        ) : (
+          <>
+            {/* Metric Cards */}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-icon"><Inbox size={22} /></div>
@@ -208,6 +217,8 @@ export const DashboardPage: React.FC = () => {
             </table>
           </div>
         </div>
+          </>
+        )}
       </div>
     </>
   );

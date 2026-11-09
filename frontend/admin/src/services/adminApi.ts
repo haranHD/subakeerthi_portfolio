@@ -18,7 +18,7 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
 export const adminClient = axios.create({
   baseURL: API_BASE,
   withCredentials: true,
-  timeout: 10000,
+  timeout: 60000,
 });
 
 export const adminApi = {
@@ -157,11 +157,23 @@ export const adminApi = {
     return res.data.data;
   },
 
-  async uploadMedia(file: File, assetType: string): Promise<MediaAsset> {
+  async uploadMedia(
+    file: File,
+    assetType: string,
+    onProgress?: (percent: number) => void
+  ): Promise<MediaAsset> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('assetType', assetType);
-    const res = await adminClient.post('/admin/media', formData);
+    const res = await adminClient.post('/admin/media', formData, {
+      timeout: 180000, // 3 minutes timeout for large file uploads
+      onUploadProgress: (progressEvent) => {
+        if (progressEvent.total && onProgress) {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress(percent);
+        }
+      },
+    });
     return res.data.data;
   },
 

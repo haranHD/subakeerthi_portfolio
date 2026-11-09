@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { AuditLog } from '../types/admin';
 import { ShieldCheck, Loader2 } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const AuditLogsPage: React.FC = () => {
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadLogs();
@@ -13,22 +15,20 @@ export const AuditLogsPage: React.FC = () => {
 
   const loadLogs = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getAuditLogs();
       setLogs(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load audit logs';
+      setError(msg);
     } finally {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -37,7 +37,15 @@ export const AuditLogsPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        <div className="data-card">
+        {loading || error ? (
+          <PageLoader
+            title="Audit Logs"
+            message="Loading administrative activity history and security events..."
+            error={error}
+            onRetry={loadLogs}
+          />
+        ) : (
+          <div className="data-card">
           <div className="table-responsive">
             <table className="admin-table">
               <thead>
@@ -77,6 +85,7 @@ export const AuditLogsPage: React.FC = () => {
             </table>
           </div>
         </div>
+        )}
       </div>
     </>
   );

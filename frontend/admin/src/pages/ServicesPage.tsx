@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Service } from '../types/admin';
 import { Plus, Edit, Trash2, Eye, EyeOff, Check, X, Loader2 } from 'lucide-react';
+import { PageLoader } from '../components/PageLoader';
 
 export const ServicesPage: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Partial<Service> | null>(null);
 
   useEffect(() => {
@@ -14,10 +16,16 @@ export const ServicesPage: React.FC = () => {
 
   const loadServices = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const data = await adminApi.getServices();
       setServices(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+        ? 'Connecting to backend timed out. Render may still be spinning up from idle.'
+        : err?.response?.data?.message || err?.message || 'Failed to load services';
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -59,14 +67,6 @@ export const ServicesPage: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--admin-burgundy)' }} />
-      </div>
-    );
-  }
-
   return (
     <>
       <header className="admin-header">
@@ -91,7 +91,16 @@ export const ServicesPage: React.FC = () => {
       </header>
 
       <div className="admin-body">
-        {editing && (
+        {loading || error ? (
+          <PageLoader
+            title="Areas of Work"
+            message="Loading advisory, training, and counselling offerings..."
+            error={error}
+            onRetry={loadServices}
+          />
+        ) : (
+          <>
+            {editing && (
           <div className="data-card" style={{ marginBottom: '2rem', padding: '1.5rem' }}>
             <h2 className="card-title" style={{ marginBottom: '1.25rem' }}>
               {editing.id ? 'Edit Service' : 'Create New Service'}
@@ -241,6 +250,8 @@ export const ServicesPage: React.FC = () => {
             </table>
           </div>
         </div>
+          </>
+        )}
       </div>
     </>
   );
