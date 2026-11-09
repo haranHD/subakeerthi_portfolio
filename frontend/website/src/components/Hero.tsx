@@ -17,6 +17,26 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
   const description =
     'Combining legal scholarship, child psychology, and scientific understanding to deliver practical, prevention-first awareness and training for safer institutions and communities.';
 
+  const targetPortraitUrl = profile?.portraitUrl ? getMediaUrl(profile.portraitUrl) : ASSETS.portrait.src;
+  const [activeSrc, setActiveSrc] = React.useState<string>(targetPortraitUrl);
+  const [imageLoaded, setImageLoaded] = React.useState<boolean>(true);
+
+  React.useEffect(() => {
+    if (!targetPortraitUrl || targetPortraitUrl === activeSrc) return;
+
+    // Smoothly preload new image before switching to prevent glitching/flashing
+    const img = new Image();
+    img.src = targetPortraitUrl;
+    img.onload = () => {
+      setActiveSrc(targetPortraitUrl);
+      setImageLoaded(true);
+    };
+    img.onerror = () => {
+      setActiveSrc(ASSETS.portrait.src);
+      setImageLoaded(true);
+    };
+  }, [targetPortraitUrl]);
+
   const handleConsultation = (e: React.MouseEvent) => {
     e.preventDefault();
     triggerEnquiry({
@@ -132,10 +152,14 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             <div className="portrait-editorial-frame">
               <div className="portrait-editorial-inner">
                 <img
-                  src={profile?.portraitUrl ? getMediaUrl(profile.portraitUrl) : ASSETS.portrait.src}
+                  src={activeSrc}
                   alt={ASSETS.portrait.alt}
                   className="portrait-editorial-image"
                   loading="eager"
+                  style={{
+                    opacity: imageLoaded ? 1 : 0.85,
+                    transition: 'opacity 0.35s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                  }}
                   onError={(e) => {
                     const img = e.currentTarget;
                     if (img.src !== ASSETS.portrait.src && !img.src.endsWith(ASSETS.portrait.src)) {

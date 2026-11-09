@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
-import { Profile } from '../types/admin';
-import { Save, CheckCircle, Loader2 } from 'lucide-react';
+import { Profile, MediaAsset } from '../types/admin';
+import { Save, CheckCircle, Loader2, Upload, Image as ImageIcon, User, AlertCircle } from 'lucide-react';
 import { getMediaUrl } from '../utils/media';
 import { PageLoader } from '../components/PageLoader';
 
 export const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [uploadingPortrait, setUploadingPortrait] = useState(false);
+  const [previewError, setPreviewError] = useState(false);
 
   useEffect(() => {
-    loadProfile();
+    loadProfileAndMedia();
   }, []);
 
-  const loadProfile = async () => {
+  const loadProfileAndMedia = async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await adminApi.getProfile();
-      setProfile(data);
+      const [profData, mediaData] = await Promise.all([
+        adminApi.getProfile(),
+        adminApi.getMedia().catch(() => []),
+      ]);
+      setProfile(profData);
+      setMediaAssets(mediaData.filter((m) => m.mimeType.startsWith('image/')));
     } catch (err: any) {
       console.error(err);
-      const msg = err.code === 'ECONNABORTED' || err.message?.includes('timeout')
-        ? 'Connecting to backend timed out. Render may still be waking up.'
-        : err?.response?.data?.message || err?.message || 'Failed to load profile';
+      const msg =
+        err.code === 'ECONNABORTED' || err.message?.includes('timeout')
+          ? 'Connecting to backend timed out. Render may still be waking up.'
+          : err?.response?.data?.message || err?.message || 'Failed to load profile';
       setError(msg);
     } finally {
       setLoading(false);
@@ -37,6 +45,37 @@ export const ProfilePage: React.FC = () => {
     const { name, value } = e.target;
     if (profile) {
       setProfile({ ...profile, [name]: value });
+      if (name === 'portraitUrl') {
+        setPreviewError(false);
+      }
+    }
+  };
+
+  const handleSelectMedia = (storageUrl: string) => {
+    if (profile) {
+      setProfile({ ...profile, portraitUrl: storageUrl });
+      setPreviewError(false);
+    }
+  };
+
+  const handleDirectPortraitUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingPortrait(true);
+    try {
+      const asset = await adminApi.uploadMedia(file, 'PORTRAIT');
+      if (profile) {
+        setProfile({ ...profile, portraitUrl: asset.storageUrl });
+        setPreviewError(false);
+      }
+      setMediaAssets((prev) => [asset, ...prev]);
+    } catch (err: any) {
+      console.error(err);
+      alert(err?.response?.data?.message || 'Failed to upload portrait image. Please try again.');
+    } finally {
+      setUploadingPortrait(false);
+      e.target.value = '';
     }
   };
 
@@ -58,12 +97,23 @@ export const ProfilePage: React.FC = () => {
     }
   };
 
+  const resolvedPreviewUrl = profile?.portraitUrl ? getMediaUrl(profile.portraitUrl) : '';
+
   return (
     <>
       <header className="admin-header">
         <h1 className="page-title">Client Profile Management</h1>
         {success && (
-          <span style={{ color: '#2E7D32', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.86rem', fontWeight: 600 }}>
+          <span
+            style={{
+              color: '#2E7D32',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              fontSize: '0.86rem',
+              fontWeight: 600,
+            }}
+          >
             <CheckCircle size={16} /> Saved successfully!
           </span>
         )}
@@ -75,10 +125,10 @@ export const ProfilePage: React.FC = () => {
             title="Client Profile"
             message="Loading biographical data, contact details, and credentials..."
             error={error}
-            onRetry={loadProfile}
+            onRetry={loadProfileAndMedia}
           />
         ) : (
-          <div className="data-card" style={{ maxWidth: 840 }}>
+          <div className="data-card" style={{ maxWidth: 860 }}>
             <div className="card-header">
               <h2 className="card-title">Personal & Professional Identity</h2>
             </div>
@@ -136,7 +186,7 @@ export const ProfilePage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+              <div className="form-group" style={{ marginBottom: '1.5rem' }}>
                 <label className="form-label">Professional Headline</label>
                 <input
                   type="text"
@@ -151,32 +201,177 @@ export const ProfilePage: React.FC = () => {
                 </span>
               </div>
 
-              <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                <label className="form-label">Portrait Image Path / URL</label>
-                <input
-                  type="text"
-                  name="portraitUrl"
-                  value={profile?.portraitUrl || ''}
-                  onChange={handleChange}
-                  placeholder="/uploads/your-image.jpg or https://..."
-                  className="form-input"
-                />
-                {profile?.portraitUrl && (
-                  <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem', background: '#f8faf9', borderRadius: 6, border: '1px solid #e2ece7' }}>
-                    <img
-                      src={getMediaUrl(profile.portraitUrl)}
-                      alt="Current Portrait Preview"
-                      style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 4, border: '1px solid #c9dcd4' }}
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).style.display = 'none';
-                      }}
-                    />
-                    <div style={{ fontSize: '0.75rem', color: '#555' }}>
-                      <div style={{ fontWeight: 600, color: '#145A43' }}>Active Portrait Preview</div>
-                      <div>Source: {profile.portraitUrl}</div>
-                    </div>
+              {/* Dedicated Official Portrait Manager & Stable Preview */}
+              <div
+                className="data-card"
+                style={{
+                  padding: '1.25rem',
+                  marginBottom: '1.5rem',
+                  backgroundColor: '#FAF7F4',
+                  border: '1px solid var(--admin-border)',
+                }}
+              >
+                <label className="form-label" style={{ fontWeight: 700, color: 'var(--admin-burgundy)' }}>
+                  Hero Section Portrait Photo
+                </label>
+                <p style={{ fontSize: '0.78rem', color: '#666', marginBottom: '1rem' }}>
+                  This official portrait is displayed on the main website homepage inside the editorial arch frame.
+                </p>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '1.5rem',
+                    alignItems: 'flex-start',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  {/* Visual Portrait Preview (Matching the site's arch aesthetic) */}
+                  <div
+                    style={{
+                      width: 140,
+                      aspectRatio: '4 / 5',
+                      borderRadius: '70px 70px 8px 8px',
+                      overflow: 'hidden',
+                      border: '2px solid var(--admin-burgundy)',
+                      backgroundColor: '#FFFFFF',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                      flexShrink: 0,
+                      position: 'relative',
+                    }}
+                  >
+                    {resolvedPreviewUrl && !previewError ? (
+                      <img
+                        src={resolvedPreviewUrl}
+                        alt="Client Portrait Preview"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block',
+                          transition: 'opacity 0.2s ease',
+                        }}
+                        onError={() => setPreviewError(true)}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '0.75rem',
+                          textAlign: 'center',
+                          color: '#888',
+                        }}
+                      >
+                        <User size={36} style={{ opacity: 0.35, marginBottom: '0.5rem' }} />
+                        <span style={{ fontSize: '0.7rem' }}>
+                          {previewError ? 'Invalid image path' : 'Default photo used'}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                )}
+
+                  {/* Actions & Quick Selection */}
+                  <div style={{ flex: 1, minWidth: 260 }}>
+                    <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                      <label
+                        className="btn-primary"
+                        style={{
+                          cursor: uploadingPortrait ? 'not-allowed' : 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          fontSize: '0.84rem',
+                          padding: '0.6rem 1.1rem',
+                        }}
+                      >
+                        {uploadingPortrait ? (
+                          <>
+                            <Loader2 size={15} className="animate-spin" /> Uploading...
+                          </>
+                        ) : (
+                          <>
+                            <Upload size={15} /> Upload & Set New Photo
+                          </>
+                        )}
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleDirectPortraitUpload}
+                          disabled={uploadingPortrait}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                    </div>
+
+                    <div className="form-group" style={{ marginBottom: '1rem' }}>
+                      <label className="form-label" style={{ fontSize: '0.78rem' }}>
+                        Image Path / URL (Auto-set on upload or pick below)
+                      </label>
+                      <input
+                        type="text"
+                        name="portraitUrl"
+                        value={profile?.portraitUrl || ''}
+                        onChange={handleChange}
+                        placeholder="/uploads/... or https://..."
+                        className="form-input"
+                        style={{ fontSize: '0.82rem' }}
+                      />
+                    </div>
+
+                    {/* Quick Pick from Uploaded Media Gallery */}
+                    {mediaAssets.length > 0 && (
+                      <div>
+                        <span style={{ fontSize: '0.76rem', fontWeight: 600, color: '#555', display: 'block', marginBottom: '0.4rem' }}>
+                          Or pick from Media Library:
+                        </span>
+                        <div
+                          style={{
+                            display: 'flex',
+                            gap: '0.5rem',
+                            overflowX: 'auto',
+                            paddingBottom: '0.5rem',
+                          }}
+                        >
+                          {mediaAssets.slice(0, 8).map((asset) => {
+                            const isSelected = profile?.portraitUrl === asset.storageUrl;
+                            return (
+                              <button
+                                key={asset.id}
+                                type="button"
+                                onClick={() => handleSelectMedia(asset.storageUrl)}
+                                style={{
+                                  border: isSelected ? '2px solid var(--admin-burgundy)' : '1px solid #ccc',
+                                  borderRadius: 6,
+                                  overflow: 'hidden',
+                                  width: 44,
+                                  height: 44,
+                                  padding: 0,
+                                  cursor: 'pointer',
+                                  backgroundColor: '#FFFFFF',
+                                  flexShrink: 0,
+                                }}
+                                title={asset.originalName}
+                              >
+                                <img
+                                  src={getMediaUrl(asset.storageUrl)}
+                                  alt={asset.originalName}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className="form-group" style={{ marginBottom: '1.5rem' }}>

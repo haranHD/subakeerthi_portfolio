@@ -268,7 +268,14 @@ const defaultCredentials: Credential[] = [
 ];
 
 export const App: React.FC = () => {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(() => {
+    try {
+      const cached = localStorage.getItem('subakeerthii_profile_cache');
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
   const [services, setServices] = useState<Service[]>(defaultServices);
   const [programmes, setProgrammes] = useState<Programme[]>(defaultProgrammes);
   const [credentials, setCredentials] = useState<Credential[]>(defaultCredentials);
@@ -285,7 +292,14 @@ export const App: React.FC = () => {
           api.getAudiences(),
         ]);
 
-        if (profData) setProfile(profData);
+        if (profData) {
+          setProfile(profData);
+          try {
+            localStorage.setItem('subakeerthii_profile_cache', JSON.stringify(profData));
+          } catch (e) {
+            console.warn('Failed to cache profile in localStorage', e);
+          }
+        }
         if (servData.length > 0) setServices(servData);
         if (progData.length > 0) setProgrammes(progData);
         if (credData.length > 0) setCredentials(credData);
