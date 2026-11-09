@@ -283,24 +283,3 @@ export const ProgrammesPage: React.FC = () => {
     </>
   );
 };
-                       onClick={() => handleDelete(p.id)}
-                              className="btn-danger"
-                              style={{ padding: '0.35rem 0.6rem' }}
-                              title="Delete"
-                            >
-                              <Trash2 size={15} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </>
-  );
-};
