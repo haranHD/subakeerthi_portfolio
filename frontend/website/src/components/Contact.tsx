@@ -405,7 +405,7 @@ export const Contact: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <span>Submit Training Enquiry</span>
+                      <span>Submit Enquiry</span>
                       <Send size={16} />
                     </>
                   )}
