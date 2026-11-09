@@ -13,6 +13,7 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ profile }) => {
+  const navigate = useNavigate();
   const headline = 'Building Safer Schools, Workplaces & Communities.';
   const description =
     'Combining legal scholarship, child psychology, and scientific understanding to deliver practical, prevention-first awareness and training for safer institutions and communities.';
@@ -39,11 +40,14 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
 
   const handleConsultation = (e: React.MouseEvent) => {
     e.preventDefault();
-    triggerEnquiry({
-      category: 'School / Educational Institution',
-      areaOfInterest: 'POCSO School Awareness',
-      requirements: 'I would like to schedule a professional consultation regarding institutional awareness training.',
-    });
+    triggerEnquiry(
+      {
+        category: 'School / Educational Institution',
+        areaOfInterest: 'POCSO School Awareness',
+        requirements: 'I would like to schedule a professional consultation regarding institutional awareness training.',
+      },
+      navigate
+    );
   };
 
   return (

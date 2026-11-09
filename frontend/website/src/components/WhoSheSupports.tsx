@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { School, Heart, Sparkles, Briefcase, ArrowUpRight, LucideIcon } from 'lucide-react';
 import { AudienceGroup } from '../types';
 import { triggerEnquiry } from '../utils/enquiryEvents';
@@ -23,6 +24,7 @@ interface WhoSheSupportsProps {
 }
 
 export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
 
@@ -89,11 +91,14 @@ export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => 
                     type="button"
                     className="btn btn--rose btn--sm btn--full audience-cta-btn"
                     onClick={() =>
-                      triggerEnquiry({
-                        category,
-                        areaOfInterest: aud.actionText.replace('Enquire for ', ''),
-                        requirements: `Interested in: ${aud.title} — ${aud.actionText}`,
-                      })
+                      triggerEnquiry(
+                        {
+                          category,
+                          areaOfInterest: aud.actionText.replace('Enquire for ', ''),
+                          requirements: `Interested in: ${aud.title} — ${aud.actionText}`,
+                        },
+                        navigate
+                      )
                     }
                   >
                     <span>{aud.actionText}</span>

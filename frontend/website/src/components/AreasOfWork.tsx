@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Building2,
@@ -28,6 +29,7 @@ interface AreasOfWorkProps {
 }
 
 export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
 
@@ -98,16 +100,19 @@ export const AreasOfWork: React.FC<AreasOfWorkProps> = ({ services }) => {
                     type="button"
                     className="area-link"
                     onClick={() =>
-                      triggerEnquiry({
-                        category:
-                          area.category === 'Workplace Compliance'
-                            ? 'Workplace / Corporate Organisation'
-                            : area.category === 'Child Safeguarding'
-                              ? 'School / Educational Institution'
-                              : 'Other Collaboration',
-                        areaOfInterest: area.title,
-                        requirements: `I am interested in a session on "${area.title}" for our institution.`,
-                      })
+                      triggerEnquiry(
+                        {
+                          category:
+                            area.category === 'Workplace Compliance'
+                              ? 'Workplace / Corporate Organisation'
+                              : area.category === 'Child Safeguarding'
+                                ? 'School / Educational Institution'
+                                : 'Other Collaboration',
+                          areaOfInterest: area.title,
+                          requirements: `I am interested in a session on "${area.title}" for our institution.`,
+                        },
+                        navigate
+                      )
                     }
                   >
                     <span>Enquire for this Area</span>

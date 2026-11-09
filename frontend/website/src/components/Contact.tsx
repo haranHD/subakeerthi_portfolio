@@ -33,6 +33,37 @@ export const Contact: React.FC = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
+  // Check for prefill from sessionStorage on mount (e.g. when navigated from /programmes)
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem('subakeerthii_prefill');
+      if (stored) {
+        const prefill = JSON.parse(stored);
+        sessionStorage.removeItem('subakeerthii_prefill');
+        setFormData((prev) => ({
+          ...prev,
+          ...(prefill.category ? { category: prefill.category } : {}),
+          ...(prefill.areaOfInterest ? { areaOfInterest: prefill.areaOfInterest } : {}),
+          ...(prefill.preferredLanguage ? { preferredLanguage: prefill.preferredLanguage } : {}),
+          ...(prefill.requirements ? { requirements: prefill.requirements } : {}),
+        }));
+
+        setTimeout(() => {
+          const formCard = document.querySelector('.form-card') || document.getElementById('contact');
+          if (formCard) {
+            formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          const reqEl = document.getElementById('requirements');
+          if (reqEl) {
+            reqEl.focus();
+          }
+        }, 400);
+      }
+    } catch (e) {
+      console.warn('Could not read prefill from sessionStorage:', e);
+    }
+  }, []);
+
   // Listen for enquiry prefill events from service pills / cards
   useEffect(() => {
     const handler = (event: Event) => {

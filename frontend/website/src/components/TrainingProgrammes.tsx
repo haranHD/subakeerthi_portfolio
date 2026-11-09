@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CalendarCheck, ArrowRight, Check, ChevronDown } from 'lucide-react';
 import { Programme } from '../types';
 import { triggerEnquiry } from '../utils/enquiryEvents';
@@ -9,6 +10,7 @@ interface TrainingProgrammesProps {
 }
 
 export const TrainingProgrammes: React.FC<TrainingProgrammesProps> = ({ programmes }) => {
+  const navigate = useNavigate();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
@@ -102,20 +104,23 @@ export const TrainingProgrammes: React.FC<TrainingProgrammesProps> = ({ programm
                         type="button"
                         className="btn btn--primary btn--sm btn--full"
                         onClick={() =>
-                          triggerEnquiry({
-                            category: prog.intendedAudience.toLowerCase().includes('school') ||
-                              prog.intendedAudience.toLowerCase().includes('student')
-                                ? 'School / Educational Institution'
-                                : prog.intendedAudience.toLowerCase().includes('parent')
-                                ? 'Parent or Caregiver Group'
-                                : prog.intendedAudience.toLowerCase().includes('employee') ||
-                                  prog.intendedAudience.toLowerCase().includes('corporate') ||
-                                  prog.intendedAudience.toLowerCase().includes('hr')
-                                ? 'Workplace / Corporate Organisation'
-                                : 'Other Collaboration',
-                            areaOfInterest: prog.title.substring(0, 60),
-                            requirements: `I would like to enquire about the "${prog.title}" programme for my institution.`,
-                          })
+                          triggerEnquiry(
+                            {
+                              category: prog.intendedAudience.toLowerCase().includes('school') ||
+                                prog.intendedAudience.toLowerCase().includes('student')
+                                  ? 'School / Educational Institution'
+                                  : prog.intendedAudience.toLowerCase().includes('parent')
+                                  ? 'Parent or Caregiver Group'
+                                  : prog.intendedAudience.toLowerCase().includes('employee') ||
+                                    prog.intendedAudience.toLowerCase().includes('corporate') ||
+                                    prog.intendedAudience.toLowerCase().includes('hr')
+                                  ? 'Workplace / Corporate Organisation'
+                                  : 'Other Collaboration',
+                              areaOfInterest: prog.title.substring(0, 60),
+                              requirements: `I would like to enquire about the "${prog.title}" programme for my institution.`,
+                            },
+                            navigate
+                          )
                         }
                       >
                         <span>Enquire About This Programme</span>
@@ -145,11 +150,14 @@ export const TrainingProgrammes: React.FC<TrainingProgrammesProps> = ({ programm
               type="button"
               className="btn btn--secondary btn--sm"
               onClick={() =>
-                triggerEnquiry({
-                  category: 'Other Collaboration',
-                  areaOfInterest: 'Custom Programme Consultation',
-                  requirements: 'I need a custom-tailored programme for my institution. Please reach out to discuss options.',
-                })
+                triggerEnquiry(
+                  {
+                    category: 'Other Collaboration',
+                    areaOfInterest: 'Custom Programme Consultation',
+                    requirements: 'I need a custom-tailored programme for my institution. Please reach out to discuss options.',
+                  },
+                  navigate
+                )
               }
             >
               Custom Consultation

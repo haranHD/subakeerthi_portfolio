@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Award, Calendar, Building, ArrowRight, ShieldCheck, FileText } from 'lucide-react';
 import { Credential } from '../types';
 import { triggerEnquiry } from '../utils/enquiryEvents';
@@ -9,6 +10,7 @@ interface BackgroundProps {
 }
 
 export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
+  const navigate = useNavigate();
   const educationData = credentials.filter((c) => c.credentialType === 'EDUCATION');
   const trainingCredentialsData = credentials.filter((c) => c.credentialType === 'ACCREDITATION');
 
@@ -202,11 +204,14 @@ export const Background: React.FC<BackgroundProps> = ({ credentials }) => {
                   type="button"
                   className="btn btn--secondary btn--sm"
                   onClick={() =>
-                    triggerEnquiry({
-                      category: 'Other Collaboration',
-                      areaOfInterest: 'Custom Programme Consultation',
-                      requirements: 'Institutional verification documents may be requested directly for professional evaluation.',
-                    })
+                    triggerEnquiry(
+                      {
+                        category: 'Other Collaboration',
+                        areaOfInterest: 'Custom Programme Consultation',
+                        requirements: 'Institutional verification documents may be requested directly for professional evaluation.',
+                      },
+                      navigate
+                    )
                   }
                 >
                   <span>Request Verification Documents</span>
