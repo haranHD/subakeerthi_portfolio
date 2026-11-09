@@ -50,6 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
               <li><Link to="/about">About & Philosophy</Link></li>
               <li><Link to="/programmes">Training Programmes</Link></li>
               <li><Link to="/credentials">Verified Credentials</Link></li>
+              <li><Link to="/gallery">Social Service Gallery</Link></li>
               <li><Link to="/contact">Schedule a Consultation</Link></li>
             </ul>
           </div>

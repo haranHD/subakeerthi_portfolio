@@ -74,6 +74,15 @@ export const api = {
     }
   },
 
+  async getMedia(): Promise<any[]> {
+    try {
+      const res = await apiClient.get<ApiResponse<any[]>>('/media');
+      return res.data.data;
+    } catch {
+      return [];
+    }
+  },
+
   async submitEnquiry(payload: EnquiryPayload): Promise<ApiResponse<{ id: string }>> {
     const res = await apiClient.post<ApiResponse<{ id: string }>>('/enquiries', payload);
     return res.data;

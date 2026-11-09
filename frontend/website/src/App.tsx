@@ -7,6 +7,7 @@ import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ProgrammesPage } from './pages/ProgrammesPage';
 import { CredentialsPage } from './pages/CredentialsPage';
+import { GalleryPage } from './pages/GalleryPage';
 import { ContactPage } from './pages/ContactPage';
 import { api } from './services/api';
 import { Profile, Service, Programme, Credential, AudienceGroup } from './types';
@@ -331,6 +332,7 @@ export const App: React.FC = () => {
               path="/credentials"
               element={<CredentialsPage credentials={credentials} />}
             />
+            <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
             {/* Fallback route */}
             <Route path="*" element={<Navigate to="/" replace />} />

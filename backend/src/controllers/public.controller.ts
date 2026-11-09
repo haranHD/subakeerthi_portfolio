@@ -86,6 +86,19 @@ export const PublicController = {
     }
   },
 
+  async getMediaList(_req: Request, res: Response, next: NextFunction) {
+    try {
+      const media = await ContentRepository.getAllMediaAssets();
+      return res.json({
+        success: true,
+        message: 'Media assets retrieved successfully',
+        data: media,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
   async createEnquiry(req: Request, res: Response, next: NextFunction) {
     try {
       const validatedData = createEnquirySchema.parse(req.body);

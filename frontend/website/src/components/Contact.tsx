@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Send, AlertCircle, CheckCircle2, ShieldAlert, Loader2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, AlertCircle, CheckCircle2, ShieldAlert, Loader2, MessageCircle } from 'lucide-react';
 import { api } from '../services/api';
 import { EnquiryPrefill } from '../utils/enquiryEvents';
 import './Contact.css';
@@ -31,6 +31,7 @@ export const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
   // Listen for enquiry prefill events from service pills / cards
   useEffect(() => {
@@ -104,10 +105,16 @@ export const Contact: React.FC = () => {
     setSubmitError(null);
 
     try {
-      const response = await api.submitEnquiry(formData);
+      const submittedData = { ...formData };
+      const response = await api.submitEnquiry(submittedData);
       if (response.success) {
+        // Construct pre-filled WhatsApp link to Subakeerthii's official number
+        const waMessage = `Hello Subakeerthii MP,\nI have submitted an advisory consultation enquiry through your website:\n\n• Name: ${submittedData.fullName}\n• Organization: ${submittedData.organisation}\n• Phone: ${submittedData.phone || 'N/A'}\n• Email: ${submittedData.email || 'N/A'}\n• Category: ${submittedData.category}\n• Area of Interest: ${submittedData.areaOfInterest}\n• Language: ${submittedData.preferredLanguage}\n• Requirements: ${submittedData.requirements}`;
+        const waLink = `https://wa.me/917789937789?text=${encodeURIComponent(waMessage)}`;
+        setWhatsappUrl(waLink);
+
         setSubmitSuccess(
-          'Thank you. Your training enquiry has been delivered and stored securely. Subakeerthii MP will review your request and get in touch shortly.'
+          'Thank you. Your consultation enquiry has been recorded securely in the system. You can also send a direct copy to Subakeerthii MP on WhatsApp for instant confirmation.'
         );
         setFormData({
           fullName: '',
@@ -200,8 +207,8 @@ export const Contact: React.FC = () => {
           <div className="contact-form-side">
             <div className={`form-card ${hasPrefill ? 'form-card--prefilled' : ''}`}>
               <div className="form-header">
-                <h3>Discuss a Training Session</h3>
-                <p>Provide preliminary details regarding your institution or event to tailor the session format.</p>
+                <h3>Initiate an Advisory Consultation</h3>
+                <p>Provide preliminary details regarding your institution, corporate organization, or community initiative to tailor the engagement.</p>
               </div>
 
               {/* Prefill notice banner */}
@@ -213,12 +220,51 @@ export const Contact: React.FC = () => {
               )}
 
               {submitSuccess && (
-                <div className="demo-notice-alert" style={{ borderColor: 'var(--color-burgundy)', backgroundColor: 'var(--color-rose-light)' }}>
-                  <CheckCircle2 size={20} className="demo-alert-icon" style={{ color: 'var(--color-burgundy)' }} />
-                  <div>
-                    <strong>Enquiry Received Successfully:</strong>
-                    <p>{submitSuccess}</p>
+                <div
+                  className="demo-notice-alert"
+                  style={{
+                    borderColor: '#25D366',
+                    backgroundColor: '#F0FDF4',
+                    padding: '1.25rem',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <CheckCircle2 size={22} className="demo-alert-icon" style={{ color: '#15803D' }} />
+                    <strong style={{ color: '#166534', fontSize: '0.98rem' }}>
+                      Enquiry Logged in Admin Panel Successfully
+                    </strong>
                   </div>
+                  <p style={{ color: '#374151', fontSize: '0.86rem', lineHeight: 1.5, margin: 0 }}>
+                    {submitSuccess}
+                  </p>
+                  {whatsappUrl && (
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        backgroundColor: '#25D366',
+                        color: '#FFFFFF',
+                        fontWeight: 600,
+                        fontSize: '0.86rem',
+                        padding: '0.65rem 1.2rem',
+                        borderRadius: 6,
+                        textDecoration: 'none',
+                        boxShadow: '0 2px 8px rgba(37, 211, 102, 0.35)',
+                        marginTop: '0.35rem',
+                      }}
+                    >
+                      <MessageCircle size={17} />
+                      <span>Send Instant Copy via WhatsApp</span>
+                    </a>
+                  )}
                 </div>
               )}
 

@@ -55,6 +55,11 @@ export const Navbar: React.FC = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/gallery" className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
+                Gallery
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
                 Contact & FAQ
               </NavLink>
@@ -126,8 +131,13 @@ export const Navbar: React.FC = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/gallery" className="mobile-nav-link" onClick={closeMenu}>
+                <span>05 — Social Service Gallery</span>
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/contact" className="mobile-nav-link" onClick={closeMenu}>
-                <span>05 — Contact & FAQ</span>
+                <span>06 — Contact & FAQ</span>
               </NavLink>
             </li>
           </ul>

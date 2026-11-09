@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Enquiry } from '../types/admin';
-import { Search, Filter, Loader2, MessageSquare, Phone, Mail, Building } from 'lucide-react';
+import { Search, Filter, Loader2, MessageSquare, Phone, Mail, Building, MessageCircle } from 'lucide-react';
 import { PageLoader } from '../components/PageLoader';
 
 export const EnquiriesPage: React.FC = () => {
@@ -127,7 +127,32 @@ export const EnquiriesPage: React.FC = () => {
                 </div>
                 <div>
                   <div style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase' }}>Phone</div>
-                  <div>{selectedEnquiry.phone || '—'}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>{selectedEnquiry.phone || '—'}</span>
+                    {selectedEnquiry.phone && (
+                      <a
+                        href={`https://wa.me/${selectedEnquiry.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                          `Hello ${selectedEnquiry.fullName}, this is Subakeerthii MP following up on your consultation enquiry regarding ${selectedEnquiry.areaOfInterest}.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          backgroundColor: '#25D366',
+                          color: '#FFFFFF',
+                          padding: '0.2rem 0.5rem',
+                          borderRadius: 4,
+                          fontSize: '0.74rem',
+                          textDecoration: 'none',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontWeight: 600,
+                        }}
+                      >
+                        <MessageCircle size={12} /> WhatsApp
+                      </a>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <div style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase' }}>Category</div>
@@ -261,13 +286,40 @@ export const EnquiriesPage: React.FC = () => {
                       </td>
                       <td>{new Date(enq.createdAt).toLocaleDateString()}</td>
                       <td>
-                        <button
-                          onClick={() => openDetail(enq)}
-                          className="btn-secondary"
-                          style={{ padding: '0.4rem 0.75rem', fontSize: '0.82rem' }}
-                        >
-                          View & Reply
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                          <button
+                            onClick={() => openDetail(enq)}
+                            className="btn-secondary"
+                            style={{ padding: '0.35rem 0.65rem', fontSize: '0.78rem' }}
+                          >
+                            View & Reply
+                          </button>
+                          {enq.phone && (
+                            <a
+                              href={`https://wa.me/${enq.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                                `Hello ${enq.fullName}, this is Subakeerthii MP following up on your consultation enquiry regarding ${enq.areaOfInterest}.`
+                              )}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                backgroundColor: '#25D366',
+                                color: '#FFFFFF',
+                                padding: '0.35rem 0.6rem',
+                                borderRadius: 4,
+                                fontSize: '0.78rem',
+                                textDecoration: 'none',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.25rem',
+                                fontWeight: 600,
+                              }}
+                              title="Chat with enquirer on WhatsApp"
+                            >
+                              <MessageCircle size={13} />
+                              <span>WhatsApp</span>
+                            </a>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))

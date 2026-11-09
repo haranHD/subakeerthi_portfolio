@@ -1,0 +1,393 @@
+/* ============================================================
+   Gallery & Social Service Engagements Page Styles
+   ============================================================ */
+
+.gallery-section {
+  padding: 3.5rem 0 5rem;
+  background-color: #FAF8F5;
+}
+
+/* Category Filter Bar */
+.gallery-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 3rem;
+}
+
+.gallery-filter-btn {
+  background: #FFFFFF;
+  border: 1px solid #E2D9C5;
+  color: #1C2723;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-filter-btn:hover {
+  border-color: #145A43;
+  color: #145A43;
+  background-color: #F4F9F6;
+}
+
+.gallery-filter-btn--active {
+  background: #145A43 !important;
+  color: #FFFFFF !important;
+  border-color: #145A43 !important;
+  box-shadow: 0 4px 14px rgba(20, 90, 67, 0.25);
+  font-weight: 600;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.gallery-card {
+  background: #FFFFFF;
+  border: 1px solid #E8DFD0;
+  border-radius: 12px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+
+.gallery-card:hover {
+  transform: translateY(-4px);
+  border-color: #2F8F6F;
+  box-shadow: 0 12px 28px rgba(20, 90, 67, 0.08);
+}
+
+.gallery-card-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.gallery-category-pill {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  background: #EBF5F1;
+  color: #145A43;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.gallery-year-tag {
+  font-size: 0.78rem;
+  color: #888;
+  font-weight: 600;
+}
+
+.gallery-card-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.15rem;
+  color: #145A43;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.85rem;
+}
+
+.gallery-card-description {
+  font-size: 0.88rem;
+  color: #56665F;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gallery-card-impact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  background: #FAF5EB;
+  border-left: 3px solid #D7C7A1;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0D3F2F;
+  margin-bottom: 1.25rem;
+}
+
+.impact-icon {
+  color: #145A43;
+  flex-shrink: 0;
+}
+
+.gallery-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid #F0E9DC;
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.gallery-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.gallery-view-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #145A43;
+  font-weight: 600;
+  transition: gap 0.2s ease;
+}
+
+.gallery-card:hover .gallery-view-link {
+  gap: 0.5rem;
+  color: #2F8F6F;
+}
+
+.gallery-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.gallery-tag {
+  font-size: 0.72rem;
+  background: #F4F1EA;
+  color: #4A5750;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+/* Uploaded Media Showcase Section */
+.media-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.media-photo-card {
+  background: #FFFFFF;
+  border: 1px solid #E8DFD0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.media-photo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.media-photo-thumb {
+  height: 160px;
+  background-color: #FAF7F4;
+  overflow: hidden;
+}
+
+.media-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.media-photo-card:hover .media-photo-thumb img {
+  transform: scale(1.05);
+}
+
+.media-photo-info {
+  padding: 0.85rem;
+}
+
+.photo-type-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #145A43;
+  background: #EBF5F1;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+}
+
+.photo-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1C2723;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+/* Modal / Lightbox Styles */
+.gallery-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 28, 23, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.gallery-modal-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #E2D9C5;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1C2723;
+  z-index: 2;
+  transition: all 0.15s ease;
+}
+
+.gallery-modal-close:hover {
+  background: #FEE2E2;
+  color: #B91C1C;
+  border-color: #FCA5A5;
+}
+
+.gallery-modal-image-wrap {
+  width: 100%;
+  max-height: 340px;
+  overflow: hidden;
+  background: #FAF7F4;
+}
+
+.gallery-modal-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-modal-body {
+  padding: 2rem;
+}
+
+.gallery-modal-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.gallery-modal-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.35rem;
+  color: #145A43;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 1rem;
+}
+
+.gallery-modal-description {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #4A5750;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-modal-impact {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  background: #EBF5F1;
+  border-left: 4px solid #145A43;
+  border-radius: 4px;
+  color: #145A43;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.gallery-modal-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-card {
+    padding: 1.25rem;
+  }
+
+  .gallery-modal-body {
+    padding: 1.25rem;
+  }
+
+  .gallery-modal-title {
+    font-size: 1.15rem;
+  }
+}
