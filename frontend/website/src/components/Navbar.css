@@ -225,6 +225,19 @@
   transform: scaleX(1);
 }
 
+.nav-link.active,
+.nav-link--active {
+  color: var(--color-emerald-deep, #145A43);
+  font-weight: 600;
+  background-color: var(--color-soft-mint, #EBF5F1);
+}
+
+.nav-link.active::after,
+.nav-link--active::after {
+  transform: scaleX(1);
+  background-color: var(--color-emerald-primary, #145A43);
+}
+
 /* ── Header Actions ───────────────────────────────────────── */
 .header-actions {
   display: flex;

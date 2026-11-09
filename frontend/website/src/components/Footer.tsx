@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ArrowUp, ShieldCheck } from 'lucide-react';
 import { Profile } from '../types';
 import './Footer.css';
@@ -23,13 +24,13 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
         <div className="footer-grid">
           {/* Col 1: Identity & Bio */}
           <div className="footer-col footer-col--identity">
-            <div className="footer-brand">
+            <Link to="/" className="footer-brand" style={{ textDecoration: 'none' }}>
               <div className="footer-monogram" aria-hidden="true">SK</div>
               <div className="footer-brand-text">
                 <span className="footer-name">SUBAKEERTHII MP</span>
                 <span className="footer-tagline">LEGAL AWARENESS · POSH & POCSO TRAINING · CHILD SAFETY</span>
               </div>
-            </div>
+            </Link>
 
             <p className="footer-summary">
               Promoting preventative awareness, child safety education, workplace harassment prevention, and child-centred counselling support across schools, corporates, and communities.
@@ -45,14 +46,11 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
           <div className="footer-col">
             <h4 className="footer-col-title">Quick Navigation</h4>
             <ul className="footer-links-list">
-              <li><a href="#about">About</a></li>
-              <li><a href="#areas">Areas of Work</a></li>
-              <li><a href="#audience">Who She Supports</a></li>
-              <li><a href="#training">Programmes</a></li>
-              <li><a href="#approach">Approach</a></li>
-              <li><a href="#background">Credentials</a></li>
-              <li><a href="#faq">Frequently Asked Questions</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><Link to="/">Home Overview</Link></li>
+              <li><Link to="/about">About & Philosophy</Link></li>
+              <li><Link to="/programmes">Training Programmes</Link></li>
+              <li><Link to="/credentials">Verified Credentials</Link></li>
+              <li><Link to="/contact">Schedule a Consultation</Link></li>
             </ul>
           </div>
 
@@ -79,9 +77,9 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
             </ul>
 
             <div className="footer-invite-btn-wrap">
-              <a href="#contact" className="btn btn--rose btn--sm btn--full">
+              <Link to="/contact" className="btn btn--rose btn--sm btn--full">
                 Invite for a Session
-              </a>
+              </Link>
             </div>
           </div>
         </div>

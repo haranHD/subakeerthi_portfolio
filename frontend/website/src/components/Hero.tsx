@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, Languages, Award, Scale, FileText, Heart } from 'lucide-react';
 import { Profile } from '../types';
@@ -73,13 +74,13 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.32 }}
           >
-            <a href="#training" className="btn btn--primary hero-btn-main">
+            <Link to="/programmes" className="btn btn--primary hero-btn-main">
               <span>Explore Training Programmes</span>
               <ArrowRight size={18} className="btn-icon-animated" />
-            </a>
-            <a href="#contact" onClick={handleConsultation} className="btn btn--secondary hero-btn-sub">
+            </Link>
+            <Link to="/contact" className="btn btn--secondary hero-btn-sub">
               <span>Schedule a Consultation</span>
-            </a>
+            </Link>
           </motion.div>
 
           {/* Under CTAs: Refined Service Tags */}
@@ -89,51 +90,27 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.4 }}
           >
-            <a
-              href="#areas"
+            <Link
+              to="/programmes"
               className="service-pill"
-              onClick={(e) => {
-                e.preventDefault();
-                triggerEnquiry({
-                  category: 'Workplace / Corporate Organisation',
-                  areaOfInterest: 'POSH Workplace Training',
-                  requirements: 'Inquiring about POSH workplace training and Internal Committee compliance.',
-                });
-              }}
             >
               <span className="service-pill-icon"><ShieldCheck size={15} /></span>
               <span className="service-pill-text">POSH Awareness</span>
-            </a>
-            <a
-              href="#areas"
+            </Link>
+            <Link
+              to="/programmes"
               className="service-pill"
-              onClick={(e) => {
-                e.preventDefault();
-                triggerEnquiry({
-                  category: 'School / Educational Institution',
-                  areaOfInterest: 'POCSO School Awareness',
-                  requirements: 'Inquiring about POCSO awareness for school faculty and staff.',
-                });
-              }}
             >
               <span className="service-pill-icon"><BookOpen size={15} /></span>
               <span className="service-pill-text">POCSO Awareness</span>
-            </a>
-            <a
-              href="#areas"
+            </Link>
+            <Link
+              to="/programmes"
               className="service-pill"
-              onClick={(e) => {
-                e.preventDefault();
-                triggerEnquiry({
-                  category: 'Parent or Caregiver Group',
-                  areaOfInterest: 'Child Safety & Boundaries',
-                  requirements: 'Inquiring about child safety sessions and developmental guidance.',
-                });
-              }}
             >
               <span className="service-pill-icon"><HeartHandshake size={15} /></span>
               <span className="service-pill-text">Child Safety & Support</span>
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
 

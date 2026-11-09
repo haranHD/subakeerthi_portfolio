@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { AreasOfWork } from './components/AreasOfWork';
-import { WhoSheSupports } from './components/WhoSheSupports';
-import { TrainingProgrammes } from './components/TrainingProgrammes';
-import { Approach } from './components/Approach';
-import { Background } from './components/Background';
-import { FAQ } from './components/FAQ';
-import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ScrollToTop } from './components/ScrollToTop';
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
+import { ProgrammesPage } from './pages/ProgrammesPage';
+import { CredentialsPage } from './pages/CredentialsPage';
+import { ContactPage } from './pages/ContactPage';
 import { api } from './services/api';
 import { Profile, Service, Programme, Credential, AudienceGroup } from './types';
 
@@ -301,34 +298,33 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="portfolio-app">
-      <Helmet>
-        <title>Subakeerthii MP | Legal Awareness, POSH & POCSO Trainer, Child Counsellor</title>
-        <meta
-          name="description"
-          content="Professional portfolio of Subakeerthii MP — Legal Scholar, Certified POSH & POCSO Trainer, and Child Counsellor based in Erode, Tamil Nadu."
-        />
-        <meta property="og:title" content="Subakeerthii MP | Legal Awareness, POSH & POCSO Trainer" />
-        <meta
-          property="og:description"
-          content="Building safer schools, workplaces & communities through practical awareness, prevention, and responsible reporting."
-        />
-      </Helmet>
-
-      <Navbar />
-      <main id="main-content">
-        <Hero profile={profile} />
-        <About profile={profile} />
-        <AreasOfWork services={services} />
-        <WhoSheSupports audiences={audiences} />
-        <TrainingProgrammes programmes={programmes} />
-        <Approach />
-        <Background credentials={credentials} />
-        <FAQ />
-        <Contact />
-      </main>
-      <Footer profile={profile} />
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+      <div className="portfolio-app">
+        <Navbar />
+        <main id="main-content">
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage profile={profile} services={services} audiences={audiences} />}
+            />
+            <Route path="/about" element={<AboutPage profile={profile} />} />
+            <Route
+              path="/programmes"
+              element={<ProgrammesPage programmes={programmes} audiences={audiences} />}
+            />
+            <Route
+              path="/credentials"
+              element={<CredentialsPage credentials={credentials} />}
+            />
+            <Route path="/contact" element={<ContactPage />} />
+            {/* Fallback route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+        <Footer profile={profile} />
+      </div>
+    </BrowserRouter>
   );
 };
 

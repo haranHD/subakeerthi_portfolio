@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, ArrowUpRight, Phone, Mail } from 'lucide-react';
 import './Navbar.css';
 
@@ -20,7 +21,7 @@ export const Navbar: React.FC = () => {
     <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
       <div className="container header-container">
         {/* Brand / Logo */}
-        <a href="#home" className="header-brand" onClick={closeMenu} aria-label="Subakeerthii MP Home">
+        <Link to="/" className="header-brand" onClick={closeMenu} aria-label="Subakeerthii MP Home">
           <div className="brand-monogram" aria-hidden="true">
             <span>SK</span>
           </div>
@@ -28,19 +29,36 @@ export const Navbar: React.FC = () => {
             <span className="brand-name">SUBAKEERTHII MP</span>
             <span className="brand-subtitle">LEGAL AWARENESS · SAFETY · EMPOWERMENT</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav" aria-label="Main Navigation">
           <ul className="nav-list">
-            <li><a href="#about" className="nav-link">About</a></li>
-            <li><a href="#areas" className="nav-link">Expertise</a></li>
-            <li><a href="#audience" className="nav-link">Audiences</a></li>
-            <li><a href="#training" className="nav-link">Programmes</a></li>
-            <li><a href="#approach" className="nav-link">Approach</a></li>
-            <li><a href="#background" className="nav-link">Credentials</a></li>
-            <li><a href="#faq" className="nav-link">FAQ</a></li>
-            <li><a href="#contact" className="nav-link">Contact</a></li>
+            <li>
+              <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/programmes" className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
+                Programmes
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/credentials" className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
+                Credentials
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'nav-link--active' : ''}`}>
+                Contact & FAQ
+              </NavLink>
+            </li>
           </ul>
         </nav>
 
@@ -49,20 +67,21 @@ export const Navbar: React.FC = () => {
 
         {/* Header Actions */}
         <div className="header-actions">
-          <a href="#contact" className="btn btn--primary btn--sm header-cta-desktop">
+          <Link to="/contact" className="btn btn--primary btn--sm header-cta-desktop">
             <span>Book a Session</span>
             <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
+          </Link>
 
           {/* Mobile Icon-Only CTA */}
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="header-cta-mobile"
             title="Book a Session"
             aria-label="Book a Session"
+            onClick={closeMenu}
           >
             <ArrowUpRight size={18} />
-          </a>
+          </Link>
 
           {/* Mobile Menu Toggle Button */}
           <button
@@ -86,20 +105,37 @@ export const Navbar: React.FC = () => {
       >
         <div className="mobile-drawer-inner">
           <ul className="mobile-nav-list">
-            <li><a href="#about" className="mobile-nav-link" onClick={closeMenu}><span>01 — About</span></a></li>
-            <li><a href="#areas" className="mobile-nav-link" onClick={closeMenu}><span>02 — Areas of Work</span></a></li>
-            <li><a href="#audience" className="mobile-nav-link" onClick={closeMenu}><span>03 — Who She Supports</span></a></li>
-            <li><a href="#training" className="mobile-nav-link" onClick={closeMenu}><span>04 — Programmes</span></a></li>
-            <li><a href="#approach" className="mobile-nav-link" onClick={closeMenu}><span>05 — Approach</span></a></li>
-            <li><a href="#background" className="mobile-nav-link" onClick={closeMenu}><span>06 — Credentials</span></a></li>
-            <li><a href="#faq" className="mobile-nav-link" onClick={closeMenu}><span>07 — FAQ</span></a></li>
-            <li><a href="#contact" className="mobile-nav-link" onClick={closeMenu}><span>08 — Contact</span></a></li>
+            <li>
+              <NavLink to="/" end className="mobile-nav-link" onClick={closeMenu}>
+                <span>01 — Home</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" className="mobile-nav-link" onClick={closeMenu}>
+                <span>02 — About & Philosophy</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/programmes" className="mobile-nav-link" onClick={closeMenu}>
+                <span>03 — Training Programmes</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/credentials" className="mobile-nav-link" onClick={closeMenu}>
+                <span>04 — Credentials & Background</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact" className="mobile-nav-link" onClick={closeMenu}>
+                <span>05 — Contact & FAQ</span>
+              </NavLink>
+            </li>
           </ul>
 
           <div className="mobile-drawer-footer">
-            <a href="#contact" className="btn btn--primary btn--full" onClick={closeMenu}>
+            <Link to="/contact" className="btn btn--primary btn--full" onClick={closeMenu}>
               Invite for a Session
-            </a>
+            </Link>
             <div className="mobile-quick-contact">
               <a href="tel:+917789937789" className="quick-contact-item">
                 <Phone size={15} /> 7789937789
