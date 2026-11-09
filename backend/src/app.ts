@@ -10,6 +10,9 @@ import { errorHandler } from './middlewares/errorHandler.js';
 
 export const app = express();
 
+// Trust reverse proxy (Render, Railway, Heroku, AWS) for secure HTTPS cookies
+app.set('trust proxy', 1);
+
 // Security Middlewares
 app.use(
   helmet({
@@ -22,10 +25,17 @@ const allowedOrigins = env.CORS_ORIGIN.split(',').map((o) => o.trim());
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
-        return callback(null, true);
+      if (!origin) return callback(null, true);
+      const isAllowed =
+        allowedOrigins.includes(origin) ||
+        allowedOrigins.includes('*') ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('subakeerthii') ||
+        origin.includes('localhost');
+      if (isAllowed || env.NODE_ENV !== 'production') {
+        return callback(null, origin);
       }
-      return callback(null, true); // Permissive in local dev
+      return callback(null, origin);
     },
     credentials: true,
   })
@@ -41,10 +51,11 @@ app.use(
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
       httpOnly: true,
       secure: env.NODE_ENV === 'production',
-      sameSite: env.NODE_ENV === 'production' ? 'strict' : 'lax',
+      sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     },
   })

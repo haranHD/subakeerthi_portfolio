@@ -6,12 +6,13 @@
   "scripts": {
     "db:start": "/usr/lib/postgresql/16/bin/pg_isready -h /tmp || /usr/lib/postgresql/16/bin/pg_ctl -D ./data/pgdata -l ./data/pg.log -o \"-k /tmp -c listen_addresses=''\" start",
     "dev": "npm run db:start && tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
-    "seed": "tsx ../database/seed/seed.ts"
+    "seed": "node dist/seed.js",
+    "seed:dev": "tsx src/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
