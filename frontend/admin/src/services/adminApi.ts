@@ -15,28 +15,104 @@ import {
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
 
+const TOKEN_STORAGE_KEY = 'subakeerthii_admin_token';
+const USER_STORAGE_KEY = 'subakeerthii_admin_user';
+
+export const getStoredToken = (): string | null => {
+  try {
+    return localStorage.getItem(TOKEN_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+};
+
+export const getStoredUser = (): User | null => {
+  try {
+    const raw = localStorage.getItem(USER_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
+
+export const setStoredAuth = (token: string, user: User): void => {
+  try {
+    localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+  } catch {
+    // ignore
+  }
+};
+
+export const clearStoredAuth = (): void => {
+  try {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(USER_STORAGE_KEY);
+  } catch {
+    // ignore
+  }
+};
+
 export const adminClient = axios.create({
   baseURL: API_BASE,
   withCredentials: true,
   timeout: 60000,
 });
 
+// Request Interceptor: Attach Authorization Bearer header
+adminClient.interceptors.request.use((config) => {
+  const token = getStoredToken();
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Response Interceptor: Automatically redirect to login on 401 Unauthorized
+adminClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      clearStoredAuth();
+      if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
+        window.location.href = '/login?session_expired=1';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const adminApi = {
   // Auth
   async login(email: string, password: string): Promise<User> {
     const res = await adminClient.post('/auth/login', { email, password });
-    return res.data.data.user;
+    const { user, token } = res.data.data;
+    if (token && user) {
+      setStoredAuth(token, user);
+    }
+    return user;
   },
 
   async logout(): Promise<void> {
-    await adminClient.post('/auth/logout');
+    try {
+      await adminClient.post('/auth/logout');
+    } finally {
+      clearStoredAuth();
+    }
   },
 
   async getMe(): Promise<User | null> {
     try {
       const res = await adminClient.get('/auth/me');
-      return res.data.data.user;
+      const user = res.data.data.user;
+      if (user) {
+        const token = getStoredToken();
+        if (token) setStoredAuth(token, user);
+      }
+      return user;
     } catch {
+      clearStoredAuth();
       return null;
     }
   },

@@ -38,6 +38,8 @@ app.use(
       return callback(null, origin);
     },
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
 );
 
@@ -45,6 +47,7 @@ app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 // Express Session
+const isProd = env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production';
 app.use(
   session({
     name: 'subakeerthii.sid',
@@ -54,8 +57,8 @@ app.use(
     proxy: true,
     cookie: {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     },
   })

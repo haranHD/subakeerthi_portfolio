@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User } from '../types/admin';
-import { adminApi } from '../services/adminApi';
+import { adminApi, getStoredToken, getStoredUser } from '../services/adminApi';
 
 interface AuthContextType {
   user: User | null;
@@ -12,11 +12,18 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => getStoredUser());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function checkAuth() {
+      const token = getStoredToken();
+      if (!token) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
       try {
         const currentUser = await adminApi.getMe();
         setUser(currentUser);

@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react';
+import { Lock, Mail, AlertCircle, Info, Loader2 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('admin@subakeerthii.com');
   const [password, setPassword] = useState('ChangeMe123!');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const sessionExpired = searchParams.get('session_expired') === '1';
+
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +26,7 @@ export const LoginPage: React.FC = () => {
 
     try {
       await login(email, password);
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } catch (err: any) {
       const msg =
         err.code === 'ECONNABORTED' || err.message?.includes('timeout')
@@ -39,9 +47,42 @@ export const LoginPage: React.FC = () => {
           <p className="login-subtitle">Portfolio Administration Portal</p>
         </div>
 
+        {sessionExpired && !error && (
+          <div
+            style={{
+              backgroundColor: '#fff8e1',
+              border: '1px solid #ffe082',
+              color: '#855302',
+              padding: '0.75rem',
+              borderRadius: 6,
+              marginBottom: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.84rem',
+            }}
+          >
+            <Info size={16} style={{ flexShrink: 0 }} />
+            <span>Your session has expired or requires authentication. Please log in below.</span>
+          </div>
+        )}
+
         {error && (
-          <div style={{ backgroundColor: '#ffebee', color: '#c62828', padding: '0.75rem', borderRadius: 6, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem' }}>
-            <AlertCircle size={16} />
+          <div
+            style={{
+              backgroundColor: '#ffebee',
+              border: '1px solid #ffcdd2',
+              color: '#c62828',
+              padding: '0.75rem',
+              borderRadius: 6,
+              marginBottom: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.84rem',
+            }}
+          >
+            <AlertCircle size={16} style={{ flexShrink: 0 }} />
             <span>{error}</span>
           </div>
         )}
@@ -77,7 +118,12 @@ export const LoginPage: React.FC = () => {
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary"
+            style={{ width: '100%', justifyContent: 'center' }}
+          >
             {loading ? <Loader2 size={16} className="animate-spin" /> : 'Log In to Dashboard'}
           </button>
         </form>
