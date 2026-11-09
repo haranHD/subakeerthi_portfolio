@@ -14,6 +14,7 @@
   gap: 1.25rem;
   margin-bottom: 2.5rem;
   align-items: center;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -29,6 +30,16 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .faq-filter-pills {
+    width: auto;
+    justify-content: flex-start;
+  }
 }
 
 .faq-pill {
@@ -42,6 +53,9 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   box-shadow: 0 2px 6px rgba(20, 90, 67, 0.05);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .faq-pill:hover {
@@ -322,30 +336,38 @@
 }
 
 /* ============================================================
-   Mobile Responsiveness Overrides (< 480px)
+   Mobile Responsiveness Overrides (< 768px)
    ============================================================ */
-@media (max-width: 479px) {
+@media (max-width: 767px) {
+  .faq-controls {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
   .faq-filter-pills {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    justify-content: flex-start;
-    padding-bottom: 0.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.35rem;
+    width: 100%;
+    padding: 0;
   }
-  .faq-filter-pills::-webkit-scrollbar {
-    display: none;
-  }
+
   .faq-pill {
+    font-size: 0.78rem;
+    padding: 0.42rem 0.82rem;
     flex-shrink: 0;
   }
+
   .faq-search-wrapper {
     max-width: 100%;
+    width: 100%;
   }
+
   .faq-question-btn {
     font-size: 0.95rem;
     padding: 1rem 1.15rem;
   }
+
   .faq-support-banner {
     padding: 1.5rem 1.25rem;
   }
