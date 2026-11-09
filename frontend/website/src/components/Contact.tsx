@@ -108,13 +108,34 @@ export const Contact: React.FC = () => {
       const submittedData = { ...formData };
       const response = await api.submitEnquiry(submittedData);
       if (response.success) {
-        // Construct pre-filled WhatsApp link to Subakeerthii's official number
-        const waMessage = `Hello Subakeerthii MP,\nI have submitted an advisory consultation enquiry through your website:\n\n• Name: ${submittedData.fullName}\n• Organization: ${submittedData.organisation}\n• Phone: ${submittedData.phone || 'N/A'}\n• Email: ${submittedData.email || 'N/A'}\n• Category: ${submittedData.category}\n• Area of Interest: ${submittedData.areaOfInterest}\n• Language: ${submittedData.preferredLanguage}\n• Requirements: ${submittedData.requirements}`;
+        // Construct structured WhatsApp message template with user's notes and details
+        const waMessage =
+          `*New Consultation Enquiry — Subakeerthii MP*\n\n` +
+          `*Name:* ${submittedData.fullName}\n` +
+          `*Organisation / Institution:* ${submittedData.organisation}\n` +
+          `*Contact Phone:* ${submittedData.phone || 'Not provided'}\n` +
+          `*Official Email:* ${submittedData.email || 'Not provided'}\n` +
+          `*Engagement Category:* ${submittedData.category}\n` +
+          `*Area of Interest:* ${submittedData.areaOfInterest}\n` +
+          `*Preferred Language:* ${submittedData.preferredLanguage}\n\n` +
+          `*Requirements & Notes:*\n${submittedData.requirements}\n\n` +
+          `— Submitted via official web portfolio`;
+
         const waLink = `https://wa.me/917789937789?text=${encodeURIComponent(waMessage)}`;
         setWhatsappUrl(waLink);
 
+        // Automatically launch WhatsApp directly so user does not have to go separately
+        try {
+          const waTab = window.open(waLink, '_blank');
+          if (!waTab || waTab.closed || typeof waTab.closed === 'undefined') {
+            window.location.href = waLink;
+          }
+        } catch {
+          window.location.href = waLink;
+        }
+
         setSubmitSuccess(
-          'Thank you. Your consultation enquiry has been recorded securely in the system. You can also send a direct copy to Subakeerthii MP on WhatsApp for instant confirmation.'
+          'Your enquiry has been securely logged in our system and automatically directed to Subakeerthii MP on WhatsApp.'
         );
         setFormData({
           fullName: '',
@@ -234,7 +255,7 @@ export const Contact: React.FC = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                     <CheckCircle2 size={22} className="demo-alert-icon" style={{ color: '#15803D' }} />
                     <strong style={{ color: '#166534', fontSize: '0.98rem' }}>
-                      Enquiry Logged in Admin Panel Successfully
+                      Enquiry Logged & WhatsApp Initiated
                     </strong>
                   </div>
                   <p style={{ color: '#374151', fontSize: '0.86rem', lineHeight: 1.5, margin: 0 }}>
@@ -262,7 +283,7 @@ export const Contact: React.FC = () => {
                       }}
                     >
                       <MessageCircle size={17} />
-                      <span>Send Instant Copy via WhatsApp</span>
+                      <span>Click to Re-open WhatsApp if not launched</span>
                     </a>
                   )}
                 </div>
@@ -419,7 +440,7 @@ export const Contact: React.FC = () => {
                 <div className="form-group">
                   <div className="form-label-row">
                     <label htmlFor="requirements" className="form-label">
-                      Programme Requirements & Notes <span className="req">*</span>
+                      Consultation Scope & Notes <span className="req">*</span>
                     </label>
                     <span className={`char-counter ${formData.requirements.length >= 950 ? 'char-counter--limit' : ''}`}>
                       {formData.requirements.length} / 1000 characters
@@ -433,7 +454,7 @@ export const Contact: React.FC = () => {
                     value={formData.requirements}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    placeholder="Briefly describe your intended audience size, preferred format (in-person in Erode / Tamil Nadu or online), and focal topics..."
+                    placeholder="Describe your requirements, focus areas, audience size, and any specific notes for Subakeerthii MP..."
                     className={`form-textarea ${errors.requirements ? 'form-input--error' : ''}`}
                   ></textarea>
                   {errors.requirements && <span className="field-error">{errors.requirements}</span>}
