@@ -4,6 +4,7 @@ import { Profile, MediaAsset } from '../types/admin';
 import { Save, CheckCircle, Loader2, Upload, Image as ImageIcon, User, AlertCircle } from 'lucide-react';
 import { getMediaUrl } from '../utils/media';
 import { PageLoader } from '../components/PageLoader';
+import { optimizeImageFile } from '../utils/imageOptimizer';
 
 export const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -12,6 +13,7 @@ export const ProfilePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [portraitSavedNotice, setPortraitSavedNotice] = useState(false);
   const [uploadingPortrait, setUploadingPortrait] = useState(false);
   const [previewError, setPreviewError] = useState(false);
 
@@ -51,10 +53,45 @@ export const ProfilePage: React.FC = () => {
     }
   };
 
-  const handleSelectMedia = (storageUrl: string) => {
-    if (profile) {
-      setProfile({ ...profile, portraitUrl: storageUrl });
+  const handleSelectMedia = async (storageUrl: string) => {
+    if (!profile) return;
+    try {
+      setSaving(true);
+      const updated = await adminApi.updateProfile({ portraitUrl: storageUrl });
+      setProfile(updated);
       setPreviewError(false);
+      setPortraitSavedNotice(true);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setPortraitSavedNotice(false);
+      }, 4000);
+    } catch (err: any) {
+      console.error('Failed to auto-save selected portrait:', err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to update portrait. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleResetToOfficialPortrait = async () => {
+    if (!profile) return;
+    try {
+      setSaving(true);
+      const updated = await adminApi.updateProfile({ portraitUrl: '/subakeerthii-portrait.png' });
+      setProfile(updated);
+      setPreviewError(false);
+      setPortraitSavedNotice(true);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setPortraitSavedNotice(false);
+      }, 4000);
+    } catch (err: any) {
+      console.error('Failed to reset to official portrait:', err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to reset portrait.');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -64,15 +101,26 @@ export const ProfilePage: React.FC = () => {
 
     setUploadingPortrait(true);
     try {
-      const asset = await adminApi.uploadMedia(file, 'PORTRAIT');
-      if (profile) {
-        setProfile({ ...profile, portraitUrl: asset.storageUrl });
-        setPreviewError(false);
-      }
+      // 1. Optimize image in browser (downscales large mobile camera images to compact high-def JPEG)
+      const optimizedFile = await optimizeImageFile(file);
+
+      // 2. Upload to database storage
+      const asset = await adminApi.uploadMedia(optimizedFile, 'PORTRAIT');
+
+      // 3. Immediately persist to database profile so it remains permanent
+      const updated = await adminApi.updateProfile({ portraitUrl: asset.storageUrl });
+      setProfile(updated);
+      setPreviewError(false);
       setMediaAssets((prev) => [asset, ...prev]);
+      setPortraitSavedNotice(true);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setPortraitSavedNotice(false);
+      }, 4000);
     } catch (err: any) {
-      console.error(err);
-      alert(err?.response?.data?.message || 'Failed to upload portrait image. Please try again.');
+      console.error('Portrait upload or save failed:', err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to upload and save portrait image. Please try again.');
     } finally {
       setUploadingPortrait(false);
       e.target.value = '';
@@ -90,8 +138,9 @@ export const ProfilePage: React.FC = () => {
       setProfile(updated);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to save profile changes.');
     } finally {
       setSaving(false);
     }
@@ -211,11 +260,31 @@ export const ProfilePage: React.FC = () => {
                   border: '1px solid var(--admin-border)',
                 }}
               >
-                <label className="form-label" style={{ fontWeight: 700, color: 'var(--admin-burgundy)' }}>
-                  Hero Section Portrait Photo
-                </label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                  <label className="form-label" style={{ fontWeight: 700, color: 'var(--admin-burgundy)', margin: 0 }}>
+                    Hero Section Portrait Photo
+                  </label>
+                  {portraitSavedNotice && (
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        backgroundColor: '#E8F5E9',
+                        color: '#2E7D32',
+                        padding: '0.2rem 0.65rem',
+                        borderRadius: 16,
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        border: '1px solid #C8E6C9',
+                      }}
+                    >
+                      <CheckCircle size={13} /> Saved permanently in Database!
+                    </span>
+                  )}
+                </div>
                 <p style={{ fontSize: '0.78rem', color: '#666', marginBottom: '1rem' }}>
-                  This official portrait is displayed on the main website homepage inside the editorial arch frame.
+                  This official portrait is displayed on the main website homepage inside the editorial arch frame. Any uploaded photo or selection is saved immediately to the database and remains set permanently until your next update.
                 </p>
 
                 <div
@@ -283,7 +352,7 @@ export const ProfilePage: React.FC = () => {
                       <label
                         className="btn-primary"
                         style={{
-                          cursor: uploadingPortrait ? 'not-allowed' : 'pointer',
+                          cursor: uploadingPortrait || saving ? 'not-allowed' : 'pointer',
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '0.5rem',
@@ -293,7 +362,7 @@ export const ProfilePage: React.FC = () => {
                       >
                         {uploadingPortrait ? (
                           <>
-                            <Loader2 size={15} className="animate-spin" /> Uploading...
+                            <Loader2 size={15} className="animate-spin" /> Uploading & Saving...
                           </>
                         ) : (
                           <>
@@ -304,19 +373,15 @@ export const ProfilePage: React.FC = () => {
                           type="file"
                           accept="image/*"
                           onChange={handleDirectPortraitUpload}
-                          disabled={uploadingPortrait}
+                          disabled={uploadingPortrait || saving}
                           style={{ display: 'none' }}
                         />
                       </label>
 
                       <button
                         type="button"
-                        onClick={() => {
-                          if (profile) {
-                            setProfile({ ...profile, portraitUrl: '/subakeerthii-portrait.png' });
-                            setPreviewError(false);
-                          }
-                        }}
+                        onClick={handleResetToOfficialPortrait}
+                        disabled={saving || uploadingPortrait}
                         className="btn-secondary"
                         style={{
                           display: 'inline-flex',
@@ -324,7 +389,7 @@ export const ProfilePage: React.FC = () => {
                           gap: '0.4rem',
                           fontSize: '0.82rem',
                           padding: '0.6rem 0.9rem',
-                          cursor: 'pointer',
+                          cursor: saving || uploadingPortrait ? 'not-allowed' : 'pointer',
                         }}
                       >
                         Use Official Portrait
@@ -333,7 +398,7 @@ export const ProfilePage: React.FC = () => {
 
                     <div className="form-group" style={{ marginBottom: '1rem' }}>
                       <label className="form-label" style={{ fontSize: '0.78rem' }}>
-                        Image Path / URL (Auto-set on upload or pick below)
+                        Image Path / URL (Auto-persisted to database)
                       </label>
                       <input
                         type="text"

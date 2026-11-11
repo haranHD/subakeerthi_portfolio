@@ -4,6 +4,7 @@ import { MediaAsset } from '../types/admin';
 import { Upload, Trash2, Copy, Check, Loader2, Image as ImageIcon, AlertCircle } from 'lucide-react';
 import { getMediaUrl } from '../utils/media';
 import { PageLoader } from '../components/PageLoader';
+import { optimizeImageFile } from '../utils/imageOptimizer';
 
 export const MediaPage: React.FC = () => {
   const [media, setMedia] = useState<MediaAsset[]>([]);
@@ -46,7 +47,8 @@ export const MediaPage: React.FC = () => {
     setUploadSuccess(null);
 
     try {
-      await adminApi.uploadMedia(file, assetType, (percent) => {
+      const optimizedFile = await optimizeImageFile(file);
+      await adminApi.uploadMedia(optimizedFile, assetType, (percent) => {
         setUploadProgress(percent);
       });
       setUploadSuccess(`Successfully uploaded "${file.name}"`);
