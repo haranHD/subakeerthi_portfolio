@@ -4,9 +4,9 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private paths
+# Disallow internal API paths
 Disallow: /api/
 
 # XML Sitemaps
-Sitemap: https://subakeerthiimp.com/sitemap.xml
-Sitemap: https://www.subakeerthiimp.com/sitemap.xml
+Sitemap: https://subakeerthii.in/sitemap.xml
+Sitemap: https://www.subakeerthii.in/sitemap.xml

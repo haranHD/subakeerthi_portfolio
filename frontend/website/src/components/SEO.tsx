@@ -32,7 +32,7 @@ export const SEO: React.FC<SEOProps> = ({
   const currentOrigin =
     typeof window !== 'undefined' && window.location.origin
       ? window.location.origin
-      : 'https://subakeerthiimp.com';
+      : 'https://subakeerthii.in';
 
   const fullCanonicalUrl = `${currentOrigin}${canonicalPath}`;
   const fullImageUrl = ogImage.startsWith('http') ? ogImage : `${currentOrigin}${ogImage}`;
