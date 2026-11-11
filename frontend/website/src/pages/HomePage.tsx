@@ -1,8 +1,8 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, CheckCircle2 } from 'lucide-react';
 import { Hero } from '../components/Hero';
+import { SEO } from '../components/SEO';
 import { Profile, Service, AudienceGroup } from '../types';
 import './PageHeader.css';
 
@@ -15,13 +15,12 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ profile, services, audiences }) => {
   return (
     <>
-      <Helmet>
-        <title>Subakeerthii MP | Legal Scholar, Certified POSH & POCSO Trainer, Child Counsellor</title>
-        <meta
-          name="description"
-          content="Subakeerthii MP combines legal scholarship, child psychology, and scientific understanding to deliver practical statutory education in POSH Act 2013, POCSO Act 2012, and Child Safeguarding."
-        />
-      </Helmet>
+      <SEO
+        title="Subakeerthii MP | Certified POSH & POCSO Trainer, Child Counsellor & Legal Awareness Scholar"
+        description="Official portfolio of Subakeerthii MP — Certified POSH Trainer, Certified POCSO Trainer, Child Counsellor, and Legal Scholar based in Erode, Tamil Nadu. Specialist in statutory awareness programs, school safeguarding, workplace harassment prevention, and child psychology."
+        keywords="trainer, awareness program, counselling, psychology, child psychology, posh, pocso, posh trainer, pocso trainer, posh awareness program, pocso awareness program, child counsellor, child counselling, legal awareness, legal scholar, lawyer legal trainer, school awareness program, corporate posh training, workplace compliance, internal committee training, IC capacity building, Subakeerthii MP, Erode, Coimbatore, Salem, Tamil Nadu, bilingual legal trainer"
+        canonicalPath="/"
+      />
 
       {/* Hero Section with 4:5 Portrait, Editorial Typography & Full-Width Credentials Strip */}
       <Hero profile={profile} />

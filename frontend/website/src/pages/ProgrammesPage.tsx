@@ -1,9 +1,9 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { TrainingProgrammes } from '../components/TrainingProgrammes';
 import { WhoSheSupports } from '../components/WhoSheSupports';
+import { SEO } from '../components/SEO';
 import { Programme, AudienceGroup } from '../types';
 import './PageHeader.css';
 
@@ -15,13 +15,12 @@ interface ProgrammesPageProps {
 export const ProgrammesPage: React.FC<ProgrammesPageProps> = ({ programmes, audiences }) => {
   return (
     <>
-      <Helmet>
-        <title>Training Programmes & Workshops | POSH Act 2013 & POCSO Act 2012</title>
-        <meta
-          name="description"
-          content="Explore certified training programmes by Subakeerthii MP in POSH Act 2013 compliance, POCSO Act 2012 school safeguarding, and child psychology support."
-        />
-      </Helmet>
+      <SEO
+        title="Awareness Programs & Training Workshops | POSH Trainer, POCSO Trainer & Child Psychology"
+        description="Explore certified awareness programs and institutional training workshops conducted by Subakeerthii MP: POSH Act 2013 workplace compliance, POCSO Act 2012 school safeguarding, and child developmental counselling."
+        keywords="awareness program, trainer, posh, pocso, posh trainer, pocso trainer, child psychology, counselling, child counsellor, posh awareness program, pocso awareness program, corporate compliance training, school child protection workshops, internal committee training, tamil nadu"
+        canonicalPath="/programmes"
+      />
 
       {/* Editorial Header */}
       <section className="page-editorial-header">

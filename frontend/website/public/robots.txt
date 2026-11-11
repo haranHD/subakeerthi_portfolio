@@ -1,0 +1,12 @@
+# Robots.txt for Subakeerthii MP Official Web Portfolio
+# Permits all major search engine crawlers (Googlebot, Bingbot, etc.)
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private paths
+Disallow: /api/
+
+# XML Sitemaps
+Sitemap: https://subakeerthiimp.com/sitemap.xml
+Sitemap: https://www.subakeerthiimp.com/sitemap.xml

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Mail } from 'lucide-react';
 import { Background } from '../components/Background';
+import { SEO } from '../components/SEO';
 import { Credential } from '../types';
 import './PageHeader.css';
 
@@ -13,13 +13,12 @@ interface CredentialsPageProps {
 export const CredentialsPage: React.FC<CredentialsPageProps> = ({ credentials }) => {
   return (
     <>
-      <Helmet>
-        <title>Academic & Professional Credentials | Subakeerthii MP</title>
-        <meta
-          name="description"
-          content="Review verified credentials of Subakeerthii MP: LL.B. (Pursuing), Certified POSH Trainer, Certified POCSO Trainer, and Diploma in Child Psychology."
-        />
-      </Helmet>
+      <SEO
+        title="Accreditations & Credentials | Subakeerthii MP — POSH, POCSO & Child Psychology"
+        description="Verified credentials and accreditations of Subakeerthii MP: LL.B. (Pursuing), Certified POSH Trainer, Certified POCSO Trainer, and Diploma in Child Psychology."
+        keywords="subakeerthii mp credentials, certified posh trainer, certified pocso trainer, diploma in child psychology, child counsellor, legal scholar, statutory trainer accreditation, erode, tamil nadu"
+        canonicalPath="/credentials"
+      />
 
       {/* Editorial Header */}
       <section className="page-editorial-header">

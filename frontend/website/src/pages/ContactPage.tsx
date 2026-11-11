@@ -1,19 +1,18 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Contact } from '../components/Contact';
 import { FAQ } from '../components/FAQ';
+import { SEO } from '../components/SEO';
 import './PageHeader.css';
 
 export const ContactPage: React.FC = () => {
   return (
     <>
-      <Helmet>
-        <title>Schedule a Consultation & Contact | Subakeerthii MP</title>
-        <meta
-          name="description"
-          content="Invite Subakeerthii MP to conduct certified POSH Act 2013 training, POCSO Act 2012 school workshops, or child counselling consultations. Available in English & Tamil."
-        />
-      </Helmet>
+      <SEO
+        title="Contact & Schedule a Session | POSH & POCSO Trainer, Child Counsellor"
+        description="Invite Subakeerthii MP to conduct certified POSH Act 2013 training, POCSO Act 2012 school safety workshops, or child counselling consultations. Available in English & Tamil across Erode, Tamil Nadu, and pan-India online."
+        keywords="contact posh trainer, hire pocso trainer, schedule awareness program, child counselling consultation, legal scholar lawyer trainer, erode, coimbatore, salem, tamil nadu"
+        canonicalPath="/contact"
+      />
 
       {/* Editorial Header */}
       <section className="page-editorial-header">

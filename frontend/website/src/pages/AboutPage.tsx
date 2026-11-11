@@ -1,9 +1,9 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award } from 'lucide-react';
 import { About } from '../components/About';
 import { Approach } from '../components/Approach';
+import { SEO } from '../components/SEO';
 import { Profile } from '../types';
 import './PageHeader.css';
 
@@ -14,13 +14,12 @@ interface AboutPageProps {
 export const AboutPage: React.FC<AboutPageProps> = ({ profile }) => {
   return (
     <>
-      <Helmet>
-        <title>About Subakeerthii MP | Legal Scholarship, Psychology & Prevention</title>
-        <meta
-          name="description"
-          content="Learn about Subakeerthii MP's interdisciplinary background combining legal scholarship, certified POSH & POCSO training, and scientific child psychology."
-        />
-      </Helmet>
+      <SEO
+        title="About Subakeerthii MP | Legal Scholarship, Child Psychology & Certified POSH/POCSO Trainer"
+        description="Learn about Subakeerthii MP's background combining legal scholarship, certified POSH & POCSO training, and scientific child psychology. Delivering prevention-first awareness programs in Tamil Nadu."
+        keywords="about subakeerthii mp, legal scholar, child psychology, child counsellor, child counselling, certified posh trainer, certified pocso trainer, awareness program, prevention first education, erode, tamil nadu"
+        canonicalPath="/about"
+      />
 
       {/* Editorial Header */}
       <section className="page-editorial-header">

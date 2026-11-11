@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 import {
   Heart,
   ShieldCheck,
@@ -141,13 +141,12 @@ export const GalleryPage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Social Service & Community Engagements | Subakeerthii MP</title>
-        <meta
-          name="description"
-          content="Explore field initiatives, school POCSO child safety campaigns, community legal literacy camps, and institutional advocacy led by Subakeerthii MP across Tamil Nadu."
-        />
-      </Helmet>
+      <SEO
+        title="Social Service & Community Awareness Gallery | Subakeerthii MP"
+        description="Explore field initiatives, school POCSO child safety campaigns, community legal literacy camps, and institutional awareness programs led by Subakeerthii MP across Tamil Nadu."
+        keywords="subakeerthii mp gallery, social service, community awareness program, child safety workshop photos, pocso training photos, school outreach tamil nadu, legal awareness camps"
+        canonicalPath="/gallery"
+      />
 
       {/* Editorial Header */}
       <section className="page-editorial-header">
