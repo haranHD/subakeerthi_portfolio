@@ -308,6 +308,27 @@ export const ProfilePage: React.FC = () => {
                           style={{ display: 'none' }}
                         />
                       </label>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (profile) {
+                            setProfile({ ...profile, portraitUrl: '/subakeerthii-portrait.png' });
+                            setPreviewError(false);
+                          }
+                        }}
+                        className="btn-secondary"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.4rem',
+                          fontSize: '0.82rem',
+                          padding: '0.6rem 0.9rem',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Use Official Portrait
+                      </button>
                     </div>
 
                     <div className="form-group" style={{ marginBottom: '1rem' }}>
@@ -363,6 +384,9 @@ export const ProfilePage: React.FC = () => {
                                   src={getMediaUrl(asset.storageUrl)}
                                   alt={asset.originalName}
                                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).style.opacity = '0.2';
+                                  }}
                                 />
                               </button>
                             );

@@ -450,11 +450,14 @@ export const AdminController = {
         return res.status(400).json({ success: false, message: 'No file uploaded' });
       }
 
-      const storageUrl = `/uploads/${req.file.filename}`;
+      // Convert file buffer directly into persistent base64 Data URI
+      // Stored inside the Supabase cloud database, immune to Render container wipe!
+      const base64 = req.file.buffer.toString('base64');
+      const storageUrl = `data:${req.file.mimetype};base64,${base64}`;
       const assetType = (req.body.assetType as string) || 'OTHER';
 
       const asset = await ContentRepository.createMediaAsset({
-        fileName: req.file.filename,
+        fileName: req.file.originalname,
         originalName: req.file.originalname,
         mimeType: req.file.mimetype,
         size: req.file.size,
@@ -471,7 +474,7 @@ export const AdminController = {
 
       return res.status(201).json({
         success: true,
-        message: 'File uploaded successfully',
+        message: 'File uploaded and permanently saved in database',
         data: asset,
       });
     } catch (err) {

@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import session from 'express-session';
 import path from 'path';
+import fs from 'fs';
 import { env } from './config/env.js';
 import { UPLOADS_DIR } from './config/paths.js';
 import apiRoutes from './routes/index.js';
@@ -43,8 +44,8 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ extended: true, limit: '5mb' }));
+app.use(express.json({ limit: '25mb' }));
+app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
 // Express Session
 const isProd = env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production';
@@ -64,13 +65,17 @@ app.use(
   })
 );
 
-// Static uploads directory (supports both backend/uploads and cwd uploads)
+// Static uploads & public assets directory (supports both backend/uploads and cwd uploads)
 const staticUploadOptions = {
   setHeaders: (res: express.Response) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   },
 };
+const publicDir = path.resolve(process.cwd(), 'public');
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir, staticUploadOptions));
+}
 app.use('/uploads', express.static(UPLOADS_DIR, staticUploadOptions));
 if (path.resolve(process.cwd(), 'uploads') !== UPLOADS_DIR) {
   app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads'), staticUploadOptions));
