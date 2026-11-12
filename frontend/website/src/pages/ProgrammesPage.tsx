@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar } from 'lucide-react';
-import { TrainingProgrammes } from '../components/TrainingProgrammes';
-import { WhoSheSupports } from '../components/WhoSheSupports';
-import { SEO } from '../components/SEO';
+import { TrainingProgrammes } from '../components/sections/TrainingProgrammes';
+import { WhoSheSupports } from '../components/sections/WhoSheSupports';
+import { SEO } from '../components/common/SEO';
 import { Programme, AudienceGroup } from '../types';
-import './PageHeader.css';
+import '../styles/PageHeader.css';
 
 interface ProgrammesPageProps {
   programmes: Programme[];

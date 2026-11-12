@@ -34,34 +34,48 @@ subakeerthii-portfolio/
 ├── frontend/
 │   ├── website/                  # Public portfolio (React 18 + Vite 5 + TS)
 │   │   ├── src/
-│   │   │   ├── components/       # 10 Section components + CSS
+│   │   │   ├── components/
+│   │   │   │   ├── common/       # Shared utilities (SEO, ScrollToTop)
+│   │   │   │   ├── layout/       # Global chrome (Navbar, Footer)
+│   │   │   │   └── sections/     # Feature section components + CSS
+│   │   │   ├── config/           # Centralized asset metadata
+│   │   │   ├── data/             # Resilient client-side fallback content
+│   │   │   ├── hooks/            # Custom React hooks
+│   │   │   ├── pages/            # Route-level page views
 │   │   │   ├── services/api.ts   # Axios client for public endpoints
-│   │   │   ├── styles/global.css # Design system tokens & base typography
-│   │   │   └── types/            # TypeScript interfaces
-│   │   └── public/               # Client portrait, banner, and favicon
+│   │   │   ├── styles/           # Design system tokens & PageHeader.css
+│   │   │   ├── types/            # TypeScript interfaces
+│   │   │   └── utils/            # Event dispatchers & media URL resolvers
+│   │   └── public/               # Portrait, banner, favicon, robots.txt & sitemap.xml
 │   │
 │   └── admin/                    # Admin dashboard (React 18 + Vite 5 + TS)
 │       └── src/
+│           ├── components/       # Shared UI loaders
 │           ├── context/          # AuthContext for session management
 │           ├── layouts/          # AdminLayout with responsive sidebar
 │           ├── pages/            # 11 CRUD and management pages
 │           ├── services/         # adminApi Axios client
-│           └── styles/admin.css  # Admin design tokens & data tables
+│           ├── styles/admin.css  # Admin design tokens & data tables
+│           ├── types/            # Admin TypeScript definitions
+│           └── utils/            # Client image compression & media helpers
 │
 ├── backend/                      # Node.js + Express.js + TypeScript
 │   ├── src/
-│   │   ├── config/               # Database singleton & Zod env validation
-│   │   ├── controllers/          # Public, Auth, and Admin controllers
+│   │   ├── config/               # Database singleton, paths & Zod env validation
+│   │   ├── controllers/          # Public, Auth, Media & Admin controllers
 │   │   ├── middlewares/          # Auth, error handler, rate limiters, upload
 │   │   ├── repositories/         # Prisma query abstraction layer
 │   │   ├── routes/               # Modular Express routers
+│   │   ├── types/                # Express session & request augmentations
+│   │   ├── utils/                # Token & helper utilities
 │   │   ├── validators/           # Zod input schemas
 │   │   ├── app.ts                # Express application configuration
+│   │   ├── seed.ts               # Idempotent initial seed script
 │   │   └── server.ts             # Server entry point & graceful shutdown
-│   └── prisma/
-│       └── schema.prisma         # 10 Relational models
+│   ├── prisma/
+│   │   └── schema.prisma         # Relational models (incl. MediaAsset DB storage)
+│   └── public/                   # Official portrait & banner static assets
 │
-├── database/seed/seed.ts         # Authentic client seed data
 ├── docs/                         # Architecture, API, Schema & Deployment docs
 ├── docker-compose.yml            # Reference production container stack
 ├── package.json                  # Root npm workspace configuration

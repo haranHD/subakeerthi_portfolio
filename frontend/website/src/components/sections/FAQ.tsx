@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, HelpCircle, Sparkles, MessageCircle, ArrowRight, ShieldAlert } from 'lucide-react';
-import { triggerEnquiry } from '../utils/enquiryEvents';
+import { triggerEnquiry } from '../../utils/enquiryEvents';
 import './FAQ.css';
 
 interface FAQItem {
@@ -234,7 +234,7 @@ export const FAQ: React.FC = () => {
                           >
                             <div className="faq-answer-content">
                               <p className="faq-answer-text">{faq.answer}</p>
-                              
+
                               {faq.highlight && (
                                 <div className="faq-highlight-pill">
                                   <Sparkles size={14} className="highlight-icon" />

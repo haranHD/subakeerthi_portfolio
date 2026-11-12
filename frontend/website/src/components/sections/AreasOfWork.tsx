@@ -11,8 +11,8 @@ import {
   ArrowRight,
   LucideIcon
 } from 'lucide-react';
-import { Service } from '../types';
-import { triggerEnquiry } from '../utils/enquiryEvents';
+import { Service } from '../../types';
+import { triggerEnquiry } from '../../utils/enquiryEvents';
 import './AreasOfWork.css';
 
 const iconMap: Record<string, LucideIcon> = {

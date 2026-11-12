@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { School, Heart, Sparkles, Briefcase, ArrowUpRight, LucideIcon } from 'lucide-react';
-import { AudienceGroup } from '../types';
-import { triggerEnquiry } from '../utils/enquiryEvents';
+import { AudienceGroup } from '../../types';
+import { triggerEnquiry } from '../../utils/enquiryEvents';
 import './WhoSheSupports.css';
 
 const iconMap: Record<string, LucideIcon> = {
@@ -81,7 +81,7 @@ export const WhoSheSupports: React.FC<WhoSheSupportsProps> = ({ audiences }) => 
                 </div>
 
                 <h3 className="audience-title">{aud.title}</h3>
-                
+
                 <p className="audience-desc">
                   {aud.description}
                 </p>

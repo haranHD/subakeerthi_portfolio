@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Award, Calendar, Building, ArrowRight, ShieldCheck, FileText } from 'lucide-react';
-import { Credential } from '../types';
-import { triggerEnquiry } from '../utils/enquiryEvents';
+import { Credential } from '../../types';
+import { triggerEnquiry } from '../../utils/enquiryEvents';
 import './Background.css';
 
 interface BackgroundProps {

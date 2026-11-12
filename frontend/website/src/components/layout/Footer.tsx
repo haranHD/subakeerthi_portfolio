@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ArrowUp, ShieldCheck } from 'lucide-react';
-import { Profile } from '../types';
+import { Profile } from '../../types';
 import './Footer.css';
 
 interface FooterProps {

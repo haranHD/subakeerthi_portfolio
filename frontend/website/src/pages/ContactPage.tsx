@@ -1,9 +1,9 @@
 import React from 'react';
-import { Contact } from '../components/Contact';
-import { FAQ } from '../components/FAQ';
-import { SEO } from '../components/SEO';
+import { Contact } from '../components/sections/Contact';
+import { FAQ } from '../components/sections/FAQ';
+import { SEO } from '../components/common/SEO';
 import { Profile } from '../types';
-import './PageHeader.css';
+import '../styles/PageHeader.css';
 
 interface ContactPageProps {
   profile?: Profile | null;

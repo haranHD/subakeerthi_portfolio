@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CalendarCheck, ArrowRight, Check, ChevronDown } from 'lucide-react';
-import { Programme } from '../types';
-import { triggerEnquiry } from '../utils/enquiryEvents';
+import { Programme } from '../../types';
+import { triggerEnquiry } from '../../utils/enquiryEvents';
 import './TrainingProgrammes.css';
 
 interface TrainingProgrammesProps {

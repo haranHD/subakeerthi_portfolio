@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award } from 'lucide-react';
-import { About } from '../components/About';
-import { Approach } from '../components/Approach';
-import { SEO } from '../components/SEO';
+import { About } from '../components/sections/About';
+import { Approach } from '../components/sections/Approach';
+import { SEO } from '../components/common/SEO';
 import { Profile } from '../types';
-import './PageHeader.css';
+import '../styles/PageHeader.css';
 
 interface AboutPageProps {
   profile?: Profile | null;

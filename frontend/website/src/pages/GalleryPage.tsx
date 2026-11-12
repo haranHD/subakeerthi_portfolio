@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SEO } from '../components/SEO';
+import { SEO } from '../components/common/SEO';
 import {
   Heart,
   ShieldCheck,
@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import { getMediaUrl } from '../utils/media';
-import './PageHeader.css';
+import '../styles/PageHeader.css';
 import './GalleryPage.css';
 
 interface GalleryItem {

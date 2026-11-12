@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Mail } from 'lucide-react';
-import { Background } from '../components/Background';
-import { SEO } from '../components/SEO';
+import { Background } from '../components/sections/Background';
+import { SEO } from '../components/common/SEO';
 import { Credential } from '../types';
-import './PageHeader.css';
+import '../styles/PageHeader.css';
 
 interface CredentialsPageProps {
   credentials: Credential[];

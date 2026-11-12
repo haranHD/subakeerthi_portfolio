@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Send, AlertCircle, CheckCircle2, ShieldAlert, Loader2, MessageCircle } from 'lucide-react';
-import { api } from '../services/api';
-import { EnquiryPrefill } from '../utils/enquiryEvents';
-import { Profile } from '../types';
+import { api } from '../../services/api';
+import { EnquiryPrefill } from '../../utils/enquiryEvents';
+import { Profile } from '../../types';
 import './Contact.css';
 
 interface ContactProps {

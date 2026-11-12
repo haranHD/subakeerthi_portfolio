@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Shield, Sparkles, Heart } from 'lucide-react';
-import { Profile } from '../types';
+import { Profile } from '../../types';
 import './About.css';
 
 interface AboutProps {

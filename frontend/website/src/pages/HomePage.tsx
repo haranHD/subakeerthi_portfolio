@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, CheckCircle2 } from 'lucide-react';
-import { Hero } from '../components/Hero';
-import { SEO } from '../components/SEO';
+import { Hero } from '../components/sections/Hero';
+import { SEO } from '../components/common/SEO';
 import { Profile, Service, AudienceGroup } from '../types';
-import './PageHeader.css';
+import '../styles/PageHeader.css';
 
 interface HomePageProps {
   profile?: Profile | null;

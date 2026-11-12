@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, Languages, Award, Scale, FileText, Heart } from 'lucide-react';
-import { Profile } from '../types';
-import { triggerEnquiry } from '../utils/enquiryEvents';
-import { ASSETS } from '../config/assets';
-import { getMediaUrl } from '../utils/media';
+import { Profile } from '../../types';
+import { triggerEnquiry } from '../../utils/enquiryEvents';
+import { ASSETS } from '../../config/assets';
+import { getMediaUrl } from '../../utils/media';
 import './Hero.css';
 
 interface HeroProps {
