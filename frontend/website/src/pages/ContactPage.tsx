@@ -2,9 +2,14 @@ import React from 'react';
 import { Contact } from '../components/Contact';
 import { FAQ } from '../components/FAQ';
 import { SEO } from '../components/SEO';
+import { Profile } from '../types';
 import './PageHeader.css';
 
-export const ContactPage: React.FC = () => {
+interface ContactPageProps {
+  profile?: Profile | null;
+}
+
+export const ContactPage: React.FC<ContactPageProps> = ({ profile }) => {
   return (
     <>
       <SEO
@@ -26,7 +31,7 @@ export const ContactPage: React.FC = () => {
       </section>
 
       {/* Interactive Booking & Enquiry Form */}
-      <Contact />
+      <Contact profile={profile} />
 
       {/* Frequently Asked Questions */}
       <FAQ />

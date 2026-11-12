@@ -13,7 +13,7 @@ async function main() {
 
   const admin = await prisma.adminUser.upsert({
     where: { email: adminEmail },
-    update: { passwordHash },
+    update: {},
     create: {
       email: adminEmail,
       passwordHash,
@@ -21,9 +21,9 @@ async function main() {
       isActive: true,
     },
   });
-  console.log(`✅ Admin account provisioned: ${admin.email}`);
+  console.log(`✅ Admin account verified: ${admin.email}`);
 
-  // 2. Profile
+  // 2. Profile (Non-destructive: never overwrite existing profile edited via Admin Panel)
   const existingProfile = await prisma.profile.findFirst();
   const profileData = {
     fullName: 'Subakeerthii MP',
@@ -55,15 +55,12 @@ async function main() {
     ],
   };
 
-  if (existingProfile) {
-    await prisma.profile.update({
-      where: { id: existingProfile.id },
-      data: profileData,
-    });
-  } else {
+  if (!existingProfile) {
     await prisma.profile.create({ data: profileData });
+    console.log('✅ Profile seeded (initial creation)');
+  } else {
+    console.log('ℹ️ Existing profile found — skipping profile seed to preserve client edits');
   }
-  console.log('✅ Profile seeded');
 
   // 3. Services (6 cards)
   const services = [
@@ -141,14 +138,19 @@ async function main() {
     },
   ];
 
-  for (const s of services) {
-    await prisma.service.upsert({
-      where: { slug: s.slug },
-      update: s,
-      create: s,
-    });
+  const serviceCount = await prisma.service.count();
+  if (serviceCount === 0) {
+    for (const s of services) {
+      await prisma.service.upsert({
+        where: { slug: s.slug },
+        update: {},
+        create: s,
+      });
+    }
+    console.log(`✅ ${services.length} Services seeded`);
+  } else {
+    console.log(`ℹ️ ${serviceCount} Services already exist — skipping service seed`);
   }
-  console.log(`✅ ${services.length} Services seeded`);
 
   // 4. Programmes (6 modules)
   const programmes = [
@@ -256,14 +258,19 @@ async function main() {
     },
   ];
 
-  for (const p of programmes) {
-    await prisma.programme.upsert({
-      where: { slug: p.slug },
-      update: p,
-      create: p,
-    });
+  const programmeCount = await prisma.programme.count();
+  if (programmeCount === 0) {
+    for (const p of programmes) {
+      await prisma.programme.upsert({
+        where: { slug: p.slug },
+        update: {},
+        create: p,
+      });
+    }
+    console.log(`✅ ${programmes.length} Programmes seeded`);
+  } else {
+    console.log(`ℹ️ ${programmeCount} Programmes already exist — skipping programme seed`);
   }
-  console.log(`✅ ${programmes.length} Programmes seeded`);
 
   // 5. Credentials (5 authentic credentials)
   const credentials = [
@@ -328,11 +335,15 @@ async function main() {
     },
   ];
 
-  await prisma.credential.deleteMany({});
-  for (const c of credentials) {
-    await prisma.credential.create({ data: c });
+  const credentialCount = await prisma.credential.count();
+  if (credentialCount === 0) {
+    for (const c of credentials) {
+      await prisma.credential.create({ data: c });
+    }
+    console.log(`✅ ${credentials.length} Credentials seeded`);
+  } else {
+    console.log(`ℹ️ ${credentialCount} Credentials already exist — skipping credential seed`);
   }
-  console.log(`✅ ${credentials.length} Credentials seeded`);
 
   // 6. Audience Groups (4 groups)
   const audiences = [
@@ -378,11 +389,15 @@ async function main() {
     },
   ];
 
-  await prisma.audienceGroup.deleteMany({});
-  for (const a of audiences) {
-    await prisma.audienceGroup.create({ data: a });
+  const audienceCount = await prisma.audienceGroup.count();
+  if (audienceCount === 0) {
+    for (const a of audiences) {
+      await prisma.audienceGroup.create({ data: a });
+    }
+    console.log(`✅ ${audiences.length} Audience groups seeded`);
+  } else {
+    console.log(`ℹ️ ${audienceCount} Audience groups already exist — skipping audience seed`);
   }
-  console.log(`✅ ${audiences.length} Audience groups seeded`);
 
   // 7. Site Settings
   const settings = [
@@ -397,11 +412,11 @@ async function main() {
   for (const s of settings) {
     await prisma.siteSetting.upsert({
       where: { key: s.key },
-      update: { value: s.value },
+      update: {},
       create: s,
     });
   }
-  console.log(`✅ ${settings.length} Site settings seeded`);
+  console.log(`✅ ${settings.length} Site settings verified`);
 
   console.log('🎉 Database seeding completed successfully!');
 }

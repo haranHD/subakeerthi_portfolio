@@ -25,18 +25,41 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
   React.useEffect(() => {
     if (!targetPortraitUrl || targetPortraitUrl === activeSrc) return;
 
-    // Smoothly preload new image before switching to prevent glitching/flashing
-    const img = new Image();
-    img.src = targetPortraitUrl;
-    img.onload = () => {
-      setActiveSrc(targetPortraitUrl);
-      setImageLoaded(true);
+    let cancelled = false;
+    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const loadImage = (attempt: number) => {
+      const img = new Image();
+      img.onload = () => {
+        if (!cancelled) {
+          setActiveSrc(targetPortraitUrl);
+          setImageLoaded(true);
+        }
+      };
+      img.onerror = () => {
+        if (cancelled) return;
+        if (attempt < 2) {
+          // Retry once in case the backend media endpoint is waking up
+          retryTimer = setTimeout(() => loadImage(attempt + 1), 2500);
+        } else {
+          setActiveSrc(ASSETS.portrait.src);
+          setImageLoaded(true);
+        }
+      };
+      img.src = targetPortraitUrl;
     };
-    img.onerror = () => {
-      setActiveSrc(ASSETS.portrait.src);
-      setImageLoaded(true);
+
+    loadImage(1);
+
+    return () => {
+      cancelled = true;
+      if (retryTimer) clearTimeout(retryTimer);
     };
-  }, [targetPortraitUrl]);
+  }, [targetPortraitUrl, activeSrc]);
+
+  const eyebrowLocation = (profile?.location || 'Erode, Tamil Nadu').replace(/,\s*India$/i, '').toUpperCase();
+  const displayName = (profile?.fullName || 'SUBAKEERTHII MP').toUpperCase();
+  const displayHeadline = profile?.headline || 'Legal Scholar · Certified POSH & POCSO Trainer';
 
   const handleConsultation = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -71,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             transition={{ duration: 0.45, delay: 0.08 }}
           >
             <span className="eyebrow-dot"></span>
-            <span>BILINGUAL STATUTORY EDUCATION · ERODE, TAMIL NADU</span>
+            <span>BILINGUAL STATUTORY EDUCATION · {eyebrowLocation}</span>
           </motion.div>
 
           <motion.h1
@@ -177,8 +200,8 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
 
                 {/* Discreet Credential Label at bottom of portrait */}
                 <div className="portrait-discreet-label">
-                  <span className="portrait-label-name">SUBAKEERTHII MP</span>
-                  <span className="portrait-label-title">Legal Scholar · Certified POSH & POCSO Trainer</span>
+                  <span className="portrait-label-name">{displayName}</span>
+                  <span className="portrait-label-title">{displayHeadline}</span>
                 </div>
               </div>
             </div>

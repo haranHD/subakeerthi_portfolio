@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Send, AlertCircle, CheckCircle2, ShieldAlert, Loader2, MessageCircle } from 'lucide-react';
 import { api } from '../services/api';
 import { EnquiryPrefill } from '../utils/enquiryEvents';
+import { Profile } from '../types';
 import './Contact.css';
+
+interface ContactProps {
+  profile?: Profile | null;
+}
 
 interface FormState {
   fullName: string;
@@ -15,7 +20,11 @@ interface FormState {
   requirements: string;
 }
 
-export const Contact: React.FC = () => {
+export const Contact: React.FC<ContactProps> = ({ profile }) => {
+  const contactPhone = profile?.phone || '+91 7789937789';
+  const contactEmail = profile?.email || 'llbsubakeerthii@gmail.com';
+  const contactLocation = profile?.location || 'Erode, Tamil Nadu, India';
+  const whatsappNumber = contactPhone.replace(/[^0-9]/g, '') || '917789937789';
   const [formData, setFormData] = useState<FormState>({
     fullName: '',
     organisation: '',
@@ -152,7 +161,7 @@ export const Contact: React.FC = () => {
           `*Requirements & Notes:*\n${submittedData.requirements}\n\n` +
           `— Submitted via official web portfolio`;
 
-        const waLink = `https://wa.me/917789937789?text=${encodeURIComponent(waMessage)}`;
+        const waLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
         setWhatsappUrl(waLink);
 
         // Automatically launch WhatsApp directly so user does not have to go separately
@@ -206,24 +215,24 @@ export const Contact: React.FC = () => {
             </p>
 
             <div className="contact-details-list">
-              <a href="tel:+917789937789" className="contact-channel-card">
+              <a href={`tel:${contactPhone.replace(/[^0-9+]/g, '')}`} className="contact-channel-card">
                 <div className="channel-icon-box">
                   <Phone size={20} />
                 </div>
                 <div className="channel-info">
                   <span className="channel-label">Telephone Contact</span>
-                  <span className="channel-value">+91 7789937789</span>
+                  <span className="channel-value">{contactPhone}</span>
                   <span className="channel-action">Click to call directly</span>
                 </div>
               </a>
 
-              <a href="mailto:llbsubakeerthii@gmail.com" className="contact-channel-card">
+              <a href={`mailto:${contactEmail}`} className="contact-channel-card">
                 <div className="channel-icon-box">
                   <Mail size={20} />
                 </div>
                 <div className="channel-info">
                   <span className="channel-label">Email Enquiries</span>
-                  <span className="channel-value">llbsubakeerthii@gmail.com</span>
+                  <span className="channel-value">{contactEmail}</span>
                   <span className="channel-action">Click to open email client</span>
                 </div>
               </a>
@@ -234,7 +243,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="channel-info">
                   <span className="channel-label">Location / Base</span>
-                  <span className="channel-value">Erode, Tamil Nadu, India</span>
+                  <span className="channel-value">{contactLocation}</span>
                   <span className="channel-action">Available for regional & on-site sessions</span>
                 </div>
               </div>

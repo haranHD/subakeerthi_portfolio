@@ -7,9 +7,13 @@ interface AboutProps {
   profile?: Profile | null;
 }
 
-export const About: React.FC<AboutProps> = () => {
+export const About: React.FC<AboutProps> = ({ profile }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+
+  const bioParagraphs = profile?.biography
+    ? profile.biography.split(/\n+/).map((p) => p.trim()).filter(Boolean)
+    : [];
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -69,17 +73,30 @@ export const About: React.FC<AboutProps> = () => {
               Law, Psychology & Prevention — Working Together.
             </h2>
 
-            <p className="about-lead">
-              Combining a foundational education in science with ongoing legal scholarship and specialised training, Subakeerthii MP works to create safer environments for educational institutions, workplaces, and families.
-            </p>
+            {bioParagraphs.length > 0 ? (
+              <>
+                <p className="about-lead">{bioParagraphs[0]}</p>
+                {bioParagraphs.slice(1).map((para, idx) => (
+                  <p key={idx} className="about-text">
+                    {para}
+                  </p>
+                ))}
+              </>
+            ) : (
+              <>
+                <p className="about-lead">
+                  Combining a foundational education in science with ongoing legal scholarship and specialised training, Subakeerthii MP works to create safer environments for educational institutions, workplaces, and families.
+                </p>
 
-            <p className="about-text">
-              Her professional orientation brings together statutory awareness, child protection standards, and child-centred counselling insights. With active preparation as an LL.B. scholar and certified credentials in POSH and POCSO training, her approach prioritises proactive prevention over reactive dispute management.
-            </p>
+                <p className="about-text">
+                  Her professional orientation brings together statutory awareness, child protection standards, and child-centred counselling insights. With active preparation as an LL.B. scholar and certified credentials in POSH and POCSO training, her approach prioritises proactive prevention over reactive dispute management.
+                </p>
 
-            <p className="about-text">
-              Whether conducting sensitisation sessions for corporate leadership, guiding school educators on statutory child protection obligations, or assisting parents in fostering open communication, her sessions are structured with empathy, factual clarity, and respect for every individual's dignity.
-            </p>
+                <p className="about-text">
+                  Whether conducting sensitisation sessions for corporate leadership, guiding school educators on statutory child protection obligations, or assisting parents in fostering open communication, her sessions are structured with empathy, factual clarity, and respect for every individual's dignity.
+                </p>
+              </>
+            )}
 
             {/* Core Values Matrix */}
             <div className="about-principles-grid">

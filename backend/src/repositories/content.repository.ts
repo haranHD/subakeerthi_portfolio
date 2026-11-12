@@ -175,10 +175,27 @@ export const ContentRepository = {
     return prisma.mediaAsset.create({ data });
   },
 
+  async getMediaAssetById(id: string) {
+    return prisma.mediaAsset.findUnique({ where: { id } });
+  },
+
   async getAllMediaAssets() {
-    return prisma.mediaAsset.findMany({
+    const assets = await prisma.mediaAsset.findMany({
       orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        fileName: true,
+        originalName: true,
+        mimeType: true,
+        size: true,
+        assetType: true,
+        createdAt: true,
+      },
     });
+    return assets.map((asset) => ({
+      ...asset,
+      storageUrl: `/api/v1/media/${asset.id}/file`,
+    }));
   },
 
   async deleteMediaAsset(id: string) {

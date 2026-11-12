@@ -166,7 +166,9 @@ export const ProfilePage: React.FC = () => {
       // 3. Immediately persist to database profile so it remains permanent
       const updated = await adminApi.updateProfile({ portraitUrl: asset.storageUrl });
       setProfile(updated);
-      setUrlInputValue('');
+      setUrlInputValue(
+        asset.storageUrl && !asset.storageUrl.startsWith('data:') ? asset.storageUrl : ''
+      );
       setPreviewError(false);
       setMediaAssets((prev) => [asset, ...prev]);
       setPortraitSavedNotice(true);
@@ -191,8 +193,22 @@ export const ProfilePage: React.FC = () => {
     setSuccess(false);
 
     try {
-      const updated = await adminApi.updateProfile(profile);
+      const payload: Partial<Profile> = {
+        fullName: profile.fullName,
+        headline: profile.headline,
+        biography: profile.biography,
+        location: profile.location,
+        phone: profile.phone,
+        email: profile.email,
+        ...(profile.portraitUrl && !profile.portraitUrl.startsWith('data:')
+          ? { portraitUrl: profile.portraitUrl }
+          : {}),
+      };
+      const updated = await adminApi.updateProfile(payload);
       setProfile(updated);
+      if (updated?.portraitUrl && !updated.portraitUrl.startsWith('data:')) {
+        setUrlInputValue(updated.portraitUrl);
+      }
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err: any) {

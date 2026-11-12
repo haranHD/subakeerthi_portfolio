@@ -333,7 +333,7 @@ export const App: React.FC = () => {
               element={<CredentialsPage credentials={credentials} />}
             />
             <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/contact" element={<ContactPage profile={profile} />} />
             {/* Fallback route */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

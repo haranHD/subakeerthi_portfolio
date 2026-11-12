@@ -13,11 +13,36 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE,
-  timeout: 45000,
+  timeout: 65000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// Retry GET requests automatically if Render backend is waking up from cold sleep
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const config = error.config as any;
+    const isTransient =
+      error.code === 'ECONNABORTED' ||
+      error.code === 'ERR_NETWORK' ||
+      !error.response ||
+      [502, 503, 504].includes(error.response?.status);
+
+    if (
+      config &&
+      config.method?.toLowerCase() === 'get' &&
+      isTransient &&
+      (config._retryCount || 0) < 2
+    ) {
+      config._retryCount = (config._retryCount || 0) + 1;
+      await new Promise((r) => setTimeout(r, 2000));
+      return apiClient.request(config);
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const api = {
   async getProfile(): Promise<Profile | null> {

@@ -35,8 +35,9 @@ export const CredentialsPage: React.FC = () => {
     try {
       await adminApi.updateCredential(c.id, { isPublished: !c.isPublished });
       await loadCredentials();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to update credential status.');
     }
   };
 
@@ -45,8 +46,9 @@ export const CredentialsPage: React.FC = () => {
     try {
       await adminApi.deleteCredential(id);
       await loadCredentials();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to delete credential.');
     }
   };
 
@@ -62,8 +64,9 @@ export const CredentialsPage: React.FC = () => {
       }
       setEditing(null);
       await loadCredentials();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to save credential.');
     }
   };
 

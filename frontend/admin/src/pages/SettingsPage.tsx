@@ -44,8 +44,9 @@ export const SettingsPage: React.FC = () => {
       await adminApi.updateSetting(s.key, s.value, s.description);
       setSuccessKey(s.key);
       setTimeout(() => setSuccessKey(null), 2500);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to update setting.');
     } finally {
       setSavingKey(null);
     }

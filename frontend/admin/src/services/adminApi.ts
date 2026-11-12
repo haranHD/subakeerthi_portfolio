@@ -56,8 +56,17 @@ export const clearStoredAuth = (): void => {
 export const adminClient = axios.create({
   baseURL: API_BASE,
   withCredentials: true,
-  timeout: 60000,
+  timeout: 95000,
 });
+
+export const wakeBackend = async (): Promise<void> => {
+  try {
+    const backendBase = API_BASE.replace(/\/api\/v1\/?$/, '');
+    await axios.get(`${backendBase}/health`, { timeout: 65000 });
+  } catch {
+    // Silent warm-up ping; ignore errors
+  }
+};
 
 // Request Interceptor: Attach Authorization Bearer header
 adminClient.interceptors.request.use((config) => {
@@ -69,10 +78,28 @@ adminClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Response Interceptor: Automatically redirect to login on 401 Unauthorized
+// Response Interceptor: Handle 401 redirect and retry GET requests on Render cold-start timeouts
 adminClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const config = error.config as any;
+    const isTransient =
+      error.code === 'ECONNABORTED' ||
+      error.code === 'ERR_NETWORK' ||
+      !error.response ||
+      [502, 503, 504].includes(error.response?.status);
+
+    if (
+      config &&
+      config.method?.toLowerCase() === 'get' &&
+      isTransient &&
+      (config._retryCount || 0) < 2
+    ) {
+      config._retryCount = (config._retryCount || 0) + 1;
+      await new Promise((r) => setTimeout(r, 2000));
+      return adminClient.request(config);
+    }
+
     if (error.response?.status === 401) {
       clearStoredAuth();
       if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
@@ -130,7 +157,7 @@ export const adminApi = {
   },
 
   async updateProfile(data: Partial<Profile>): Promise<Profile> {
-    const res = await adminClient.put('/admin/profile', data);
+    const res = await adminClient.put('/admin/profile', data, { timeout: 120000 });
     return res.data.data;
   },
 

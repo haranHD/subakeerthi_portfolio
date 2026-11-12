@@ -28,6 +28,7 @@ export const AdminController = {
   // Profile
   async getProfile(_req: Request, res: Response, next: NextFunction) {
     try {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
       const profile = await ContentRepository.getProfile();
       return res.json({
         success: true,
@@ -475,7 +476,10 @@ export const AdminController = {
       return res.status(201).json({
         success: true,
         message: 'File uploaded and permanently saved in database',
-        data: asset,
+        data: {
+          ...asset,
+          storageUrl: `/api/v1/media/${asset.id}/file`,
+        },
       });
     } catch (err) {
       return next(err);

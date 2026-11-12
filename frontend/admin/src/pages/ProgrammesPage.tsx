@@ -36,8 +36,9 @@ export const ProgrammesPage: React.FC = () => {
     try {
       await adminApi.updateProgramme(p.id, { isPublished: !p.isPublished });
       await loadProgrammes();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to update programme status.');
     }
   };
 
@@ -46,8 +47,9 @@ export const ProgrammesPage: React.FC = () => {
     try {
       await adminApi.deleteProgramme(id);
       await loadProgrammes();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to delete programme.');
     }
   };
 
@@ -78,8 +80,9 @@ export const ProgrammesPage: React.FC = () => {
       }
       setEditing(null);
       await loadProgrammes();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err?.response?.data?.message || err?.message || 'Failed to save programme.');
     }
   };
 
