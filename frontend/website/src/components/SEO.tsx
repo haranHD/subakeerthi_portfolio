@@ -29,13 +29,9 @@ export const SEO: React.FC<SEOProps> = ({
   ogImage = '/subakeerthii-portrait.png',
   schema,
 }) => {
-  const currentOrigin =
-    typeof window !== 'undefined' && window.location.origin
-      ? window.location.origin
-      : 'https://subakeerthii.in';
-
-  const fullCanonicalUrl = `${currentOrigin}${canonicalPath}`;
-  const fullImageUrl = ogImage.startsWith('http') ? ogImage : `${currentOrigin}${ogImage}`;
+  const siteOrigin = 'https://subakeerthii.in';
+  const fullCanonicalUrl = `${siteOrigin}${canonicalPath}`;
+  const fullImageUrl = ogImage.startsWith('http') ? ogImage : `${siteOrigin}${ogImage}`;
 
   return (
     <Helmet>
