@@ -10,20 +10,32 @@ import './Hero.css';
 
 interface HeroProps {
   profile?: Profile | null;
+  isProfileLoading?: boolean;
 }
 
-export const Hero: React.FC<HeroProps> = ({ profile }) => {
+export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false }) => {
   const navigate = useNavigate();
   const headline = 'Building Safer Schools, Workplaces & Communities.';
   const description =
     'Combining legal scholarship, child psychology, and scientific understanding to deliver practical, prevention-first awareness and training for safer institutions and communities.';
 
-  const targetPortraitUrl = profile?.portraitUrl ? getMediaUrl(profile.portraitUrl) : ASSETS.portrait.src;
-  const [activeSrc, setActiveSrc] = React.useState<string>(targetPortraitUrl);
-  const [imageLoaded, setImageLoaded] = React.useState<boolean>(true);
+  const targetPortraitUrl = profile?.portraitUrl
+    ? getMediaUrl(profile.portraitUrl)
+    : !isProfileLoading
+      ? ASSETS.portrait.src
+      : null;
+
+  const [activeSrc, setActiveSrc] = React.useState<string | null>(targetPortraitUrl);
+  const [imageLoaded, setImageLoaded] = React.useState<boolean>(!!targetPortraitUrl);
+  const [retrySeed, setRetrySeed] = React.useState<number>(0);
 
   React.useEffect(() => {
-    if (!targetPortraitUrl || targetPortraitUrl === activeSrc) return;
+    if (!targetPortraitUrl) {
+      return;
+    }
+    if (targetPortraitUrl === activeSrc && imageLoaded) {
+      return;
+    }
 
     let cancelled = false;
     let retryTimer: ReturnType<typeof setTimeout> | null = null;
@@ -38,8 +50,8 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
       };
       img.onerror = () => {
         if (cancelled) return;
-        if (attempt < 2) {
-          // Retry once in case the backend media endpoint is waking up
+        if (attempt < 3) {
+          // Retry while backend media endpoint wakes from idle
           retryTimer = setTimeout(() => loadImage(attempt + 1), 2500);
         } else {
           setActiveSrc(ASSETS.portrait.src);
@@ -55,7 +67,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
       cancelled = true;
       if (retryTimer) clearTimeout(retryTimer);
     };
-  }, [targetPortraitUrl, activeSrc]);
+  }, [targetPortraitUrl, activeSrc, imageLoaded, retrySeed]);
 
   const eyebrowLocation = (profile?.location || 'Erode, Tamil Nadu').replace(/,\s*India$/i, '').toUpperCase();
   const displayName = (profile?.fullName || 'SUBAKEERTHII MP').toUpperCase();
@@ -178,22 +190,27 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
             {/* Outer editorial frame with refined double-border detailing */}
             <div className="portrait-editorial-frame">
               <div className="portrait-editorial-inner">
-                <img
-                  src={activeSrc}
-                  alt={ASSETS.portrait.alt}
-                  className="portrait-editorial-image"
-                  loading="eager"
-                  style={{
-                    opacity: imageLoaded ? 1 : 0.85,
-                    transition: 'opacity 0.35s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                  }}
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src !== ASSETS.portrait.src && !img.src.endsWith(ASSETS.portrait.src)) {
-                      img.src = ASSETS.portrait.src;
-                    }
-                  }}
-                />
+                {activeSrc ? (
+                  <img
+                    src={activeSrc}
+                    alt={ASSETS.portrait.alt}
+                    className="portrait-editorial-image"
+                    loading="eager"
+                    style={{
+                      opacity: imageLoaded ? 1 : 0.85,
+                      transition: 'opacity 0.35s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                    onError={() => {
+                      if (activeSrc !== ASSETS.portrait.src) {
+                        setActiveSrc(null);
+                        setImageLoaded(false);
+                        setRetrySeed((n) => n + 1);
+                      }
+                    }}
+                  />
+                ) : (
+                  <div className="portrait-skeleton" aria-label="Loading official portrait" />
+                )}
 
                 {/* Subtle depth lighting overlay */}
                 <div className="portrait-depth-gradient" aria-hidden="true" />

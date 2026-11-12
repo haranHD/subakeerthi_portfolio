@@ -277,22 +277,23 @@ export const App: React.FC = () => {
       return null;
     }
   });
+  const [isProfileLoading, setIsProfileLoading] = useState<boolean>(() => {
+    try {
+      return !localStorage.getItem('subakeerthii_profile_cache');
+    } catch {
+      return true;
+    }
+  });
   const [services, setServices] = useState<Service[]>(defaultServices);
   const [programmes, setProgrammes] = useState<Programme[]>(defaultProgrammes);
   const [credentials, setCredentials] = useState<Credential[]>(defaultCredentials);
   const [audiences, setAudiences] = useState<AudienceGroup[]>(defaultAudiences);
 
   useEffect(() => {
-    async function loadContent() {
-      try {
-        const [profData, servData, progData, credData, audData] = await Promise.all([
-          api.getProfile(),
-          api.getServices(),
-          api.getProgrammes(),
-          api.getCredentials(),
-          api.getAudiences(),
-        ]);
-
+    // Load profile independently so portrait updates immediately without waiting for other collections
+    api
+      .getProfile()
+      .then((profData) => {
         if (profData) {
           setProfile(profData);
           try {
@@ -301,6 +302,23 @@ export const App: React.FC = () => {
             console.warn('Failed to cache profile in localStorage', e);
           }
         }
+      })
+      .catch((err) => {
+        console.warn('Profile fetch error, using fallback:', err);
+      })
+      .finally(() => {
+        setIsProfileLoading(false);
+      });
+
+    async function loadContent() {
+      try {
+        const [servData, progData, credData, audData] = await Promise.all([
+          api.getServices(),
+          api.getProgrammes(),
+          api.getCredentials(),
+          api.getAudiences(),
+        ]);
+
         if (servData.length > 0) setServices(servData);
         if (progData.length > 0) setProgrammes(progData);
         if (credData.length > 0) setCredentials(credData);
@@ -321,7 +339,14 @@ export const App: React.FC = () => {
           <Routes>
             <Route
               path="/"
-              element={<HomePage profile={profile} services={services} audiences={audiences} />}
+              element={
+                <HomePage
+                  profile={profile}
+                  isProfileLoading={isProfileLoading}
+                  services={services}
+                  audiences={audiences}
+                />
+              }
             />
             <Route path="/about" element={<AboutPage profile={profile} />} />
             <Route

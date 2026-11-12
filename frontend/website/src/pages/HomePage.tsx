@@ -8,11 +8,12 @@ import './PageHeader.css';
 
 interface HomePageProps {
   profile?: Profile | null;
+  isProfileLoading?: boolean;
   services: Service[];
   audiences: AudienceGroup[];
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ profile, services, audiences }) => {
+export const HomePage: React.FC<HomePageProps> = ({ profile, isProfileLoading, services, audiences }) => {
   return (
     <>
       <SEO
@@ -23,7 +24,7 @@ export const HomePage: React.FC<HomePageProps> = ({ profile, services, audiences
       />
 
       {/* Hero Section with 4:5 Portrait, Editorial Typography & Full-Width Credentials Strip */}
-      <Hero profile={profile} />
+      <Hero profile={profile} isProfileLoading={isProfileLoading} />
 
       {/* Three Pillars Summary Section */}
       <section className="section" style={{ background: '#FAF8F3', paddingTop: '4rem', paddingBottom: '4rem' }}>
