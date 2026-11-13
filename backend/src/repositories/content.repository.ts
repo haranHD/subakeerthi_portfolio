@@ -175,6 +175,19 @@ export const ContentRepository = {
     return prisma.mediaAsset.create({ data });
   },
 
+  async updateMediaAsset(
+    id: string,
+    data: {
+      title?: string | null;
+      description?: string | null;
+      location?: string | null;
+      eventDate?: string | null;
+      assetType?: string;
+    }
+  ) {
+    return prisma.mediaAsset.update({ where: { id }, data });
+  },
+
   async getMediaAssetById(id: string) {
     return prisma.mediaAsset.findUnique({ where: { id } });
   },
@@ -186,6 +199,10 @@ export const ContentRepository = {
         id: true,
         fileName: true,
         originalName: true,
+        title: true,
+        description: true,
+        location: true,
+        eventDate: true,
         mimeType: true,
         size: true,
         assetType: true,

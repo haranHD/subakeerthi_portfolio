@@ -106,6 +106,10 @@ export interface MediaAsset {
   id: string;
   fileName: string;
   originalName: string;
+  title?: string | null;
+  description?: string | null;
+  location?: string | null;
+  eventDate?: string | null;
   mimeType: string;
   size: number;
   storageUrl: string;

@@ -136,7 +136,11 @@ model MediaAsset {
   mimeType     String
   size         Int
   storageUrl   String
-  assetType    String   @default("OTHER") // PORTRAIT, BANNER, CERTIFICATE, OTHER
+  assetType    String   @default("OTHER") // PORTRAIT, BANNER, CERTIFICATE, SESSION, OTHER
+  title        String?
+  description  String?  @db.Text
+  location     String?
+  eventDate    String?
   createdAt    DateTime @default(now())
 
   @@map("media_assets")

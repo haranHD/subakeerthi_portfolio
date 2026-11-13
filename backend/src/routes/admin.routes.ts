@@ -47,6 +47,7 @@ router.put('/enquiries/:id/status', AdminController.updateEnquiryStatus);
 // Media
 router.get('/media', AdminController.getMediaList);
 router.post('/media', uploadMedia.single('file'), AdminController.uploadMedia);
+router.put('/media/:id', AdminController.updateMedia);
 router.delete('/media/:id', AdminController.deleteMedia);
 
 // Settings

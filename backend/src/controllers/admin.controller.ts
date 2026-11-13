@@ -456,10 +456,18 @@ export const AdminController = {
       const base64 = req.file.buffer.toString('base64');
       const storageUrl = `data:${req.file.mimetype};base64,${base64}`;
       const assetType = (req.body.assetType as string) || 'OTHER';
+      const title = (req.body.title as string)?.trim() || null;
+      const description = (req.body.description as string)?.trim() || null;
+      const location = (req.body.location as string)?.trim() || null;
+      const eventDate = (req.body.eventDate as string)?.trim() || null;
 
       const asset = await ContentRepository.createMediaAsset({
         fileName: req.file.originalname,
-        originalName: req.file.originalname,
+        originalName: title || req.file.originalname,
+        title,
+        description,
+        location,
+        eventDate,
         mimeType: req.file.mimetype,
         size: req.file.size,
         storageUrl,
@@ -479,6 +487,40 @@ export const AdminController = {
         data: {
           ...asset,
           storageUrl: `/api/v1/media/${asset.id}/file`,
+        },
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  async updateMedia(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const { title, description, location, eventDate, assetType } = req.body;
+
+      const updated = await ContentRepository.updateMediaAsset(id, {
+        title: title !== undefined ? (title ? String(title).trim() : null) : undefined,
+        description: description !== undefined ? (description ? String(description).trim() : null) : undefined,
+        location: location !== undefined ? (location ? String(location).trim() : null) : undefined,
+        eventDate: eventDate !== undefined ? (eventDate ? String(eventDate).trim() : null) : undefined,
+        assetType: assetType ? String(assetType) : undefined,
+      });
+
+      await ContentRepository.logAction({
+        adminUserId: req.session.user?.id,
+        action: 'UPDATE',
+        entityType: 'MEDIA',
+        entityId: id,
+        details: { title, assetType, location },
+      });
+
+      return res.json({
+        success: true,
+        message: 'Media asset updated successfully',
+        data: {
+          ...updated,
+          storageUrl: `/api/v1/media/${updated.id}/file`,
         },
       });
     } catch (err) {

@@ -262,12 +262,20 @@ export const adminApi = {
 
   async uploadMedia(
     file: File,
-    assetType: string,
+    metaOrType: string | { assetType?: string; title?: string; description?: string; location?: string; eventDate?: string },
     onProgress?: (percent: number) => void
   ): Promise<MediaAsset> {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('assetType', assetType);
+    if (typeof metaOrType === 'string') {
+      formData.append('assetType', metaOrType);
+    } else {
+      if (metaOrType.assetType) formData.append('assetType', metaOrType.assetType);
+      if (metaOrType.title) formData.append('title', metaOrType.title);
+      if (metaOrType.description) formData.append('description', metaOrType.description);
+      if (metaOrType.location) formData.append('location', metaOrType.location);
+      if (metaOrType.eventDate) formData.append('eventDate', metaOrType.eventDate);
+    }
     const res = await adminClient.post('/admin/media', formData, {
       timeout: 180000, // 3 minutes timeout for large file uploads
       onUploadProgress: (progressEvent) => {
@@ -277,6 +285,20 @@ export const adminApi = {
         }
       },
     });
+    return res.data.data;
+  },
+
+  async updateMedia(
+    id: string,
+    data: {
+      title?: string | null;
+      description?: string | null;
+      location?: string | null;
+      eventDate?: string | null;
+      assetType?: string;
+    }
+  ): Promise<MediaAsset> {
+    const res = await adminClient.put(`/admin/media/${id}`, data);
     return res.data.data;
   },
 
