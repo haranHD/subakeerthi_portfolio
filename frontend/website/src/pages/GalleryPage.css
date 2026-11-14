@@ -614,9 +614,26 @@
 
 .gallery-modal-actions {
   display: flex;
-  gap: 1rem;
+  width: 100%;
   padding-top: 1.25rem;
   border-top: 1px solid #F0EAE1;
+}
+
+.gallery-modal-actions .btn,
+.gallery-modal-actions .gallery-modal-cta-btn {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  gap: 0.5rem;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  box-sizing: border-box;
 }
 
 /* Keyframe Animations */
@@ -642,6 +659,26 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .gallery-filter-bar {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+    margin-bottom: 2rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .gallery-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-filter-btn {
+    flex-shrink: 0;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.82rem;
+  }
+
   .gallery-grid,
   .media-photo-grid {
     grid-template-columns: 1fr;
@@ -655,12 +692,16 @@
     padding: 1.35rem;
   }
 
+  .gallery-modal-backdrop {
+    padding: 0.75rem;
+  }
+
   .gallery-modal-image-wrap {
-    height: 320px;
+    height: 300px;
   }
 
   .gallery-modal-body {
-    padding: 1.5rem 1.25rem;
+    padding: 1.35rem 1.15rem;
   }
 
   .gallery-modal-title {
@@ -669,5 +710,44 @@
 
   .gallery-sub-heading {
     font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .gallery-modal-card {
+    border-radius: 12px;
+  }
+
+  .gallery-modal-image-wrap {
+    height: 230px;
+    max-height: 34vh;
+  }
+
+  .gallery-modal-close {
+    top: 0.65rem;
+    right: 0.65rem;
+    width: 34px;
+    height: 34px;
+  }
+
+  .gallery-modal-body {
+    padding: 1.15rem 0.9rem 1.25rem;
+  }
+
+  .gallery-modal-title {
+    font-size: 1.08rem;
+  }
+
+  .gallery-modal-description {
+    font-size: 0.88rem;
+  }
+
+  .gallery-modal-actions .gallery-modal-cta-btn {
+    font-size: 0.84rem;
+    padding: 0.75rem 0.85rem;
   }
 }

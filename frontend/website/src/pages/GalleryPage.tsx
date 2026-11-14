@@ -363,7 +363,7 @@ export const GalleryPage: React.FC = () => {
               <div className="gallery-modal-actions">
                 <Link
                   to="/contact"
-                  className="btn btn--primary"
+                  className="btn btn--primary gallery-modal-cta-btn"
                   onClick={() => setSelectedItem(null)}
                 >
                   <span>Request a Session for Your Institution</span>

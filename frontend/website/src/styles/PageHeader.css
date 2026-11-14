@@ -127,3 +127,14 @@
     margin-top: 3rem;
   }
 }
+
+@media (max-width: 480px) {
+  .page-cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .page-cta-actions .btn {
+    width: 100%;
+  }
+}
+
