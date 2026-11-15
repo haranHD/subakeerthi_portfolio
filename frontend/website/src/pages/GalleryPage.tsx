@@ -124,10 +124,25 @@ function getAssetTags(assetType: string): string[] {
   }
 }
 
+const GALLERY_CACHE_KEY = 'subakeerthii_gallery_media';
+
 export const GalleryPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
-  const [uploadedMedia, setUploadedMedia] = useState<any[]>(defaultFallbackMedia);
+  const [uploadedMedia, setUploadedMedia] = useState<any[]>(() => {
+    try {
+      const cached = localStorage.getItem(GALLERY_CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch {
+      // Fallback to default
+    }
+    return defaultFallbackMedia;
+  });
 
   useEffect(() => {
     async function loadUploadedMedia() {
@@ -142,6 +157,11 @@ export const GalleryPage: React.FC = () => {
           );
           if (imageAssets.length > 0) {
             setUploadedMedia(imageAssets);
+            try {
+              localStorage.setItem(GALLERY_CACHE_KEY, JSON.stringify(imageAssets));
+            } catch (storageErr) {
+              console.warn('Could not cache gallery media:', storageErr);
+            }
           }
         }
       } catch (err) {

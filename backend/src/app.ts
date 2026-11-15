@@ -6,6 +6,7 @@ import path from 'path';
 import fs from 'fs';
 import { env } from './config/env.js';
 import { UPLOADS_DIR } from './config/paths.js';
+import { prisma } from './config/database.js';
 import apiRoutes from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
@@ -81,15 +82,29 @@ if (path.resolve(process.cwd(), 'uploads') !== UPLOADS_DIR) {
   app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads'), staticUploadOptions));
 }
 
-// Health Check
-app.get('/health', (_req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    service: 'Subakeerthii MP Portfolio Backend API',
-    version: '1.0.0',
-  });
-});
+// Health Check (Executes a lightweight DB query to keep Supabase and backend active)
+const healthHandler = async (_req: express.Request, res: express.Response) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({
+      status: 'ok',
+      database: 'connected',
+      timestamp: new Date().toISOString(),
+      service: 'Subakeerthii MP Portfolio Backend API',
+      version: '1.0.0',
+    });
+  } catch (err: any) {
+    res.status(503).json({
+      status: 'degraded',
+      database: 'error',
+      message: err.message,
+      timestamp: new Date().toISOString(),
+    });
+  }
+};
+
+app.get('/health', healthHandler);
+app.get('/api/v1/health', healthHandler);
 
 // Mount API Routes
 app.use('/api/v1', apiRoutes);
