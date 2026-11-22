@@ -279,19 +279,19 @@ export const CredentialsPage: React.FC = () => {
                             c.qualification.toLowerCase().includes('ll.b') ||
                             c.qualification.toLowerCase().includes('law') ||
                             c.qualification.toLowerCase().includes('psychology')) && (
-                            <span
-                              className="badge"
-                              style={{
-                                backgroundColor: '#E8F5E9',
-                                color: '#1B5E20',
-                                marginLeft: '0.5rem',
-                                fontSize: '0.68rem',
-                                border: '1px solid #C8E6C9',
-                              }}
-                            >
-                              Hero Highlight
-                            </span>
-                          )}
+                              <span
+                                className="badge"
+                                style={{
+                                  backgroundColor: '#E8F5E9',
+                                  color: '#1B5E20',
+                                  marginLeft: '0.5rem',
+                                  fontSize: '0.68rem',
+                                  border: '1px solid #C8E6C9',
+                                }}
+                              >
+                                Hero Highlight
+                              </span>
+                            )}
                         </td>
                         <td>{c.institution}</td>
                         <td>{c.period}</td>
@@ -338,10 +338,6 @@ export const CredentialsPage: React.FC = () => {
           </>
         )}
       </div>
-    </>
-  );
-};
-   </div>
     </>
   );
 };
