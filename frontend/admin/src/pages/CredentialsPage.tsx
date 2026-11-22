@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { adminApi } from '../services/adminApi';
 import { Credential } from '../types/admin';
-import { Plus, Edit, Trash2, Eye, EyeOff, Check, X, Loader2 } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, Check, X, Loader2, Award } from 'lucide-react';
 import { PageLoader } from '../components/PageLoader';
 
 export const CredentialsPage: React.FC = () => {
@@ -120,6 +120,31 @@ export const CredentialsPage: React.FC = () => {
           />
         ) : (
           <>
+            {/* Hero Strip Live Sync Notice */}
+            <div
+              className="data-card"
+              style={{
+                marginBottom: '1.5rem',
+                padding: '1.15rem 1.35rem',
+                backgroundColor: '#FAF7F2',
+                border: '1px solid #D7C7A1',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '0.85rem',
+              }}
+            >
+              <Award size={20} color="#145A43" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ fontSize: '0.92rem', color: '#145A43', display: 'block', marginBottom: '0.25rem' }}>
+                  Homepage Hero Credentials Strip Highlights
+                </strong>
+                <p style={{ fontSize: '0.82rem', color: '#555', margin: 0, lineHeight: 1.5 }}>
+                  The 4 core credentials below (marked with <strong>Hero Highlight</strong>: <strong>LL.B. (Legal Scholarship)</strong>, <strong>Certified POSH Trainer</strong>, <strong>Certified POCSO Trainer</strong>, and <strong>Diploma in Child Psychology</strong>) automatically power the horizontal credentials strip directly beneath the hero section on your live website homepage. Any changes you make to their qualification title, status, or details will update immediately on the live website homepage.
+                </p>
+              </div>
+            </div>
+
             {editing && (
               <div className="data-card" style={{ marginBottom: '2rem', padding: '1.5rem' }}>
                 <h2 className="card-title" style={{ marginBottom: '1.25rem' }}>
@@ -247,7 +272,27 @@ export const CredentialsPage: React.FC = () => {
                             {c.credentialType}
                           </span>
                         </td>
-                        <td><strong>{c.qualification}</strong></td>
+                        <td>
+                          <strong>{c.qualification}</strong>
+                          {(c.qualification.toLowerCase().includes('posh') ||
+                            c.qualification.toLowerCase().includes('pocso') ||
+                            c.qualification.toLowerCase().includes('ll.b') ||
+                            c.qualification.toLowerCase().includes('law') ||
+                            c.qualification.toLowerCase().includes('psychology')) && (
+                            <span
+                              className="badge"
+                              style={{
+                                backgroundColor: '#E8F5E9',
+                                color: '#1B5E20',
+                                marginLeft: '0.5rem',
+                                fontSize: '0.68rem',
+                                border: '1px solid #C8E6C9',
+                              }}
+                            >
+                              Hero Highlight
+                            </span>
+                          )}
+                        </td>
                         <td>{c.institution}</td>
                         <td>{c.period}</td>
                         <td>{c.status}</td>
@@ -293,6 +338,10 @@ export const CredentialsPage: React.FC = () => {
           </>
         )}
       </div>
+    </>
+  );
+};
+   </div>
     </>
   );
 };

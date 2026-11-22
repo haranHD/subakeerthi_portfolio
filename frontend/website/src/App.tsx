@@ -135,6 +135,7 @@ export const App: React.FC = () => {
                   isProfileLoading={isProfileLoading}
                   services={services}
                   audiences={audiences}
+                  credentials={credentials}
                 />
               }
             />

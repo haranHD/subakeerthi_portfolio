@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, CheckCircle2 } from 'lucide-react';
 import { Hero } from '../components/sections/Hero';
 import { SEO } from '../components/common/SEO';
-import { Profile, Service, AudienceGroup } from '../types';
+import { Profile, Service, AudienceGroup, Credential } from '../types';
 import '../styles/PageHeader.css';
 
 interface HomePageProps {
@@ -11,9 +11,16 @@ interface HomePageProps {
   isProfileLoading?: boolean;
   services: Service[];
   audiences: AudienceGroup[];
+  credentials?: Credential[];
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ profile, isProfileLoading, services, audiences }) => {
+export const HomePage: React.FC<HomePageProps> = ({
+  profile,
+  isProfileLoading,
+  services,
+  audiences,
+  credentials,
+}) => {
   return (
     <>
       <SEO
@@ -24,7 +31,7 @@ export const HomePage: React.FC<HomePageProps> = ({ profile, isProfileLoading, s
       />
 
       {/* Hero Section with 4:5 Portrait, Editorial Typography & Full-Width Credentials Strip */}
-      <Hero profile={profile} isProfileLoading={isProfileLoading} />
+      <Hero profile={profile} isProfileLoading={isProfileLoading} credentials={credentials} />
 
       {/* Three Pillars Summary Section */}
       <section className="section" style={{ background: '#FAF8F3', paddingTop: '4rem', paddingBottom: '4rem' }}>

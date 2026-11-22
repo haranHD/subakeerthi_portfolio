@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck, BookOpen, HeartHandshake, Languages, Award, Scale, FileText, Heart } from 'lucide-react';
-import { Profile } from '../../types';
+import { Profile, Credential } from '../../types';
 import { triggerEnquiry } from '../../utils/enquiryEvents';
 import { ASSETS } from '../../config/assets';
 import { getMediaUrl } from '../../utils/media';
@@ -11,13 +11,42 @@ import './Hero.css';
 interface HeroProps {
   profile?: Profile | null;
   isProfileLoading?: boolean;
+  credentials?: Credential[];
 }
 
-export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false }) => {
+export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false, credentials = [] }) => {
   const navigate = useNavigate();
   const headline = 'Building Safer Schools, Workplaces & Communities.';
   const description =
     'Combining legal scholarship, child psychology, and scientific understanding to deliver practical, prevention-first awareness and training for safer institutions and communities.';
+
+  // Dynamic credentials strip mapped from database
+  const legalCred = credentials.find((c) =>
+    c.qualification.toLowerCase().includes('ll.b') ||
+    c.qualification.toLowerCase().includes('law')
+  );
+  const poshCred = credentials.find((c) =>
+    c.qualification.toLowerCase().includes('posh')
+  );
+  const pocsoCred = credentials.find((c) =>
+    c.qualification.toLowerCase().includes('pocso')
+  );
+  const psychCred = credentials.find((c) =>
+    c.qualification.toLowerCase().includes('psychology') ||
+    c.qualification.toLowerCase().includes('child')
+  );
+
+  const getHighlightDesc = (cred?: Credential, fallback?: string): string => {
+    if (!cred) return fallback || '';
+    if (cred.statutoryDomain && cred.statutoryDomain.length > 5 && cred.statutoryDomain.length <= 55) {
+      return cred.statutoryDomain;
+    }
+    if (cred.details) {
+      const firstPart = cred.details.split(/[,.]/)[0].trim();
+      if (firstPart && firstPart.length <= 55) return firstPart;
+    }
+    return fallback || '';
+  };
 
   const targetPortraitUrl = profile?.portraitUrl
     ? getMediaUrl(profile.portraitUrl)
@@ -246,7 +275,10 @@ export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false })
               </div>
               <div className="hero-strip-text">
                 <span className="hero-strip-tag">01 · LEGAL SCHOLARSHIP</span>
-                <strong className="hero-strip-title">LL.B. — Pursuing</strong>
+                <strong className="hero-strip-title">{legalCred?.qualification || 'LL.B. — Pursuing'}</strong>
+                {legalCred?.status && legalCred.status !== 'Currently Pursuing' && (
+                  <span className="hero-strip-desc">{legalCred.status}</span>
+                )}
               </div>
             </div>
 
@@ -257,9 +289,15 @@ export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false })
                 <ShieldCheck size={18} className="hero-strip-icon" />
               </div>
               <div className="hero-strip-text">
-                <span className="hero-strip-tag">02 · WORKPLACE COMPLIANCE</span>
-                <strong className="hero-strip-title">Certified POSH Trainer</strong>
-                <span className="hero-strip-desc">Harassment Prevention & IC Familiarisation</span>
+                <span className="hero-strip-tag">
+                  {poshCred?.statutoryDomain && poshCred.statutoryDomain.length < 32
+                    ? `02 · ${poshCred.statutoryDomain.toUpperCase()}`
+                    : '02 · WORKPLACE COMPLIANCE'}
+                </span>
+                <strong className="hero-strip-title">{poshCred?.qualification || 'Certified POSH Trainer'}</strong>
+                <span className="hero-strip-desc">
+                  {getHighlightDesc(poshCred, 'Harassment Prevention & IC Familiarisation')}
+                </span>
               </div>
             </div>
 
@@ -270,9 +308,15 @@ export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false })
                 <Award size={18} className="hero-strip-icon" />
               </div>
               <div className="hero-strip-text">
-                <span className="hero-strip-tag">03 · CHILD PROTECTION</span>
-                <strong className="hero-strip-title">Certified POCSO Trainer</strong>
-                <span className="hero-strip-desc">School Safeguarding & Mandatory SOPs</span>
+                <span className="hero-strip-tag">
+                  {pocsoCred?.statutoryDomain && pocsoCred.statutoryDomain.length < 32
+                    ? `03 · ${pocsoCred.statutoryDomain.toUpperCase()}`
+                    : '03 · CHILD PROTECTION'}
+                </span>
+                <strong className="hero-strip-title">{pocsoCred?.qualification || 'Certified POCSO Trainer'}</strong>
+                <span className="hero-strip-desc">
+                  {getHighlightDesc(pocsoCred, 'School Safeguarding & Mandatory SOPs')}
+                </span>
               </div>
             </div>
 
@@ -283,9 +327,15 @@ export const Hero: React.FC<HeroProps> = ({ profile, isProfileLoading = false })
                 <Heart size={18} className="hero-strip-icon" />
               </div>
               <div className="hero-strip-text">
-                <span className="hero-strip-tag">04 · DEVELOPMENTAL CARE</span>
-                <strong className="hero-strip-title">Diploma in Child Psychology</strong>
-                <span className="hero-strip-desc">Child-Centred Dialogue & Empathy</span>
+                <span className="hero-strip-tag">
+                  {psychCred?.statutoryDomain && psychCred.statutoryDomain.length < 32
+                    ? `04 · ${psychCred.statutoryDomain.toUpperCase()}`
+                    : '04 · DEVELOPMENTAL CARE'}
+                </span>
+                <strong className="hero-strip-title">{psychCred?.qualification || 'Diploma in Child Psychology'}</strong>
+                <span className="hero-strip-desc">
+                  {getHighlightDesc(psychCred, 'Child-Centred Dialogue & Empathy')}
+                </span>
               </div>
             </div>
           </div>
