@@ -162,7 +162,7 @@ export const ContentRepository = {
     });
   },
 
-  async updateSetting(key: string, value: string, description?: string) {
+  async updateSetting(key: string, value: string, description?: string | null) {
     return prisma.siteSetting.upsert({
       where: { key },
       update: { value, description },

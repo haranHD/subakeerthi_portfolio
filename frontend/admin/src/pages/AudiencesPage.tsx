@@ -56,17 +56,22 @@ export const AudiencesPage: React.FC = () => {
     e.preventDefault();
     if (!editing) return;
 
+    const { id, createdAt, updatedAt, ...cleanPayload } = editing as any;
     try {
       if (editing.id) {
-        await adminApi.updateAudience(editing.id, editing);
+        await adminApi.updateAudience(editing.id, cleanPayload);
       } else {
-        await adminApi.createAudience(editing);
+        await adminApi.createAudience(cleanPayload);
       }
       setEditing(null);
       await loadAudiences();
     } catch (err: any) {
       console.error(err);
-      alert(err?.response?.data?.message || err?.message || 'Failed to save audience group.');
+      const backendErrors = err?.response?.data?.errors;
+      const errorMsg = Array.isArray(backendErrors) && backendErrors.length > 0
+        ? backendErrors.map((e: any) => `${e.field}: ${e.message}`).join('\n')
+        : err?.response?.data?.message || err?.message || 'Failed to save audience group.';
+      alert(errorMsg);
     }
   };
 

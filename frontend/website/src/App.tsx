@@ -34,10 +34,38 @@ export const App: React.FC = () => {
       return true;
     }
   });
-  const [services, setServices] = useState<Service[]>(defaultServices);
-  const [programmes, setProgrammes] = useState<Programme[]>(defaultProgrammes);
-  const [credentials, setCredentials] = useState<Credential[]>(defaultCredentials);
-  const [audiences, setAudiences] = useState<AudienceGroup[]>(defaultAudiences);
+  const [services, setServices] = useState<Service[]>(() => {
+    try {
+      const cached = localStorage.getItem('subakeerthii_services_cache');
+      return cached ? JSON.parse(cached) : defaultServices;
+    } catch {
+      return defaultServices;
+    }
+  });
+  const [programmes, setProgrammes] = useState<Programme[]>(() => {
+    try {
+      const cached = localStorage.getItem('subakeerthii_programmes_cache');
+      return cached ? JSON.parse(cached) : defaultProgrammes;
+    } catch {
+      return defaultProgrammes;
+    }
+  });
+  const [credentials, setCredentials] = useState<Credential[]>(() => {
+    try {
+      const cached = localStorage.getItem('subakeerthii_credentials_cache');
+      return cached ? JSON.parse(cached) : defaultCredentials;
+    } catch {
+      return defaultCredentials;
+    }
+  });
+  const [audiences, setAudiences] = useState<AudienceGroup[]>(() => {
+    try {
+      const cached = localStorage.getItem('subakeerthii_audiences_cache');
+      return cached ? JSON.parse(cached) : defaultAudiences;
+    } catch {
+      return defaultAudiences;
+    }
+  });
 
   useEffect(() => {
     // Load profile independently so portrait updates immediately without waiting for other collections
@@ -69,10 +97,22 @@ export const App: React.FC = () => {
           api.getAudiences(),
         ]);
 
-        if (servData.length > 0) setServices(servData);
-        if (progData.length > 0) setProgrammes(progData);
-        if (credData.length > 0) setCredentials(credData);
-        if (audData.length > 0) setAudiences(audData);
+        if (servData.length > 0) {
+          setServices(servData);
+          try { localStorage.setItem('subakeerthii_services_cache', JSON.stringify(servData)); } catch { }
+        }
+        if (progData.length > 0) {
+          setProgrammes(progData);
+          try { localStorage.setItem('subakeerthii_programmes_cache', JSON.stringify(progData)); } catch { }
+        }
+        if (credData.length > 0) {
+          setCredentials(credData);
+          try { localStorage.setItem('subakeerthii_credentials_cache', JSON.stringify(credData)); } catch { }
+        }
+        if (audData.length > 0) {
+          setAudiences(audData);
+          try { localStorage.setItem('subakeerthii_audiences_cache', JSON.stringify(audData)); } catch { }
+        }
       } catch (err) {
         console.warn('Using resilient client fallback content:', err);
       }

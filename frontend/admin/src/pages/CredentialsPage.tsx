@@ -56,17 +56,34 @@ export const CredentialsPage: React.FC = () => {
     e.preventDefault();
     if (!editing) return;
 
+    const { id, createdAt, updatedAt, ...cleanPayload } = editing as any;
+    const payload = {
+      ...cleanPayload,
+      institution: cleanPayload.institution?.trim(),
+      issuingBody: cleanPayload.institution?.trim() || cleanPayload.issuingBody?.trim() || null,
+      qualification: cleanPayload.qualification?.trim(),
+      period: cleanPayload.period?.trim(),
+      status: cleanPayload.status?.trim(),
+      details: cleanPayload.details?.trim(),
+      statutoryDomain: cleanPayload.statutoryDomain ? cleanPayload.statutoryDomain.trim() : null,
+      certificateUrl: cleanPayload.certificateUrl ? cleanPayload.certificateUrl.trim() : null,
+    };
+
     try {
       if (editing.id) {
-        await adminApi.updateCredential(editing.id, editing);
+        await adminApi.updateCredential(editing.id, payload);
       } else {
-        await adminApi.createCredential(editing);
+        await adminApi.createCredential(payload);
       }
       setEditing(null);
       await loadCredentials();
     } catch (err: any) {
       console.error(err);
-      alert(err?.response?.data?.message || err?.message || 'Failed to save credential.');
+      const backendErrors = err?.response?.data?.errors;
+      const errorMsg = Array.isArray(backendErrors) && backendErrors.length > 0
+        ? backendErrors.map((e: any) => `${e.field}: ${e.message}`).join('\n')
+        : err?.response?.data?.message || err?.message || 'Failed to save credential.';
+      alert(errorMsg);
     }
   };
 
@@ -142,7 +159,9 @@ export const CredentialsPage: React.FC = () => {
                       <input
                         type="text"
                         value={editing.institution || ''}
-                        onChange={(e) => setEditing({ ...editing, institution: e.target.value })}
+                        onChange={(e) =>
+                          setEditing({ ...editing, institution: e.target.value, issuingBody: e.target.value })
+                        }
                         required
                         className="form-input"
                       />

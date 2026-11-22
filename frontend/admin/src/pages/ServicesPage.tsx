@@ -56,17 +56,22 @@ export const ServicesPage: React.FC = () => {
     e.preventDefault();
     if (!editing) return;
 
+    const { id, createdAt, updatedAt, ...cleanPayload } = editing as any;
     try {
       if (editing.id) {
-        await adminApi.updateService(editing.id, editing);
+        await adminApi.updateService(editing.id, cleanPayload);
       } else {
-        await adminApi.createService(editing);
+        await adminApi.createService(cleanPayload);
       }
       setEditing(null);
       await loadServices();
     } catch (err: any) {
       console.error(err);
-      alert(err?.response?.data?.message || err?.message || 'Failed to save service changes.');
+      const backendErrors = err?.response?.data?.errors;
+      const errorMsg = Array.isArray(backendErrors) && backendErrors.length > 0
+        ? backendErrors.map((e: any) => `${e.field}: ${e.message}`).join('\n')
+        : err?.response?.data?.message || err?.message || 'Failed to save service changes.';
+      alert(errorMsg);
     }
   };
 

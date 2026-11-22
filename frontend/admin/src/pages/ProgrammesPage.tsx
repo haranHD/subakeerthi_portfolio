@@ -67,9 +67,12 @@ export const ProgrammesPage: React.FC = () => {
       .map((h) => h.trim())
       .filter(Boolean);
 
+    const { id, createdAt, updatedAt, ...cleanPayload } = editing as any;
     const payload = {
-      ...editing,
+      ...cleanPayload,
       highlights,
+      duration: cleanPayload.duration ? cleanPayload.duration.trim() : null,
+      bannerUrl: cleanPayload.bannerUrl ? cleanPayload.bannerUrl.trim() : null,
     };
 
     try {
@@ -82,7 +85,11 @@ export const ProgrammesPage: React.FC = () => {
       await loadProgrammes();
     } catch (err: any) {
       console.error(err);
-      alert(err?.response?.data?.message || err?.message || 'Failed to save programme.');
+      const backendErrors = err?.response?.data?.errors;
+      const errorMsg = Array.isArray(backendErrors) && backendErrors.length > 0
+        ? backendErrors.map((e: any) => `${e.field}: ${e.message}`).join('\n')
+        : err?.response?.data?.message || err?.message || 'Failed to save programme.';
+      alert(errorMsg);
     }
   };
 
